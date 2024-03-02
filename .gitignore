@@ -1,1 +1,7 @@
 .idea
+.DS_store
+node_modules
+streaming_service_api-master/static/*
+
+dist/
+public/
