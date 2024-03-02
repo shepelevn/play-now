@@ -1,88 +1,26 @@
-import trackImageSrc from '../../resources/img/tracks (2).jpg';
-
+import { TrackData } from '../../presenters/TrackListPresenter';
 import Component from '../Component';
 import TrackComponent from './TrackComponent';
 
 export default class TrackListComponent extends Component {
   private tracks: TrackComponent[] = [];
 
-  constructor() {
+  constructor(tracksData: TrackData[]) {
     super();
 
-    this.tracks.push(
-      new TrackComponent(
-        1,
-        trackImageSrc,
-        'song 1',
-        'author 1',
-        'album 1',
-        new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
-        120,
-      ),
-      new TrackComponent(
-        2,
-        trackImageSrc,
-        'song 2',
-        'author 2',
-        'album 2',
-        new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-        60,
-      ),
-      new TrackComponent(
-        3,
-        trackImageSrc,
-        'song 3',
-        'author 3',
-        'album 3',
-        new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-        195,
-      ),
-      new TrackComponent(
-        4,
-        trackImageSrc,
-        'song 4',
-        'author 4',
-        'album 4',
-        new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
-        145,
-      ),
-      new TrackComponent(
-        4,
-        trackImageSrc,
-        'song 4',
-        'author 4',
-        'album 4',
-        new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
-        145,
-      ),
-      new TrackComponent(
-        4,
-        trackImageSrc,
-        'song 4',
-        'author 4',
-        'album 4',
-        new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
-        145,
-      ),
-      new TrackComponent(
-        4,
-        trackImageSrc,
-        'song 4',
-        'author 4',
-        'album 4',
-        new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
-        145,
-      ),
-      new TrackComponent(
-        4,
-        trackImageSrc,
-        'song 4',
-        'author 4',
-        'album 4',
-        new Date(Date.now() - 11 * 24 * 60 * 60 * 1000),
-        145,
-      ),
-    );
+    for (const trackData of tracksData) {
+      this.tracks.push(
+        new TrackComponent(
+          trackData.number,
+          trackData.imageSrc,
+          trackData.title,
+          trackData.author,
+          trackData.album,
+          trackData.addedDate,
+          trackData.lengthS,
+        ),
+      );
+    }
   }
 
   public getTemplate(): string {

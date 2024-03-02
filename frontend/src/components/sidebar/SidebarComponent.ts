@@ -1,14 +1,15 @@
+import { Playlist } from '../../presenters/SidebarPresenter';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
-import NoteSvg from '../../resources/svg/note.sprite.svg';
-import PlaySvg from '../../resources/svg/play.sprite.svg';
-
 import Component from '../Component';
 import SidebarButtonComponent from './SidebarButtonComponent';
+
+import NoteSvg from '../../resources/svg/note.sprite.svg';
+import PlaySvg from '../../resources/svg/play.sprite.svg';
 
 export default class SidebarComponent extends Component {
   private items: SidebarButtonComponent[] = [];
 
-  constructor() {
+  constructor(playlistsData: Playlist[]) {
     super();
 
     this.items.push(
@@ -21,15 +22,11 @@ export default class SidebarComponent extends Component {
         renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
       ),
       new SidebarButtonComponent('Любимые песни'),
-
-      new SidebarButtonComponent('Плейлист #1'),
-      new SidebarButtonComponent('Плейлист #2'),
-      new SidebarButtonComponent('Плейлист #3'),
-      new SidebarButtonComponent('Плейлист #4'),
-      new SidebarButtonComponent('Плейлист #5'),
-      new SidebarButtonComponent('Плейлист #6'),
-      new SidebarButtonComponent('Плейлист #7'),
     );
+
+    for (const playlistData of playlistsData) {
+      this.items.push(new SidebarButtonComponent(playlistData.name));
+    }
   }
 
   public getTemplate(): string {

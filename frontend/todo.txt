@@ -1,6 +1,6 @@
 TODOs:
 
-  - Move d.ts files to their own folder
+  - Add string shortener for very long album names in TrackList
 
   - Check TODOs console.logs and alerts
   - Check for errors in console
