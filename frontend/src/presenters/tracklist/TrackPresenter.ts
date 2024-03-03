@@ -1,5 +1,5 @@
 import TrackComponent from '../../components/trackList/TrackComponent';
-import { TrackData } from './TrackListPresenter';
+import { TrackData } from '../../types/TrackData';
 
 export default class TrackPresenter {
   private trackComponent: TrackComponent;
@@ -11,7 +11,7 @@ export default class TrackPresenter {
     dropdownCallback: (event: Event) => void,
   ) {
     this.trackComponent = new TrackComponent(
-      this.trackData.number,
+      this.trackData.id,
       this.trackData.imageSrc,
       this.trackData.title,
       this.trackData.author,

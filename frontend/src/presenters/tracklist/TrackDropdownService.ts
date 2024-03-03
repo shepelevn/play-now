@@ -6,7 +6,7 @@ export default class TrackDropdownService {
 
   constructor(private dropdownService: DropdownService) {}
 
-  public openDropdown(id: number) {
+  public openDropdown(id: number, deleteCallback: () => void) {
     const trackItemElement: HTMLElement | null = document.getElementById(
       `track-item-${id}`,
     );
@@ -36,12 +36,18 @@ export default class TrackDropdownService {
 
     this.currentDropdownButton?.classList.add('btn-dropdown--active');
 
-    this.dropdownService.openDropdown(
+    const dropdown: HTMLElement = this.dropdownService.openDropdown(
       dropdownContainer,
       dropdownElement,
       () => {
         this.currentDropdownButton?.classList.remove('btn-dropdown--active');
       },
     );
+
+    const addButton = dropdown.querySelector('.track__add-btn');
+    addButton?.addEventListener('click', () => alert('Add is not implemented'));
+
+    const deleteButton = dropdown.querySelector('.track__delete-btn');
+    deleteButton?.addEventListener('click', () => deleteCallback());
   }
 }

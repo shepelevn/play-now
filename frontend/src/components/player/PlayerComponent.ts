@@ -1,4 +1,4 @@
-import { TrackData } from '../../presenters/tracklist/TrackListPresenter';
+import { TrackData } from '../../types/TrackData';
 import { getTimeString } from '../../utils/getTimeString';
 import Component from '../Component';
 

@@ -8,7 +8,7 @@ export default class DropdownService {
     container: HTMLElement,
     dropdownElement: HTMLElement,
     onClose: () => void,
-  ): void {
+  ): HTMLElement {
     onClose();
     this.closeCurrentDropdown();
 
@@ -22,6 +22,8 @@ export default class DropdownService {
     window.addEventListener('click', this.listenerCallback);
 
     this.currentDropdown = dropdownElement;
+
+    return dropdownElement;
   }
 
   public closeCurrentDropdown(): void {

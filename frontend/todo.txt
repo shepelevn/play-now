@@ -1,7 +1,6 @@
 TODOs:
 
   - Add string shortener for very long album names in TrackList
-  - Check dropdown bug
 
   - Check TODOs console.logs and alerts
   - Check for errors in console

@@ -1,5 +1,5 @@
 import PlayerComponent from '../../components/player/PlayerComponent';
-import { TrackData } from '../tracklist/TrackListPresenter';
+import { TrackData } from '../../types/TrackData';
 
 import trackImageSrc from '../../resources/img/tracks (2).jpg';
 
@@ -8,7 +8,7 @@ export default class PlayerPresenter {
 
   constructor(private parentElement: HTMLElement) {
     const trackData: TrackData = {
-      number: 1,
+      id: 1,
       title: 'song 1',
       imageSrc: trackImageSrc,
       author: 'author 1',
