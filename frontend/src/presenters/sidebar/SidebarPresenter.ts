@@ -1,4 +1,4 @@
-import SidebarComponent from '../components/sidebar/SidebarComponent';
+import SidebarComponent from '../../components/sidebar/SidebarComponent';
 
 export type Playlist = {
   name: string;

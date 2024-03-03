@@ -12,6 +12,8 @@ export default abstract class Component {
   }
 
   public removeElement(): void {
+    this.element?.remove();
+
     this.element = null;
   }
 }

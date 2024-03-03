@@ -1,7 +1,7 @@
-import PlayerComponent from '../components/player/PlayerComponent';
-import { TrackData } from './TrackListPresenter';
+import PlayerComponent from '../../components/player/PlayerComponent';
+import { TrackData } from '../tracklist/TrackListPresenter';
 
-import trackImageSrc from '../resources/img/tracks (2).jpg';
+import trackImageSrc from '../../resources/img/tracks (2).jpg';
 
 export default class PlayerPresenter {
   private searchComponent: PlayerComponent;
@@ -15,6 +15,7 @@ export default class PlayerPresenter {
       album: 'album 1',
       lengthS: 61,
       addedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+      liked: false,
     };
 
     this.searchComponent = new PlayerComponent(trackData);

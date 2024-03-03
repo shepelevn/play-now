@@ -1,4 +1,4 @@
-import { ProfileData } from '../../presenters/ProfilePresenter';
+import { ProfileData } from '../../presenters/header/ProfilePresenter';
 
 import Component from '../Component';
 

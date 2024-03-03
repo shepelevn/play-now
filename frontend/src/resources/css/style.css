@@ -623,7 +623,10 @@ body {
   fill: var(--color-promo);
 }
 
-.track__btn-dropdown:active svg {
+/* TODO: Delete later probably */
+/* .track__btn-dropdown:active svg, */ 
+.track__btn-dropdown.btn-dropdown--active
+{
   transform: rotate(90deg);
 }
 
@@ -640,9 +643,15 @@ body {
   transition: color var(--transition-duration) ease-in-out;
 }
 
-.track__like-btn path,
+.track__like-btn svg,
 .track__btn-dropdown circle {
-  transition: fill var(--transition-duration) ease-in-out;
+  transition: var(--transition-duration) ease-in-out;
+  transition-property: fill, color; 
+}
+
+.track__like-icon {
+  width: 20px;
+  height: 18px;
 }
 
 .track__name__link:focus {
@@ -653,8 +662,8 @@ body {
   border-color: var(--color-promo);
 }
 
-.track__like-btn:focus-visible path {
-  fill: var(--color-promo);
+.track__like-btn:focus-visible svg {
+  color: var(--color-promo);
 }
 
 .track__name__link:focus-visible,
@@ -939,12 +948,13 @@ body {
 }
 
 .track__like-btn {
+  color: var(--color-greytxt);
   position: relative;
   z-index: 2;
 }
 
-.track__like-btn.like-btn--active path {
-  fill: var(--color-promo);
+.track__like-btn.like-btn--active svg {
+  color: var(--color-promo);
 }
 
 .track__like-btn path {
@@ -962,10 +972,6 @@ body {
   border-radius: 100%;
   border: 1px solid transparent;
   transition: transform var(--transition-duration) ease-in-out;
-}
-
-.track__btn-dropdown.btn-dropdown--active {
-  transform: rotate(90deg);
 }
 
 .data__text {
@@ -1316,8 +1322,8 @@ body {
     border-color: var(--color-promo);
   }
 
-  .track__like-btn:hover path {
-    fill: var(--color-promo);
+  .track__like-btn:hover svg {
+    color: var(--color-promo);
   }
 
   .track__btn-dropdown:hover circle {

@@ -1,4 +1,4 @@
-import SearchComponent from '../components/header/SearchComponent';
+import SearchComponent from '../../components/header/SearchComponent';
 
 export default class SearchPresenter {
   private searchComponent: SearchComponent;

@@ -1,6 +1,6 @@
-import ProfileComponent from '../components/header/ProfileComponent';
+import ProfileComponent from '../../components/header/ProfileComponent';
 
-import AvatarUrl from '../resources/img/user.jpg';
+import AvatarUrl from '../../resources/img/user.jpg';
 
 export type ProfileData = {
   avatarUrl: string;

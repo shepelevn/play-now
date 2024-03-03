@@ -1,35 +1,7 @@
-import { TrackData } from '../../presenters/TrackListPresenter';
 import Component from '../Component';
-import TrackComponent from './TrackComponent';
 
 export default class TrackListComponent extends Component {
-  private tracks: TrackComponent[] = [];
-
-  constructor(tracksData: TrackData[]) {
-    super();
-
-    for (const trackData of tracksData) {
-      this.tracks.push(
-        new TrackComponent(
-          trackData.number,
-          trackData.imageSrc,
-          trackData.title,
-          trackData.author,
-          trackData.album,
-          trackData.addedDate,
-          trackData.lengthS,
-        ),
-      );
-    }
-  }
-
   public getTemplate(): string {
-    const trackTemplates: string = this.tracks.reduce(
-      (accumulator: string, track: TrackComponent) =>
-        accumulator + track.getTemplate(),
-      '',
-    );
-
     return `
       <section class="tracks section tabs-content section--active" data-target="tracks">
         <h2 class="tracks__h2 title__h2">Треки</h2>
@@ -51,8 +23,7 @@ export default class TrackListComponent extends Component {
     </svg>
             </div>
           </div>
-          <ul class="tracks__list">
-          ${trackTemplates}
+          <ul class="tracks__list" id="tracks-list">
           </ul>
         </div>
       </section>

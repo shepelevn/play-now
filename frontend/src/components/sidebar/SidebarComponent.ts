@@ -1,4 +1,4 @@
-import { Playlist } from '../../presenters/SidebarPresenter';
+import { Playlist } from '../../presenters/sidebar/SidebarPresenter';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
 import Component from '../Component';
 import SidebarButtonComponent from './SidebarButtonComponent';

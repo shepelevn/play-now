@@ -1,4 +1,4 @@
-import HeaderComponent from '../components/header/HeaderComponent';
+import HeaderComponent from '../../components/header/HeaderComponent';
 import ProfilePresenter from './ProfilePresenter';
 import SearchPresenter from './SearchPresenter';
 
