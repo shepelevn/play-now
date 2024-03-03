@@ -8,4 +8,14 @@ export default class SearchComponent extends Component {
       </div>
     `;
   }
+
+  public addOnChange(callback: (event: Event) => void) {
+    const input: HTMLElement | null = this.getElement().querySelector(
+      '.header__search__field',
+    );
+
+    if (input instanceof HTMLInputElement) {
+      input.addEventListener('input', callback);
+    }
+  }
 }

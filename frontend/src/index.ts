@@ -13,27 +13,6 @@ import trackImageSrc from './resources/img/tracks (2).jpg';
 import Tracks from './model/Tracks';
 import { TrackData } from './types/TrackData';
 
-TimeAgo.addDefaultLocale(ru);
-
-const dropdownService = new DropdownService();
-
-// TODO: Move to main presenter maybe
-const rootElement: HTMLElement = createRootElement();
-
-new HeaderPresenter(rootElement);
-
-const contentWrapElement: HTMLElement = createAndAppendElement(
-  rootElement,
-  '<div class="content-wrap flex"></div>',
-);
-
-new SidebarPresenter(contentWrapElement);
-
-const mainElement = createAndAppendElement(
-  contentWrapElement,
-  '<main class="main"> </main>',
-);
-
 const tracksData: TrackData[] = [
   {
     id: 0,
@@ -117,6 +96,37 @@ const tracksData: TrackData[] = [
   },
 ];
 
-new TrackListPresenter(mainElement, dropdownService, new Tracks(tracksData));
+TimeAgo.addDefaultLocale(ru);
+
+const dropdownService = new DropdownService();
+
+const tracksModel: Tracks = new Tracks(tracksData);
+
+// TODO: Move to main presenter maybe
+const rootElement: HTMLElement = createRootElement();
+
+const headerPresenter = new HeaderPresenter(rootElement, tracksModel);
+
+const contentWrapElement: HTMLElement = createAndAppendElement(
+  rootElement,
+  '<div class="content-wrap flex"></div>',
+);
+
+new SidebarPresenter(contentWrapElement);
+
+const mainElement = createAndAppendElement(
+  contentWrapElement,
+  '<main class="main"> </main>',
+);
+
+const trackListPresenter: TrackListPresenter = new TrackListPresenter(
+  mainElement,
+  dropdownService,
+  tracksModel,
+);
+
+headerPresenter.searchPresenter.searchChangeCallback = () => {
+  trackListPresenter.render();
+};
 
 new PlayerPresenter(rootElement);

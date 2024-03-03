@@ -52,7 +52,7 @@ export default class TrackListPresenter {
     };
   }
 
-  private render() {
+  public render() {
     this.trackListComponent.removeElement();
     const trackListElement = this.trackListComponent.getElement();
     this.parentElement.append(trackListElement);

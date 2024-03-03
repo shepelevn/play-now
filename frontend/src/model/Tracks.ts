@@ -1,12 +1,20 @@
 import { TrackData } from '../types/TrackData';
 
 export default class Tracks {
+  public filterString: string = '';
+
   constructor(private tracks: TrackData[]) {
     this.generateIds();
   }
 
   public all(): TrackData[] {
-    return this.tracks;
+    return this.tracks.filter((track: TrackData) => {
+      return (
+        track.title.includes(this.filterString) ||
+        track.author.includes(this.filterString) ||
+        track.album.includes(this.filterString)
+      );
+    });
   }
 
   public get(id: number): TrackData | undefined {
