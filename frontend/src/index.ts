@@ -7,11 +7,17 @@ import TrackListPresenter from './presenters/tracklist/TrackListPresenter';
 import PlayerPresenter from './presenters/player/PlayerPresenter';
 import { createAndAppendElement } from './utils/createAndAppendElement';
 import DropdownService from './utils/DropdownService';
+import Tracks from './model/Tracks';
+import { TrackData } from './types/TrackData';
+import PlaylistsPresenter from './presenters/playlists/PlaylistsPresenter';
+import ScreenPresenter from './presenters/screen/ScreenPresenter';
 
 import './resources/css/style.css';
 import trackImageSrc from './resources/img/tracks (2).jpg';
-import Tracks from './model/Tracks';
-import { TrackData } from './types/TrackData';
+import playlistImageSrc from './resources/img/playlists (1).jpg';
+import { PlaylistData } from './types/PlaylistData';
+import Playlists from './model/Playlists';
+import ScreenState from './types/ScreenState';
 
 const tracksData: TrackData[] = [
   {
@@ -96,11 +102,45 @@ const tracksData: TrackData[] = [
   },
 ];
 
+const playlistsData: PlaylistData[] = [
+  {
+    name: 'Плейлист #1',
+    imageSrc: playlistImageSrc,
+    tracksCount: 12,
+    tracks: tracksData,
+  },
+  {
+    name: 'Плейлист #2',
+    imageSrc: playlistImageSrc,
+    tracksCount: 11,
+    tracks: tracksData,
+  },
+  {
+    name: 'Плейлист #3',
+    imageSrc: playlistImageSrc,
+    tracksCount: 14,
+    tracks: tracksData,
+  },
+  {
+    name: 'Плейлист #4',
+    imageSrc: playlistImageSrc,
+    tracksCount: 17,
+    tracks: tracksData,
+  },
+  {
+    name: 'Плейлист #5',
+    imageSrc: playlistImageSrc,
+    tracksCount: 20,
+    tracks: tracksData,
+  },
+];
+
 TimeAgo.addDefaultLocale(ru);
 
 const dropdownService = new DropdownService();
 
 const tracksModel: Tracks = new Tracks(tracksData);
+const playlistsModel: Playlists = new Playlists(playlistsData);
 
 // TODO: Move to main presenter maybe
 const rootElement: HTMLElement = createRootElement();
@@ -112,7 +152,10 @@ const contentWrapElement: HTMLElement = createAndAppendElement(
   '<div class="content-wrap flex"></div>',
 );
 
-new SidebarPresenter(contentWrapElement);
+const sidebarPresenter = new SidebarPresenter(
+  contentWrapElement,
+  playlistsModel,
+);
 
 const mainElement = createAndAppendElement(
   contentWrapElement,
@@ -125,8 +168,23 @@ const trackListPresenter: TrackListPresenter = new TrackListPresenter(
   tracksModel,
 );
 
+const playlistsPresenter: PlaylistsPresenter = new PlaylistsPresenter(
+  mainElement,
+  playlistsModel,
+);
+
+const screenPresenter = new ScreenPresenter(
+  mainElement,
+  trackListPresenter,
+  playlistsPresenter,
+);
+
+sidebarPresenter.changeScreenCallback = (state: ScreenState) => {
+  screenPresenter.changeScreen(state);
+};
+
 headerPresenter.searchPresenter.searchChangeCallback = () => {
-  trackListPresenter.render();
+  screenPresenter.render();
 };
 
 new PlayerPresenter(rootElement);

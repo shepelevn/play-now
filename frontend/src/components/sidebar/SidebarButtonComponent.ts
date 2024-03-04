@@ -18,4 +18,13 @@ export default class SidebarButtonComponent extends Component {
       </li>
     `;
   }
+
+  public addOnClickListener(callback: () => void): void {
+    const button: HTMLElement | null =
+      this.getElement().querySelector('.aside__btn');
+
+    if (button) {
+      button.addEventListener('click', callback);
+    }
+  }
 }

@@ -1,41 +1,7 @@
-import { Playlist } from '../../presenters/sidebar/SidebarPresenter';
-import { renderSvgSprite } from '../../render/renderSvgSprite';
 import Component from '../Component';
-import SidebarButtonComponent from './SidebarButtonComponent';
-
-import NoteSvg from '../../resources/svg/note.sprite.svg';
-import PlaySvg from '../../resources/svg/play.sprite.svg';
 
 export default class SidebarComponent extends Component {
-  private items: SidebarButtonComponent[] = [];
-
-  constructor(playlistsData: Playlist[]) {
-    super();
-
-    this.items.push(
-      new SidebarButtonComponent(
-        'Треки',
-        renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
-      ),
-      new SidebarButtonComponent(
-        'Плейлисты',
-        renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
-      ),
-      new SidebarButtonComponent('Любимые песни'),
-    );
-
-    for (const playlistData of playlistsData) {
-      this.items.push(new SidebarButtonComponent(playlistData.name));
-    }
-  }
-
   public getTemplate(): string {
-    const items = this.items.reduce(
-      (accumulator: string, item: SidebarButtonComponent) =>
-        accumulator + item.getTemplate(),
-      '',
-    );
-
     return `
       <aside class="aside">
         <h2 class="aside__h2 visually-hidden">Левая панель навигации</h2>
@@ -47,7 +13,6 @@ export default class SidebarComponent extends Component {
       </svg>
           </button>
           <ul class="aside__list">
-            ${items}
           </ul>
         </nav>
       </aside>

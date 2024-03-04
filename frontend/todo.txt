@@ -1,6 +1,10 @@
 TODOs:
 
   - Add string shortener for very long album names in TrackList
+  - Make fields readonly
+  - Add active class to active sidebar button
+
+  - Make dropdown better
 
   - Check TODOs console.logs and alerts
   - Check for errors in console

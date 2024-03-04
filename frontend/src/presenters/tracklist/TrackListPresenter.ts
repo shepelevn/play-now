@@ -16,8 +16,6 @@ export default class TrackListPresenter {
     this.trackListComponent = new TrackListComponent();
 
     this.trackDropdownService = new TrackDropdownService(this.dropdownService);
-
-    this.render();
   }
 
   private createLikeCallback(index: number) {

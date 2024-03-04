@@ -1,38 +1,57 @@
 import SidebarComponent from '../../components/sidebar/SidebarComponent';
+import Playlists from '../../model/Playlists';
+import { renderSvgSprite } from '../../render/renderSvgSprite';
+import ScreenState from '../../types/ScreenState';
+import { noop } from '../../utils/noop';
 
-export type Playlist = {
-  name: string;
-};
+import NoteSvg from '../../resources/svg/note.sprite.svg';
+import PlaySvg from '../../resources/svg/play.sprite.svg';
+import SidebarButtonPresenter from './SidebarButtonPresenter';
 
 export default class SidebarPresenter {
-  constructor(private parentElement: HTMLElement) {
-    const playlists: Playlist[] = [
-      {
-        name: 'Плейлист #1',
-      },
-      {
-        name: 'Плейлист #2',
-      },
-      {
-        name: 'Плейлист #3',
-      },
-      {
-        name: 'Плейлист #4',
-      },
-      {
-        name: 'Плейлист #4',
-      },
-      {
-        name: 'Плейлист #5',
-      },
-      {
-        name: 'Плейлист #6',
-      },
-      {
-        name: 'Плейлист #7',
-      },
-    ];
+  private sidebarComponent: SidebarComponent;
+  public changeScreenCallback: (state: ScreenState) => void = noop;
 
-    this.parentElement.append(new SidebarComponent(playlists).getElement());
+  constructor(
+    private parentElement: HTMLElement,
+    private playlists: Playlists,
+  ) {
+    this.sidebarComponent = new SidebarComponent();
+
+    this.parentElement.append(this.sidebarComponent.getElement());
+
+    this.render();
+  }
+
+  public render(): void {
+    const sidebarElement: HTMLElement = this.sidebarComponent.getElement();
+
+    new SidebarButtonPresenter(
+      sidebarElement,
+      'Треки',
+      () => {
+        this.changeScreenCallback(ScreenState.Tracks);
+      },
+      renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
+    );
+
+    new SidebarButtonPresenter(
+      sidebarElement,
+      'Плейлисты',
+      () => {
+        this.changeScreenCallback(ScreenState.Playlists);
+      },
+      renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
+    );
+
+    new SidebarButtonPresenter(sidebarElement, 'Любимые песни', () => {
+      this.changeScreenCallback(ScreenState.Tracks);
+    });
+
+    for (const playlistData of this.playlists.all()) {
+      new SidebarButtonPresenter(sidebarElement, playlistData.name, () => {
+        this.changeScreenCallback(ScreenState.Tracks);
+      });
+    }
   }
 }
