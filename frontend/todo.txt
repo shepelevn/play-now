@@ -1,8 +1,25 @@
 TODOs:
 
+  Routes: 
+    Playlists: 
+      get: /api/users/playlists
+      post: /api/playlists
+      get: /api/playlists/{playlistId}
+    Tracks:
+      get: /api/songs
+    Favorite:
+      get: /api/users/likes
+    Track:
+      post: /api/songs/{songId}/like
+      post: /api/songs/{songId}/unlike
+      post: /api/playlists/{playlistId}/add/{songId}
+      post: /api/playlists/{playlistId}/remove/{songId}
+
+  - Complete point 13. Добавление/удаление из плейлиста. Часть 2
+
+  - Add playlist creation logic and deletion logic
   - Add string shortener for very long album names in TrackList
   - Make fields readonly
-  - Add active class to active sidebar button
 
   - Make dropdown better
 

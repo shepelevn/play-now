@@ -623,8 +623,6 @@ body {
   fill: var(--color-promo);
 }
 
-/* TODO: Delete later probably */
-/* .track__btn-dropdown:active svg, */ 
 .track__btn-dropdown.btn-dropdown--active
 {
   transform: rotate(90deg);

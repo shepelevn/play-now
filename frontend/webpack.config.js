@@ -23,6 +23,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
+      favicon: './src/resources/favicon.ico',
     }),
     new SpritePlugin(),
   ],
