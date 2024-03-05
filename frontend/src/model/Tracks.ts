@@ -1,20 +1,28 @@
 import { TrackData } from '../types/TrackData';
+import { ModelStatus } from './ModelStatus';
 
 export default class Tracks {
+  private tracks: TrackData[] = [];
   public filterString: string = '';
+  public status: ModelStatus = ModelStatus.Pending;
 
-  constructor(private tracks: TrackData[]) {
+  constructor() {
+    // TODO: See if it works after change
     this.generateIds();
   }
 
-  public all(): TrackData[] {
+  public allWithSearch(): TrackData[] {
     return this.tracks.filter((track: TrackData) => {
       return (
-        track.title.includes(this.filterString) ||
-        track.author.includes(this.filterString) ||
-        track.album.includes(this.filterString)
+        track.name.includes(this.filterString) ||
+        track.artist.name.includes(this.filterString) ||
+        track.album.name.includes(this.filterString)
       );
     });
+  }
+
+  public setAll(tracks: TrackData[]) {
+    this.tracks = tracks;
   }
 
   public get(id: number): TrackData | undefined {

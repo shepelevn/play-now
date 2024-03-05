@@ -1,7 +1,15 @@
+import { ModelStatus } from '../../model/ModelStatus';
+import Playlists from '../../model/Playlists';
 import Component from '../Component';
 
 export default class SidebarComponent extends Component {
+  constructor(private playlists: Playlists) {
+    super();
+  }
+
   public getTemplate(): string {
+    const isLoading: boolean = this.playlists.status === ModelStatus.Pending;
+
     return `
       <aside class="aside">
         <h2 class="aside__h2 visually-hidden">Левая панель навигации</h2>
@@ -12,9 +20,10 @@ export default class SidebarComponent extends Component {
       <path d="M18.9999 19L15.5 15.5001" stroke="#AAAAAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
           </button>
-          <ul class="aside__list">
-          </ul>
+            <ul class="aside__list">
+            </ul>
         </nav>
+        ${isLoading ? '<p>Loading...</p>' : ''}
       </aside>
     `;
   }

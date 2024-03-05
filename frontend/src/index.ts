@@ -16,6 +16,8 @@ import Playlists from './model/Playlists';
 import ScreenState from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
+import { loadTracks } from './api/tracks';
+import { ModelStatus } from './model/ModelStatus';
 
 init();
 
@@ -27,8 +29,11 @@ async function init(): Promise<void> {
 
   const dropdownService = new DropdownService();
 
-  const tracksModel: Tracks = new Tracks([]);
-  const playlistsModel: Playlists = new Playlists([]);
+  const tracksModel: Tracks = new Tracks();
+  tracksModel.setAll(await loadTracks());
+  tracksModel.status = ModelStatus.Success;
+
+  const playlistsModel: Playlists = new Playlists();
 
   // TODO: Move to main presenter maybe
   const rootElement: HTMLElement = createRootElement();
@@ -43,6 +48,7 @@ async function init(): Promise<void> {
   const sidebarPresenter = new SidebarPresenter(
     contentWrapElement,
     playlistsModel,
+    tracksModel,
   );
 
   const mainElement = createAndAppendElement(
@@ -67,13 +73,18 @@ async function init(): Promise<void> {
     playlistsPresenter,
   );
 
-  sidebarPresenter.changeScreenCallback = (state: ScreenState) => {
-    screenPresenter.changeScreen(state);
-  };
-
   headerPresenter.searchPresenter.searchChangeCallback = () => {
     screenPresenter.render();
   };
 
-  new PlayerPresenter(rootElement);
+  sidebarPresenter.changeScreenCallback = (state: ScreenState) => {
+    screenPresenter.changeScreen(state);
+  };
+
+  playlistsPresenter.onLoadCallback = () => {
+    sidebarPresenter.render();
+    screenPresenter.render();
+  };
+
+  new PlayerPresenter(rootElement, tracksModel);
 }

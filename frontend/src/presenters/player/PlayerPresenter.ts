@@ -1,25 +1,43 @@
 import PlayerComponent from '../../components/player/PlayerComponent';
+import Tracks from '../../model/Tracks';
 import { TrackData } from '../../types/TrackData';
 
-import trackImageSrc from '../../resources/img/tracks (2).jpg';
-
 export default class PlayerPresenter {
-  private searchComponent: PlayerComponent;
+  private playerComponent: PlayerComponent;
 
-  constructor(private parentElement: HTMLElement) {
-    const trackData: TrackData = {
-      id: 1,
-      title: 'song 1',
-      imageSrc: trackImageSrc,
-      author: 'author 1',
-      album: 'album 1',
-      lengthS: 61,
-      addedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
-      liked: false,
-    };
+  constructor(
+    private parentElement: HTMLElement,
+    tracksModel: Tracks,
+  ) {
+    let trackData: TrackData | undefined = tracksModel.allWithSearch()[0];
 
-    this.searchComponent = new PlayerComponent(trackData);
+    if (!trackData) {
+      // TODO: Turn on error later
+      // throw new Error('First track not found');
+      trackData = {
+        id: 0,
+        path: '',
+        image: '',
+        name: 'test',
+        createdAt: '2024-02-28 11:14:19',
+        duration: 120000,
+        album: {
+          name: 'test',
+          image: '',
+        },
+        artist: {
+          name: 'test',
+        },
+        likes: [
+          {
+            username: 'test',
+          },
+        ],
+      };
+    }
 
-    this.parentElement.append(this.searchComponent.getElement());
+    this.playerComponent = new PlayerComponent(trackData);
+
+    this.parentElement.append(this.playerComponent.getElement());
   }
 }

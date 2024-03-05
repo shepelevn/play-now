@@ -13,7 +13,7 @@ export default class TrackListPresenter {
     private dropdownService: DropdownService,
     private tracksModel: Tracks,
   ) {
-    this.trackListComponent = new TrackListComponent();
+    this.trackListComponent = new TrackListComponent(tracksModel);
 
     this.trackDropdownService = new TrackDropdownService(this.dropdownService);
   }
@@ -26,7 +26,8 @@ export default class TrackListPresenter {
         throw new Error(`trackData with index: ${index} not found`);
       }
 
-      trackData.liked = !trackData.liked;
+      // TODO: Add fetch
+      // trackData.liked = !trackData.liked;
 
       this.tracksModel.update(trackData, index);
 
@@ -58,7 +59,7 @@ export default class TrackListPresenter {
     const trackListUl = document.getElementById('tracks-list');
 
     if (trackListUl instanceof HTMLElement) {
-      for (const trackData of this.tracksModel.all()) {
+      for (const trackData of this.tracksModel.allWithSearch()) {
         new TrackPresenter(
           trackListUl,
           trackData,

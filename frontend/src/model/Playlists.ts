@@ -1,9 +1,7 @@
 import { PlaylistData } from '../types/PlaylistData';
+import { ModelStatus } from './ModelStatus';
 
 export default class Playlists {
-  constructor(private playlists: PlaylistData[]) {}
-
-  public all(): PlaylistData[] {
-    return this.playlists;
-  }
+  public playlists: PlaylistData[] = [];
+  public status: ModelStatus = ModelStatus.Pending;
 }

@@ -1,4 +1,6 @@
-export function getTimeString(seconds: number): string {
+export function getTimeString(ms: number): string {
+  const seconds = Math.round(ms / 1000);
+
   const minutes = Math.round(seconds / 60);
   const secondsRemainder = seconds % 60;
 
