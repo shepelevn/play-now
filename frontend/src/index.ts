@@ -60,6 +60,7 @@ async function init(): Promise<void> {
     mainElement,
     dropdownService,
     tracksModel,
+    playlistsModel,
   );
 
   const playlistsPresenter: PlaylistsPresenter = new PlaylistsPresenter(

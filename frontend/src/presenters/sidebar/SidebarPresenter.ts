@@ -41,6 +41,7 @@ export default class SidebarPresenter {
       listElement,
       'Треки',
       async () => {
+        this.tracksModel.playlistId = null;
         this.tracksModel.status = ModelStatus.Pending;
         this.changeScreenCallback(ScreenState.Tracks);
 
@@ -62,6 +63,7 @@ export default class SidebarPresenter {
     );
 
     new SidebarButtonPresenter(listElement, 'Любимые песни', async () => {
+      this.tracksModel.playlistId = null;
       this.tracksModel.status = ModelStatus.Pending;
       this.changeScreenCallback(ScreenState.Tracks);
 
@@ -73,6 +75,7 @@ export default class SidebarPresenter {
 
     for (const playlistData of this.playlistsModel.playlists) {
       new SidebarButtonPresenter(listElement, playlistData.name, () => {
+        this.tracksModel.playlistId = playlistData.id;
         this.tracksModel.setAll(playlistData.songs);
 
         this.changeScreenCallback(ScreenState.Tracks);

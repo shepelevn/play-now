@@ -6,7 +6,11 @@ export default class TrackDropdownService {
 
   constructor(private dropdownService: DropdownService) {}
 
-  public openDropdown(id: number, deleteCallback: () => void) {
+  public openDropdown(
+    id: number,
+    deleteCallback: () => void,
+    isPlaylist: boolean,
+  ) {
     const trackItemElement: HTMLElement | null = document.getElementById(
       `track-item-${id}`,
     );
@@ -26,7 +30,7 @@ export default class TrackDropdownService {
     const dropdownElement: HTMLElement = createElement(`
       <div class="track__dropdown dropdown--active">
         <button class="track__add-btn">Добавить в плейлист</button>
-        <button class="track__delete-btn">Удалить из плейлиста</button>
+        ${isPlaylist ? '<button class="track__delete-btn">Удалить из плейлиста</button>' : ''}
       </div>
       `);
 

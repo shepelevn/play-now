@@ -5,6 +5,7 @@ export default class Tracks {
   private tracks: TrackData[] = [];
   public filterString: string = '';
   public status: ModelStatus = ModelStatus.Pending;
+  public playlistId: number | null = null;
 
   public allWithSearch(): TrackData[] {
     return this.tracks.filter((track: TrackData) => {

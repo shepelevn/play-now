@@ -24,6 +24,7 @@ export async function loadPlaylistsData(): Promise<PlaylistData[]> {
       const imageId = (index % PLAYLIST_IMAGES_COUNT) + 1;
 
       return {
+        id: playlist.id,
         name: playlist.name,
         imageId,
         songs: tracks,
@@ -38,4 +39,11 @@ export async function loadPlaylistTracks(id: number): Promise<TrackData[]> {
   const response = await axios.get(`${SERVER_URL}/playlists/${id}`);
 
   return response.data.songs;
+}
+
+export async function removeFromPlaylist(
+  playlistId: number,
+  trackId: number,
+): Promise<void> {
+  await axios.post(`${SERVER_URL}/playlists/${playlistId}/remove/${trackId}`);
 }

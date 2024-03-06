@@ -1,6 +1,8 @@
 import { USERNAME } from '../../api/authConstants';
+import { removeFromPlaylist } from '../../api/playlists';
 import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
+import Playlists from '../../model/Playlists';
 import Tracks from '../../model/Tracks';
 import DropdownService from '../../utils/DropdownService';
 import { isTrackLiked } from '../../utils/isTrackLiked';
@@ -17,6 +19,7 @@ export default class TrackListPresenter {
     private parentElement: HTMLElement,
     private dropdownService: DropdownService,
     private tracksModel: Tracks,
+    private playlistsModel: Playlists,
   ) {
     this.trackListComponent = new TrackListComponent(tracksModel);
 
@@ -59,15 +62,26 @@ export default class TrackListPresenter {
     return (event: Event) => {
       event.stopPropagation();
 
-      this.trackDropdownService.openDropdown(index, deleteCallback);
+      const isPlaylist = this.tracksModel.playlistId !== null;
+
+      this.trackDropdownService.openDropdown(index, deleteCallback, isPlaylist);
     };
   }
 
-  private createDeleteCallback(index: number): () => void {
-    return () => {
-      this.tracksModel.delete(index);
+  private createDeleteCallback(trackId: number): () => void {
+    return async () => {
+      const playlistId = this.tracksModel.playlistId;
 
-      this.render();
+      if (!playlistId) {
+        throw new Error('playlistId is null');
+      }
+
+      await removeFromPlaylist(playlistId, trackId);
+
+      this.playlistsModel.removeTrack(playlistId, trackId);
+      this.tracksModel.setAll(this.playlistsModel.get(playlistId).songs);
+
+      this.onChangeCallback();
     };
   }
 
