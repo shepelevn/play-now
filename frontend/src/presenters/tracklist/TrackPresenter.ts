@@ -1,6 +1,6 @@
-import { USERNAME } from '../../api/authConstants';
 import TrackComponent from '../../components/trackList/TrackComponent';
 import { TrackData } from '../../types/TrackData';
+import { isTrackLiked } from '../../utils/isTrackLiked';
 
 export default class TrackPresenter {
   private trackComponent: TrackComponent;
@@ -11,9 +11,7 @@ export default class TrackPresenter {
     likeCallback: () => void,
     dropdownCallback: (event: Event) => void,
   ) {
-    const liked: boolean = this.trackData.likes.reduce((accumulator, like) => {
-      return accumulator ? accumulator : like.username === USERNAME;
-    }, false);
+    const liked: boolean = isTrackLiked(this.trackData);
 
     this.trackComponent = new TrackComponent(
       this.trackData.id,

@@ -81,6 +81,8 @@ async function init(): Promise<void> {
     screenPresenter.changeScreen(state);
   };
 
+  trackListPresenter.onChangeCallback = () => screenPresenter.render();
+
   playlistsPresenter.onLoadCallback = () => {
     sidebarPresenter.render();
     screenPresenter.render();

@@ -6,11 +6,6 @@ export default class Tracks {
   public filterString: string = '';
   public status: ModelStatus = ModelStatus.Pending;
 
-  constructor() {
-    // TODO: See if it works after change
-    this.generateIds();
-  }
-
   public allWithSearch(): TrackData[] {
     return this.tracks.filter((track: TrackData) => {
       return (
@@ -25,8 +20,8 @@ export default class Tracks {
     this.tracks = tracks;
   }
 
-  public get(id: number): TrackData | undefined {
-    return this.tracks[id];
+  public get(id: number): TrackData {
+    return this.findById(id);
   }
 
   public add(track: TrackData): void {
@@ -34,23 +29,22 @@ export default class Tracks {
   }
 
   public update(track: TrackData, id: number): void {
-    this.tracks[id] = track;
+    const index = this.tracks.findIndex((track) => track.id === id);
+
+    this.tracks[index] = track;
   }
 
   public delete(id: number): void {
-    this.tracks = this.tracks.slice(0, id).concat(this.tracks.slice(id + 1));
-    this.generateIds();
+    this.tracks.filter((track) => track.id !== id);
   }
 
-  private generateIds(): void {
-    for (let i = 0; i < this.tracks.length; i++) {
-      const track: TrackData | undefined = this.tracks[i];
+  private findById(id: number): TrackData {
+    const track = this.tracks.filter((track) => track.id === id)[0];
 
-      if (track) {
-        track.id = i;
-
-        this.tracks[i] = track;
-      }
+    if (!track) {
+      throw new Error(`Track with id: ${id} not found`);
     }
+
+    return track;
   }
 }

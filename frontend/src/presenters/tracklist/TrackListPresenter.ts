@@ -1,12 +1,17 @@
+import { USERNAME } from '../../api/authConstants';
+import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
 import Tracks from '../../model/Tracks';
 import DropdownService from '../../utils/DropdownService';
+import { isTrackLiked } from '../../utils/isTrackLiked';
+import { noop } from '../../utils/noop';
 import TrackDropdownService from './TrackDropdownService';
 import TrackPresenter from './TrackPresenter';
 
 export default class TrackListPresenter {
   private trackListComponent: TrackListComponent;
   private trackDropdownService;
+  public onChangeCallback: () => void = noop;
 
   constructor(
     private parentElement: HTMLElement,
@@ -18,20 +23,35 @@ export default class TrackListPresenter {
     this.trackDropdownService = new TrackDropdownService(this.dropdownService);
   }
 
-  private createLikeCallback(index: number) {
-    return () => {
-      const trackData = this.tracksModel.get(index);
+  private createLikeCallback(id: number) {
+    let loading = false;
 
-      if (trackData === undefined) {
-        throw new Error(`trackData with index: ${index} not found`);
+    return async () => {
+      if (loading) {
+        return;
+      } else {
+        loading = true;
       }
 
-      // TODO: Add fetch
-      // trackData.liked = !trackData.liked;
+      const trackData = this.tracksModel.get(id);
 
-      this.tracksModel.update(trackData, index);
+      console.log(trackData.id);
 
-      this.render();
+      if (!isTrackLiked(trackData)) {
+        await postLike(trackData.id);
+
+        trackData.likes.push({ username: USERNAME });
+      } else {
+        await postDislike(trackData.id);
+
+        trackData.likes = trackData.likes.filter(
+          (like) => like.username !== USERNAME,
+        );
+      }
+
+      this.onChangeCallback();
+
+      loading = false;
     };
   }
 

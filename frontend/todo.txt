@@ -2,20 +2,21 @@ TODOs:
 
   Routes: 
     Playlists: 
-      post: /api/playlists
       post: /api/playlists/{playlistId}/add/{songId}
       post: /api/playlists/{playlistId}/remove/{songId}
-    Track:
-      post: /api/songs/{songId}/like
-      post: /api/songs/{songId}/unlike
 
-  - Delete tracks images
+      post: /api/playlists
+      delete: /api/playlists/{playlistId}
 
   - Complete point 13. Добавление/удаление из плейлиста. Часть 2
 
   - Add playlist creation logic and deletion logic
   - Make fields readonly
   - Add search to /api/songs query
+  - Fix tracks numbering in favorites and playlists
+
+  - Try the api server in GitLab repository
+  - Write to curator about the api server bug
 
   - Make dropdown better
   - Make loading elements with spinners

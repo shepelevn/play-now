@@ -7,9 +7,6 @@ export async function loadTracks(): Promise<TrackData[]> {
     `${SERVER_URL}/songs?search=${''}`,
   );
 
-  console.log('response.data');
-  console.log(response.data);
-
   return response.data;
 }
 
@@ -32,4 +29,16 @@ async function loadTrack(id: number): Promise<TrackData> {
   const response: AxiosResponse = await axios.get(`${SERVER_URL}/songs/${id}`);
 
   return response.data;
+}
+
+export async function postLike(trackId: number): Promise<void> {
+  await axios.post(`${SERVER_URL}/songs/${trackId}/like`);
+
+  console.log('postLike');
+}
+
+export async function postDislike(trackId: number): Promise<void> {
+  await axios.post(`${SERVER_URL}/songs/${trackId}/unlike`);
+
+  console.log('postDislike');
 }

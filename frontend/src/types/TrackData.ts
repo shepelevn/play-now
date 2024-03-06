@@ -12,11 +12,9 @@ export type TrackData = {
   artist: {
     name: string;
   };
-  likes: [
-    {
-      username: string;
-    },
-  ];
+  likes: {
+    username: string;
+  }[];
 };
 
 export type ShortTrackData = {
