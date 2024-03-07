@@ -19,6 +19,7 @@ import { loadTracks } from './api/tracks';
 import { ModelStatus } from './model/ModelStatus';
 import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
+import { TracksType } from './model/TracksType';
 
 init();
 
@@ -34,7 +35,7 @@ async function init(): Promise<void> {
   const modalService = new ModalService();
 
   const tracksModel: Tracks = new Tracks();
-  tracksModel.setAll(await loadTracks());
+  tracksModel.setAll(await loadTracks(''));
   tracksModel.status = ModelStatus.Success;
 
   const playlistsModel: Playlists = new Playlists();
@@ -47,11 +48,28 @@ async function init(): Promise<void> {
     '<div class="content-wrap flex"></div>',
   );
 
+  const changeScreenCallback = (state: ScreenState) => {
+    screenPresenter.changeScreen(state);
+  };
+
+  const loadTracksCallback = async () => {
+    tracksModel.playlistId = null;
+    tracksModel.status = ModelStatus.Pending;
+    changeScreenCallback(ScreenState.Tracks);
+
+    tracksModel.setAll(await loadTracks(tracksModel.filterString));
+    tracksModel.status = ModelStatus.Success;
+
+    changeScreenCallback(ScreenState.Tracks);
+  };
+
   const sidebarPresenter = new SidebarPresenter(
     contentWrapElement,
     playlistsModel,
     tracksModel,
   );
+
+  sidebarPresenter.loadTracksCallback = loadTracksCallback;
 
   const mainElement = createAndAppendElement(
     contentWrapElement,
@@ -79,13 +97,14 @@ async function init(): Promise<void> {
   );
 
   headerPresenter.searchPresenter.searchChangeCallback = () => {
+    if (tracksModel.tracksType === TracksType.Tracks) {
+      loadTracksCallback();
+    }
+
     screenPresenter.render();
   };
 
-  sidebarPresenter.changeScreenCallback = (state: ScreenState) => {
-    screenPresenter.changeScreen(state);
-  };
-
+  sidebarPresenter.changeScreenCallback = changeScreenCallback;
   trackListPresenter.onTracksChangeCallback = () => screenPresenter.render();
 
   trackListPresenter.onPlaylistsChangeCallback = () => {

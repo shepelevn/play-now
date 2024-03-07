@@ -1,6 +1,5 @@
 TODOs:
 
-  - Add search to /api/songs query
   - Fix tracks numbering in favorites and playlists
   - Make title change on TracksListComponent
 

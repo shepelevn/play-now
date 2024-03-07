@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 import { SERVER_URL, USERNAME } from './authConstants';
 import { ShortTrackData, TrackData } from '../types/TrackData';
 
-export async function loadTracks(): Promise<TrackData[]> {
+export async function loadTracks(filterString: string): Promise<TrackData[]> {
   const response: AxiosResponse = await axios.get(
-    `${SERVER_URL}/songs?search=${''}`,
+    `${SERVER_URL}/songs?search=${filterString}`,
   );
 
   return response.data;

@@ -8,12 +8,13 @@ import NoteSvg from '../../resources/svg/note.sprite.svg';
 import PlaySvg from '../../resources/svg/play.sprite.svg';
 import SidebarButtonPresenter from './SidebarButtonPresenter';
 import Tracks from '../../model/Tracks';
-import { loadFavorites, loadTracks } from '../../api/tracks';
+import { loadFavorites } from '../../api/tracks';
 import { ModelStatus } from '../../model/ModelStatus';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
   public changeScreenCallback: (state: ScreenState) => void = noop;
+  public loadTracksCallback: () => void = noop;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -40,15 +41,8 @@ export default class SidebarPresenter {
     new SidebarButtonPresenter(
       listElement,
       'Треки',
-      async () => {
-        this.tracksModel.playlistId = null;
-        this.tracksModel.status = ModelStatus.Pending;
-        this.changeScreenCallback(ScreenState.Tracks);
-
-        this.tracksModel.setAll(await loadTracks());
-        this.tracksModel.status = ModelStatus.Success;
-
-        this.changeScreenCallback(ScreenState.Tracks);
+      () => {
+        this.loadTracksCallback();
       },
       renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
     );
