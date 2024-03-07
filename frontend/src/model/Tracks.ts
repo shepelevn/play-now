@@ -9,6 +9,7 @@ export default class Tracks {
   public status: ModelStatus = ModelStatus.Pending;
   public playlistId: number | null = null;
   public tracksType: TracksType = TracksType.Tracks;
+  public tracksTitle: string = 'Треки';
 
   public allWithSearch(): TrackDataWithIndex[] {
     return this.tracks.filter((track: TrackData) => {

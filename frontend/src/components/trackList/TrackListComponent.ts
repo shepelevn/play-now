@@ -40,7 +40,7 @@ export default class TrackListComponent extends Component {
 
     return `
       <section class="tracks section tabs-content section--active" data-target="tracks">
-        <h2 class="tracks__h2 title__h2">Треки</h2>
+        <h2 class="tracks__h2 title__h2">${this.tracksModel.tracksTitle}</h2>
         ${content}
       </section>
     `;

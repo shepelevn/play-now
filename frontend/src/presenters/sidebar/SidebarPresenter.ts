@@ -42,6 +42,8 @@ export default class SidebarPresenter {
       listElement,
       'Треки',
       () => {
+        this.tracksModel.tracksTitle = 'Треки';
+
         this.loadTracksCallback();
       },
       renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
@@ -51,12 +53,15 @@ export default class SidebarPresenter {
       listElement,
       'Плейлисты',
       () => {
+        this.tracksModel.tracksTitle = 'Плейлисты';
+
         this.changeScreenCallback(ScreenState.Playlists);
       },
       renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
     );
 
     new SidebarButtonPresenter(listElement, 'Любимые песни', async () => {
+      this.tracksModel.tracksTitle = 'Любимые песни';
       this.tracksModel.playlistId = null;
       this.tracksModel.status = ModelStatus.Pending;
       this.changeScreenCallback(ScreenState.Tracks);
@@ -69,6 +74,7 @@ export default class SidebarPresenter {
 
     for (const playlistData of this.playlistsModel.playlists) {
       new SidebarButtonPresenter(listElement, playlistData.name, () => {
+        this.tracksModel.tracksTitle = playlistData.name;
         this.tracksModel.playlistId = playlistData.id;
         this.tracksModel.setAll(playlistData.songs);
 

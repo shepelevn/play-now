@@ -1,8 +1,5 @@
 TODOs:
 
-  - Fix tracks numbering in favorites and playlists
-  - Make title change on TracksListComponent
-
   - Try to clean up code
 
   - Delete temporary project folder
