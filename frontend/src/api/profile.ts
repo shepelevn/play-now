@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { SERVER_URL, USERNAME } from './authConstants';
+import { SERVER_URL, USERNAME } from './apiConstants';
 
 import userAvatarUrl from '../resources/img/user.jpg';
 

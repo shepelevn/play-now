@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { PlaylistData } from '../types/PlaylistData';
-import { SERVER_URL, USERNAME } from './authConstants';
+import { SERVER_URL, USERNAME } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { PLAYLIST_IMAGES_COUNT } from '../model/Playlists';
 

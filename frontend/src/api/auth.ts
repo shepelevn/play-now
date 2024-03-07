@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { SERVER_URL, USERNAME } from './authConstants';
+import { SERVER_URL, USERNAME } from './apiConstants';
 
 const PASSWORD = 'password';
 const FIRST_NAME = 'John';

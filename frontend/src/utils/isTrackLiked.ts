@@ -1,4 +1,4 @@
-import { USERNAME } from '../api/authConstants';
+import { USERNAME } from '../api/apiConstants';
 import { TrackData } from '../types/TrackData';
 
 export function isTrackLiked(trackData: TrackData): boolean {

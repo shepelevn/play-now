@@ -1,4 +1,4 @@
-import { USERNAME } from '../../api/authConstants';
+import { USERNAME } from '../../api/apiConstants';
 import { removeFromPlaylist } from '../../api/playlists';
 import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
