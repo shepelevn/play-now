@@ -1,4 +1,4 @@
-import { noop } from './noop';
+import { noop } from '../noop';
 
 export default class DropdownService {
   private currentDropdown: HTMLElement | null = null;

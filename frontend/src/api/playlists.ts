@@ -2,13 +2,12 @@ import axios, { AxiosResponse } from 'axios';
 import { PlaylistData } from '../types/PlaylistData';
 import { SERVER_URL, USERNAME } from './authConstants';
 import { TrackData } from '../types/TrackData';
+import { PLAYLIST_IMAGES_COUNT } from '../model/Playlists';
 
 type PlaylistInfo = {
   id: number;
   name: string;
 };
-
-const PLAYLIST_IMAGES_COUNT = 8;
 
 export async function loadPlaylistsData(): Promise<PlaylistData[]> {
   const response: AxiosResponse = await axios.get(
@@ -46,4 +45,30 @@ export async function removeFromPlaylist(
   trackId: number,
 ): Promise<void> {
   await axios.post(`${SERVER_URL}/playlists/${playlistId}/remove/${trackId}`);
+}
+
+export async function addToPlaylist(
+  playlistId: number,
+  trackId: number,
+): Promise<PlaylistData> {
+  const response = await axios.post(
+    `${SERVER_URL}/playlists/${playlistId}/add/${trackId}`,
+  );
+
+  return response.data;
+}
+
+export async function createPlaylist(name: string): Promise<PlaylistData> {
+  const response: AxiosResponse = await axios.post(`${SERVER_URL}/playlists`, {
+    name: name,
+  });
+
+  const playlist = response.data;
+  playlist.songs = [];
+
+  return playlist;
+}
+
+export async function deletePlaylist(playlistId: number): Promise<void> {
+  await axios.delete(`${SERVER_URL}/playlists/${playlistId}`);
 }

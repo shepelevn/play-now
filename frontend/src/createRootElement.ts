@@ -6,6 +6,7 @@ export function createRootElement(): HTMLElement {
   const rootDiv: HTMLElement = createElement(
     '<div class="over-wrapper" style="position: relative; overflow: hidden; "></div>',
   );
+
   document.body.append(rootDiv);
 
   return rootDiv;

@@ -1,6 +1,6 @@
 import Component from '../Component';
-import plural from 'plural-ru';
 import { PLAYLIST_IMAGES } from './playlistImages';
+import { getTracksCountString } from '../../utils/getTracksCountString';
 
 export default class PlaylistCardComponent extends Component {
   constructor(
@@ -12,12 +12,7 @@ export default class PlaylistCardComponent extends Component {
   }
 
   public getTemplate(): string {
-    const tracksCountString: string = plural(
-      this.tracksCount,
-      '%d трек',
-      '%d трека',
-      '%d треков',
-    );
+    const tracksCountString: string = getTracksCountString(this.tracksCount);
 
     const imageSrc = PLAYLIST_IMAGES[this.imageId];
 

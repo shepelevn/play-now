@@ -6,7 +6,6 @@ import SidebarPresenter from './presenters/sidebar/SidebarPresenter';
 import TrackListPresenter from './presenters/tracklist/TrackListPresenter';
 import PlayerPresenter from './presenters/player/PlayerPresenter';
 import { createAndAppendElement } from './utils/createAndAppendElement';
-import DropdownService from './utils/DropdownService';
 import Tracks from './model/Tracks';
 import PlaylistsPresenter from './presenters/playlists/PlaylistsPresenter';
 import ScreenPresenter from './presenters/screen/ScreenPresenter';
@@ -18,6 +17,8 @@ import axios from 'axios';
 import { getApiToken } from './api/auth';
 import { loadTracks } from './api/tracks';
 import { ModelStatus } from './model/ModelStatus';
+import DropdownService from './utils/services/DropdownService';
+import ModalService from './utils/services/ModalService';
 
 init();
 
@@ -27,7 +28,10 @@ async function init(): Promise<void> {
   const authToken = await getApiToken();
   axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
 
+  const rootElement: HTMLElement = createRootElement();
+
   const dropdownService = new DropdownService();
+  const modalService = new ModalService();
 
   const tracksModel: Tracks = new Tracks();
   tracksModel.setAll(await loadTracks());
@@ -36,8 +40,6 @@ async function init(): Promise<void> {
   const playlistsModel: Playlists = new Playlists();
 
   // TODO: Move to main presenter maybe
-  const rootElement: HTMLElement = createRootElement();
-
   const headerPresenter = new HeaderPresenter(rootElement, tracksModel);
 
   const contentWrapElement: HTMLElement = createAndAppendElement(
@@ -58,14 +60,16 @@ async function init(): Promise<void> {
 
   const trackListPresenter: TrackListPresenter = new TrackListPresenter(
     mainElement,
-    dropdownService,
     tracksModel,
     playlistsModel,
+    dropdownService,
+    modalService,
   );
 
   const playlistsPresenter: PlaylistsPresenter = new PlaylistsPresenter(
     mainElement,
     playlistsModel,
+    modalService,
   );
 
   const screenPresenter = new ScreenPresenter(
@@ -82,7 +86,12 @@ async function init(): Promise<void> {
     screenPresenter.changeScreen(state);
   };
 
-  trackListPresenter.onChangeCallback = () => screenPresenter.render();
+  trackListPresenter.onTracksChangeCallback = () => screenPresenter.render();
+
+  trackListPresenter.onPlaylistsChangeCallback = () => {
+    sidebarPresenter.render();
+    screenPresenter.render();
+  };
 
   playlistsPresenter.onLoadCallback = () => {
     sidebarPresenter.render();

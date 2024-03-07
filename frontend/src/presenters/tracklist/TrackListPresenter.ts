@@ -4,26 +4,32 @@ import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
 import Playlists from '../../model/Playlists';
 import Tracks from '../../model/Tracks';
-import DropdownService from '../../utils/DropdownService';
+import DropdownService from '../../utils/services/DropdownService';
 import { isTrackLiked } from '../../utils/isTrackLiked';
 import { noop } from '../../utils/noop';
 import TrackDropdownService from './TrackDropdownService';
 import TrackPresenter from './TrackPresenter';
+import AddTrackModalService from './AddTrackModalService';
+import ModalService from '../../utils/services/ModalService';
 
 export default class TrackListPresenter {
   private trackListComponent: TrackListComponent;
   private trackDropdownService;
-  public onChangeCallback: () => void = noop;
+  private addTrackModalService: AddTrackModalService;
+  public onTracksChangeCallback: () => void = noop;
+  public onPlaylistsChangeCallback: () => void = noop;
 
   constructor(
     private parentElement: HTMLElement,
-    private dropdownService: DropdownService,
     private tracksModel: Tracks,
     private playlistsModel: Playlists,
+    dropdownService: DropdownService,
+    modalService: ModalService,
   ) {
     this.trackListComponent = new TrackListComponent(tracksModel);
 
-    this.trackDropdownService = new TrackDropdownService(this.dropdownService);
+    this.trackDropdownService = new TrackDropdownService(dropdownService);
+    this.addTrackModalService = new AddTrackModalService(modalService);
   }
 
   private createLikeCallback(id: number) {
@@ -52,19 +58,38 @@ export default class TrackListPresenter {
         );
       }
 
-      this.onChangeCallback();
+      this.onTracksChangeCallback();
 
       loading = false;
     };
   }
 
-  private createDropdownCallback(index: number, deleteCallback: () => void) {
+  private createAddModalCallback(id: number): () => void {
+    return () => {
+      this.addTrackModalService.open(
+        id,
+        this.playlistsModel,
+        this.onPlaylistsChangeCallback,
+      );
+    };
+  }
+
+  private createDropdownCallback(
+    id: number,
+    deleteCallback: () => void,
+    openModalCallback: () => void,
+  ): (event: Event) => void {
     return (event: Event) => {
       event.stopPropagation();
 
       const isPlaylist = this.tracksModel.playlistId !== null;
 
-      this.trackDropdownService.openDropdown(index, deleteCallback, isPlaylist);
+      this.trackDropdownService.openDropdown(
+        id,
+        deleteCallback,
+        openModalCallback,
+        isPlaylist,
+      );
     };
   }
 
@@ -81,7 +106,7 @@ export default class TrackListPresenter {
       this.playlistsModel.removeTrack(playlistId, trackId);
       this.tracksModel.setAll(this.playlistsModel.get(playlistId).songs);
 
-      this.onChangeCallback();
+      this.onTracksChangeCallback();
     };
   }
 
@@ -101,6 +126,7 @@ export default class TrackListPresenter {
           this.createDropdownCallback(
             trackData.id,
             this.createDeleteCallback(trackData.id),
+            this.createAddModalCallback(trackData.id),
           ),
         );
       }

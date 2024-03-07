@@ -614,6 +614,29 @@ body {
   src: url("../fonts/CircularStd-Medium.woff2") format("woff2"),url("../fonts/CircularStd-Medium.woff") format("woff");
 }
 
+.common-input {
+    font-weight: 400;
+    height: 30px;
+}
+
+.common-input:focus-visible {
+  outline: 1px solid #FC6D3E;
+}
+
+.common-btn {
+  bottom: 20px;
+  right: 20px;
+  background: #FC6D3E;
+  color: #171717;
+  font-size: 14px;
+  width: 114px;
+  height: 32px;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
 .track__btn-dropdown:focus {
   outline: none;
   border-color: var(--color-greyBgBtn);
@@ -1021,6 +1044,21 @@ body {
   margin-right: 30px;
 }
 
+.playlist__image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+  aspect-ratio : 1 / 1;
+  opacity: 0.5;
+}
+
+.playlist__small-btn {
+  width: 50%;
+}
+
 .playlist__h3 {
   font-size: 30px;
   font-weight: 500;
@@ -1060,6 +1098,20 @@ body {
 .playlist__count {
   color: var(--color-greytxt);
   font-weight: bold;
+}
+
+.create-playlist__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.create-playlist__label {
+  margin-bottom: 15px;
+}
+
+.create-playlist__input {
+  margin-top: 5px;
 }
 
 .player {
@@ -1203,18 +1255,41 @@ body {
   filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
 }
 
-.playlists-modal {
-  max-width: 328px;
-  max-height: 600px;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.modal_hidden {
+  display: none;
+}
+
+.modal__overlay {
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal__content {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
-  display: none;
-  z-index: 10;
+  z-index: 5;
+  border: 1px solid #AAAAAA;
+}
+
+.playlists-modal {
+  max-width: 328px;
+  max-height: 600px;
   padding: 20px;
   background: #ffffff;
-  border: 1px solid #AAAAAA;
 }
 
 .playlists-modal.show {
@@ -1234,6 +1309,7 @@ body {
 }
 
 .playlists-modal__playlist_content {
+  padding-left: 3px;
   margin-top: 20px;
   margin-bottom: 20px;
   max-height: 360px;

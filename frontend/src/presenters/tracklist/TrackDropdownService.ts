@@ -1,4 +1,4 @@
-import DropdownService from '../../utils/DropdownService';
+import DropdownService from '../../utils/services/DropdownService';
 import { createElement } from '../../utils/createElement';
 
 export default class TrackDropdownService {
@@ -9,6 +9,7 @@ export default class TrackDropdownService {
   public openDropdown(
     id: number,
     deleteCallback: () => void,
+    openModalCallback: () => void,
     isPlaylist: boolean,
   ) {
     const trackItemElement: HTMLElement | null = document.getElementById(
@@ -49,7 +50,9 @@ export default class TrackDropdownService {
     );
 
     const addButton = dropdown.querySelector('.track__add-btn');
-    addButton?.addEventListener('click', () => alert('Add is not implemented'));
+    addButton?.addEventListener('click', () => {
+      openModalCallback();
+    });
 
     const deleteButton = dropdown.querySelector('.track__delete-btn');
     deleteButton?.addEventListener('click', () => deleteCallback());

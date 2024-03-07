@@ -1,25 +1,18 @@
 TODOs:
 
-  Routes: 
-    Playlists: 
-      post: /api/playlists/{playlistId}/add/{songId}
-      post: /api/playlists/{playlistId}/remove/{songId}
-
-      post: /api/playlists
-      delete: /api/playlists/{playlistId}
-
-  - Complete point 13. Добавление/удаление из плейлиста. Часть 2
-
-  - Add playlist creation logic and deletion logic
   - Make fields readonly
   - Add search to /api/songs query
   - Fix tracks numbering in favorites and playlists
 
-  - Try the api server in GitLab repository
-  - Write to curator about the api server bug
+  - Try to clean up code
+
+  - Delete temporary project folder
+  - Add loading spinner to create and delete playlist modals
+  - Make loading elements with spinners
+  - Make sidebar button active on open
+  - Make title change on TracksListComponent
 
   - Make dropdown better
-  - Make loading elements with spinners
 
   - Check TODOs console.logs and alerts
   - Check for errors in console
