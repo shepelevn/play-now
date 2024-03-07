@@ -1,5 +1,5 @@
+import { ModelStatus } from '../types/ModelStatus';
 import { PlaylistData } from '../types/PlaylistData';
-import { ModelStatus } from './ModelStatus';
 
 export const PLAYLIST_IMAGES_COUNT = 8;
 

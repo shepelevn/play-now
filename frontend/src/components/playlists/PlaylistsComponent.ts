@@ -1,5 +1,5 @@
-import { ModelStatus } from '../../model/ModelStatus';
 import Playlists from '../../model/Playlists';
+import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
 export default class PlaylistsComponent extends Component {

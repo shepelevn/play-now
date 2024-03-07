@@ -16,10 +16,10 @@ import ScreenState from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
 import { loadTracks } from './api/tracks';
-import { ModelStatus } from './model/ModelStatus';
 import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
-import { TracksType } from './model/TracksType';
+import { ModelStatus } from './types/ModelStatus';
+import { TracksType } from './types/TracksType';
 
 init();
 

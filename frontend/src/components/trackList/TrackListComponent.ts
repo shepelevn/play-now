@@ -1,5 +1,5 @@
-import { ModelStatus } from '../../model/ModelStatus';
 import Tracks from '../../model/Tracks';
+import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
 export default class TrackListComponent extends Component {

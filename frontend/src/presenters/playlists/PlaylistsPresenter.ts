@@ -5,7 +5,6 @@ import {
 } from '../../api/playlists';
 import PlaylistCardComponent from '../../components/playlists/PlaylistCardComponent';
 import PlaylistsComponent from '../../components/playlists/PlaylistsComponent';
-import { ModelStatus } from '../../model/ModelStatus';
 import Playlists from '../../model/Playlists';
 import { noop } from '../../utils/noop';
 
@@ -16,6 +15,7 @@ import CreatePlaylistModalService from './CreatePlaylistModalService';
 import ModalService from '../../utils/services/ModalService';
 import DeletePlaylistModalService from '../tracklist/DeletePlaylistModalService';
 import { PlaylistData } from '../../types/PlaylistData';
+import { ModelStatus } from '../../types/ModelStatus';
 
 export default class PlaylistsPresenter {
   private readonly playlistsComponent: PlaylistsComponent;

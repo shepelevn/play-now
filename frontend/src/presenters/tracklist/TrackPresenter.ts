@@ -1,5 +1,5 @@
 import TrackComponent from '../../components/trackList/TrackComponent';
-import { TrackData } from '../../types/TrackData';
+import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 import { isTrackLiked } from '../../utils/isTrackLiked';
 
 export default class TrackPresenter {
@@ -7,7 +7,7 @@ export default class TrackPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    private readonly trackData: TrackData,
+    private readonly trackData: TrackDataWithIndex,
     likeCallback: () => void,
     dropdownCallback: (event: Event) => void,
   ) {
@@ -15,6 +15,7 @@ export default class TrackPresenter {
 
     this.trackComponent = new TrackComponent(
       this.trackData.id,
+      this.trackData.index,
       this.trackData.image,
       this.trackData.name,
       this.trackData.artist.name,

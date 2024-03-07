@@ -8,6 +8,7 @@ import { renderSvgSprite } from '../../render/renderSvgSprite';
 export default class TrackComponent extends Component {
   constructor(
     private readonly id: number,
+    private readonly index: number,
     private readonly imageSrc: string,
     private readonly title: string,
     private readonly author: string,
@@ -46,7 +47,7 @@ export default class TrackComponent extends Component {
 
     return `
       <li class="tracks__item flex" id="track-item-${this.id}">
-        <div class="tracks__item__number">${this.id}</div>
+        <div class="tracks__item__number">${this.index + 1}</div>
         <div class="tracks__item__name"><img class="track__img" src="${this.imageSrc}" alt="${this.album}">
           <div class="track__content">
             <h3 class="track__name"><a class="track__name__link" href="#">${this.title}</a></h3><span class="track__author">${this.author}</span>

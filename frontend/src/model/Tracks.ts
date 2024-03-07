@@ -1,15 +1,16 @@
+import { ModelStatus } from '../types/ModelStatus';
 import { TrackData } from '../types/TrackData';
-import { ModelStatus } from './ModelStatus';
-import { TracksType } from './TracksType';
+import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
+import { TracksType } from '../types/TracksType';
 
 export default class Tracks {
-  private tracks: TrackData[] = [];
+  private tracks: TrackDataWithIndex[] = [];
   public filterString: string = '';
   public status: ModelStatus = ModelStatus.Pending;
   public playlistId: number | null = null;
   public tracksType: TracksType = TracksType.Tracks;
 
-  public allWithSearch(): TrackData[] {
+  public allWithSearch(): TrackDataWithIndex[] {
     return this.tracks.filter((track: TrackData) => {
       const filter: string = this.filterString.toLowerCase();
 
@@ -22,7 +23,7 @@ export default class Tracks {
   }
 
   public setAll(tracks: TrackData[]) {
-    this.tracks = tracks;
+    this.tracks = tracks.map((track, index) => Object.assign(track, { index }));
   }
 
   public get(id: number): TrackData {
@@ -30,17 +31,21 @@ export default class Tracks {
   }
 
   public add(track: TrackData): void {
-    this.tracks.push(track);
+    const index: number = this.tracks.length;
+
+    this.tracks.push(Object.assign(track, { index }));
   }
 
   public update(track: TrackData, id: number): void {
     const index = this.tracks.findIndex((track) => track.id === id);
 
-    this.tracks[index] = track;
+    this.tracks[index] = Object.assign(track, { index });
   }
 
   public delete(id: number): void {
     this.tracks.filter((track) => track.id !== id);
+
+    this.recalculateIndexes();
   }
 
   private findById(id: number): TrackData {
@@ -51,5 +56,12 @@ export default class Tracks {
     }
 
     return track;
+  }
+
+  private recalculateIndexes(): void {
+    this.tracks.map((track, index) => {
+      track.index = index;
+      return track;
+    });
   }
 }

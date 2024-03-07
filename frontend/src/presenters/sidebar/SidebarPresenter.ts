@@ -9,7 +9,7 @@ import PlaySvg from '../../resources/svg/play.sprite.svg';
 import SidebarButtonPresenter from './SidebarButtonPresenter';
 import Tracks from '../../model/Tracks';
 import { loadFavorites } from '../../api/tracks';
-import { ModelStatus } from '../../model/ModelStatus';
+import { ModelStatus } from '../../types/ModelStatus';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
