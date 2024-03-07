@@ -3,7 +3,7 @@ import Playlists from '../../model/Playlists';
 import Component from '../Component';
 
 export default class PlaylistsComponent extends Component {
-  constructor(private playlists: Playlists) {
+  constructor(private readonly playlists: Playlists) {
     super();
   }
 

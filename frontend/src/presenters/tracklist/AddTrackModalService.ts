@@ -7,7 +7,7 @@ import { getTracksCountString } from '../../utils/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
 export default class AddTrackModalService {
-  constructor(private modalService: ModalService) {}
+  constructor(private readonly modalService: ModalService) {}
 
   public open(
     songId: number,

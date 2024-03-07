@@ -3,7 +3,7 @@ import Playlists from '../../model/Playlists';
 import Component from '../Component';
 
 export default class SidebarComponent extends Component {
-  constructor(private playlists: Playlists) {
+  constructor(private readonly playlists: Playlists) {
     super();
   }
 

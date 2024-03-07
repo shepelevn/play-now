@@ -2,10 +2,10 @@ import PlaylistCardComponent from '../../components/playlists/PlaylistCardCompon
 import { PlaylistData } from '../../types/PlaylistData';
 
 export default class PlaylistCardPresenter {
-  private component: PlaylistCardComponent;
+  private readonly component: PlaylistCardComponent;
 
   constructor(
-    private parentElement: HTMLElement,
+    private readonly parentElement: HTMLElement,
     playlistData: PlaylistData,
   ) {
     this.component = new PlaylistCardComponent(

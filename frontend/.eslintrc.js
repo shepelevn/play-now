@@ -16,6 +16,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 13,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   plugins: ['prettier', '@typescript-eslint'],
   rules: {
@@ -25,5 +26,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/semi': 2,
     'prettier/prettier': 'error',
+    '@typescript-eslint/prefer-readonly': ['error'],
   },
 };

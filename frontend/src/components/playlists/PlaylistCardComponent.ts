@@ -4,9 +4,9 @@ import { getTracksCountString } from '../../utils/getTracksCountString';
 
 export default class PlaylistCardComponent extends Component {
   constructor(
-    private name: string,
-    private imageId: number,
-    private tracksCount: number,
+    private readonly name: string,
+    private readonly imageId: number,
+    private readonly tracksCount: number,
   ) {
     super();
   }

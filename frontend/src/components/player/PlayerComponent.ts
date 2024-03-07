@@ -3,7 +3,7 @@ import { getTimeString } from '../../utils/getTimeString';
 import Component from '../Component';
 
 export default class PlayerComponent extends Component {
-  constructor(private trackData: TrackData) {
+  constructor(private readonly trackData: TrackData) {
     super();
   }
 

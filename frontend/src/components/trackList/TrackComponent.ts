@@ -7,14 +7,14 @@ import { renderSvgSprite } from '../../render/renderSvgSprite';
 
 export default class TrackComponent extends Component {
   constructor(
-    private id: number,
-    private imageSrc: string,
-    private title: string,
-    private author: string,
-    private album: string,
-    private addedDate: Date,
-    private lengthS: number,
-    private liked: boolean,
+    private readonly id: number,
+    private readonly imageSrc: string,
+    private readonly title: string,
+    private readonly author: string,
+    private readonly album: string,
+    private readonly addedDate: Date,
+    private readonly lengthS: number,
+    private readonly liked: boolean,
   ) {
     super();
   }

@@ -4,7 +4,7 @@ import { createElement } from '../../utils/createElement';
 export default class TrackDropdownService {
   private currentDropdownButton: HTMLElement | null = null;
 
-  constructor(private dropdownService: DropdownService) {}
+  constructor(private readonly dropdownService: DropdownService) {}
 
   public openDropdown(
     id: number,

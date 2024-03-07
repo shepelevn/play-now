@@ -3,11 +3,11 @@ import { TrackData } from '../../types/TrackData';
 import { isTrackLiked } from '../../utils/isTrackLiked';
 
 export default class TrackPresenter {
-  private trackComponent: TrackComponent;
+  private readonly trackComponent: TrackComponent;
 
   constructor(
-    private parentElement: HTMLElement,
-    private trackData: TrackData,
+    private readonly parentElement: HTMLElement,
+    private readonly trackData: TrackData,
     likeCallback: () => void,
     dropdownCallback: (event: Event) => void,
   ) {

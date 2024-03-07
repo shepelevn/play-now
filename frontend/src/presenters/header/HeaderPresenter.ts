@@ -4,11 +4,11 @@ import ProfilePresenter from './ProfilePresenter';
 import SearchPresenter from './SearchPresenter';
 
 export default class HeaderPresenter {
-  private headerComponent: HeaderComponent;
+  private readonly headerComponent: HeaderComponent;
   public searchPresenter: SearchPresenter;
 
   constructor(
-    private parentElement: HTMLElement,
+    private readonly parentElement: HTMLElement,
     tracks: Tracks,
   ) {
     this.headerComponent = new HeaderComponent();

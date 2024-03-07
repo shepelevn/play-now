@@ -5,7 +5,7 @@ import { getTracksCountString } from '../../utils/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
 export default class DeletePlaylistModalService {
-  constructor(private modalService: ModalService) {}
+  constructor(private readonly modalService: ModalService) {}
 
   public open(
     playlistsModel: Playlists,

@@ -3,7 +3,7 @@ import Tracks from '../../model/Tracks';
 import Component from '../Component';
 
 export default class TrackListComponent extends Component {
-  constructor(private tracksModel: Tracks) {
+  constructor(private readonly tracksModel: Tracks) {
     super();
   }
 

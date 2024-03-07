@@ -12,13 +12,13 @@ import { loadFavorites, loadTracks } from '../../api/tracks';
 import { ModelStatus } from '../../model/ModelStatus';
 
 export default class SidebarPresenter {
-  private sidebarComponent: SidebarComponent;
+  private readonly sidebarComponent: SidebarComponent;
   public changeScreenCallback: (state: ScreenState) => void = noop;
 
   constructor(
-    private parentElement: HTMLElement,
-    private playlistsModel: Playlists,
-    private tracksModel: Tracks,
+    private readonly parentElement: HTMLElement,
+    private readonly playlistsModel: Playlists,
+    private readonly tracksModel: Tracks,
   ) {
     this.sidebarComponent = new SidebarComponent(playlistsModel);
 

@@ -3,11 +3,11 @@ import Tracks from '../../model/Tracks';
 import { noop } from '../../utils/noop';
 
 export default class SearchPresenter {
-  private searchComponent: SearchComponent;
+  private readonly searchComponent: SearchComponent;
   public searchChangeCallback: () => void = noop;
 
   constructor(
-    private parentElement: HTMLElement,
+    private readonly parentElement: HTMLElement,
     tracks: Tracks,
   ) {
     this.searchComponent = new SearchComponent();

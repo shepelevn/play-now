@@ -13,16 +13,16 @@ import AddTrackModalService from './AddTrackModalService';
 import ModalService from '../../utils/services/ModalService';
 
 export default class TrackListPresenter {
-  private trackListComponent: TrackListComponent;
-  private trackDropdownService;
-  private addTrackModalService: AddTrackModalService;
+  private readonly trackListComponent: TrackListComponent;
+  private readonly trackDropdownService;
+  private readonly addTrackModalService: AddTrackModalService;
   public onTracksChangeCallback: () => void = noop;
   public onPlaylistsChangeCallback: () => void = noop;
 
   constructor(
-    private parentElement: HTMLElement,
-    private tracksModel: Tracks,
-    private playlistsModel: Playlists,
+    private readonly parentElement: HTMLElement,
+    private readonly tracksModel: Tracks,
+    private readonly playlistsModel: Playlists,
     dropdownService: DropdownService,
     modalService: ModalService,
   ) {

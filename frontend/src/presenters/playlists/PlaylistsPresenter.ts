@@ -1,4 +1,8 @@
-import { createPlaylist, deletePlaylist, loadPlaylistsData } from '../../api/playlists';
+import {
+  createPlaylist,
+  deletePlaylist,
+  loadPlaylistsData,
+} from '../../api/playlists';
 import PlaylistCardComponent from '../../components/playlists/PlaylistCardComponent';
 import PlaylistsComponent from '../../components/playlists/PlaylistsComponent';
 import { ModelStatus } from '../../model/ModelStatus';
@@ -14,14 +18,14 @@ import DeletePlaylistModalService from '../tracklist/DeletePlaylistModalService'
 import { PlaylistData } from '../../types/PlaylistData';
 
 export default class PlaylistsPresenter {
-  private playlistsComponent: PlaylistsComponent;
+  private readonly playlistsComponent: PlaylistsComponent;
   public onLoadCallback: () => void = noop;
-  private createPlaylistModalService: CreatePlaylistModalService;
-  private deletePlaylistModalService: DeletePlaylistModalService;
+  private readonly createPlaylistModalService: CreatePlaylistModalService;
+  private readonly deletePlaylistModalService: DeletePlaylistModalService;
 
   constructor(
-    private parentElement: HTMLElement,
-    private playlistsModel: Playlists,
+    private readonly parentElement: HTMLElement,
+    private readonly playlistsModel: Playlists,
     modalService: ModalService,
   ) {
     this.playlistsComponent = new PlaylistsComponent(playlistsModel);

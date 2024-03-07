@@ -2,9 +2,9 @@ import { ProfileData, getProfileData } from '../../api/profile';
 import ProfileComponent from '../../components/header/ProfileComponent';
 
 export default class ProfilePresenter {
-  private profileComponent: ProfileComponent;
+  private readonly profileComponent: ProfileComponent;
 
-  constructor(private parentElement: HTMLElement) {
+  constructor(private readonly parentElement: HTMLElement) {
     const profileDataPromise: Promise<ProfileData> = getProfileData();
 
     this.profileComponent = new ProfileComponent();

@@ -2,9 +2,9 @@ import { createElement } from '../createElement';
 
 export default class ModalService {
   private previousModal: HTMLElement | null = null;
-  private modalParent: HTMLElement;
-  private overlay: HTMLElement;
-  private content: HTMLElement;
+  private readonly modalParent: HTMLElement;
+  private readonly overlay: HTMLElement;
+  private readonly content: HTMLElement;
 
   constructor() {
     this.modalParent = createElement('<div class="modal modal_hidden"> </div>');

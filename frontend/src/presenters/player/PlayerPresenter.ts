@@ -3,10 +3,10 @@ import Tracks from '../../model/Tracks';
 import { TrackData } from '../../types/TrackData';
 
 export default class PlayerPresenter {
-  private playerComponent: PlayerComponent;
+  private readonly playerComponent: PlayerComponent;
 
   constructor(
-    private parentElement: HTMLElement,
+    private readonly parentElement: HTMLElement,
     tracksModel: Tracks,
   ) {
     let trackData: TrackData | undefined = tracksModel.allWithSearch()[0];

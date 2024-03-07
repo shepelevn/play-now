@@ -2,7 +2,7 @@ import { createElement } from '../../utils/createElement';
 import ModalService from '../../utils/services/ModalService';
 
 export default class CreatePlaylistModalService {
-  constructor(private modalService: ModalService) {}
+  constructor(private readonly modalService: ModalService) {}
 
   public open(onCreateCallback: (name: string) => void): void {
     const modalElement = createElement(`

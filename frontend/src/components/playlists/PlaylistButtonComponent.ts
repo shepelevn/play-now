@@ -2,8 +2,8 @@ import Component from '../Component';
 
 export default class PlaylistButtonComponent extends Component {
   constructor(
-    private imageSrc: string,
-    private title: string,
+    private readonly imageSrc: string,
+    private readonly title: string,
   ) {
     super();
   }

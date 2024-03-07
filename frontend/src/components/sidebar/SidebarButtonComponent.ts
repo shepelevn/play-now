@@ -2,8 +2,8 @@ import Component from '../Component';
 
 export default class SidebarButtonComponent extends Component {
   constructor(
-    private text: string,
-    private iconTemplate: string = '',
+    private readonly text: string,
+    private readonly iconTemplate: string = '',
   ) {
     super();
   }

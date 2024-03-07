@@ -1,10 +1,10 @@
 import SidebarButtonComponent from '../../components/sidebar/SidebarButtonComponent';
 
 export default class SidebarButtonPresenter {
-  private component: SidebarButtonComponent;
+  private readonly component: SidebarButtonComponent;
 
   constructor(
-    private parentElement: HTMLElement,
+    private readonly parentElement: HTMLElement,
     text: string,
     clickCallback: () => void,
     iconTemplate: string = '',

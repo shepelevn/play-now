@@ -1,8 +1,8 @@
 TODOs:
 
-  - Make fields readonly
   - Add search to /api/songs query
   - Fix tracks numbering in favorites and playlists
+  - Make title change on TracksListComponent
 
   - Try to clean up code
 
@@ -10,7 +10,6 @@ TODOs:
   - Add loading spinner to create and delete playlist modals
   - Make loading elements with spinners
   - Make sidebar button active on open
-  - Make title change on TracksListComponent
 
   - Make dropdown better
 
