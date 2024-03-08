@@ -3,7 +3,6 @@ import {
   deletePlaylist,
   loadPlaylistsData,
 } from '../../api/playlists';
-import PlaylistCardComponent from '../../components/playlists/PlaylistCardComponent';
 import PlaylistsComponent from '../../components/playlists/PlaylistsComponent';
 import Playlists from '../../model/Playlists';
 import { noop } from '../../utils/noop';
@@ -16,6 +15,7 @@ import ModalService from '../../utils/services/ModalService';
 import DeletePlaylistModalService from '../tracklist/DeletePlaylistModalService';
 import { PlaylistData } from '../../types/PlaylistData';
 import { ModelStatus } from '../../types/ModelStatus';
+import PlaylistCardPresenter from './PlaylistCardPresenter';
 
 export default class PlaylistsPresenter {
   private readonly playlistsComponent: PlaylistsComponent;
@@ -36,6 +36,7 @@ export default class PlaylistsPresenter {
 
     this.deletePlaylistModalService = new DeletePlaylistModalService(
       modalService,
+      playlistsModel,
     );
 
     this.loadPlaylists();
@@ -58,55 +59,67 @@ export default class PlaylistsPresenter {
 
     this.parentElement.append(playlistsComponentElement);
 
-    if (listElement) {
-      for (const playlist of this.playlistsModel.playlists) {
-        listElement.append(
-          new PlaylistCardComponent(
-            playlist.name,
-            playlist.imageId,
-            playlist.songs.length,
-          ).getElement(),
-        );
-      }
-
-      const createPlaylistComponent: PlaylistButtonComponent =
-        new PlaylistButtonComponent(addImage, 'Создать плейлист');
-
-      createPlaylistComponent.addClickListener((event: Event) => {
-        event.preventDefault();
-
-        this.createPlaylistModalService.open(async (name: string) => {
-          const newPlaylist: PlaylistData = await createPlaylist(name);
-
-          this.playlistsModel.add(newPlaylist);
-
-          this.createPlaylistModalService.close();
-
-          this.onLoadCallback();
-        });
-      });
-
-      listElement.append(createPlaylistComponent.getElement());
-
-      const deletePlaylistComponent: PlaylistButtonComponent =
-        new PlaylistButtonComponent(deleteImage, 'Удалить плейлист');
-
-      deletePlaylistComponent.addClickListener((event: Event) => {
-        event.preventDefault();
-
-        this.deletePlaylistModalService.open(
-          this.playlistsModel,
-          async (playlistId: number) => {
-            await deletePlaylist(playlistId);
-            this.playlistsModel.delete(playlistId);
-
-            this.deletePlaylistModalService.close();
-            this.onLoadCallback();
-          },
-        );
-      });
-
-      listElement.append(deletePlaylistComponent.getElement());
+    if (!listElement) {
+      throw new Error('element with a class ".playlist__list" is not found');
     }
+
+    listElement.innerHTML = '';
+
+    for (const playlist of this.playlistsModel.playlists) {
+      new PlaylistCardPresenter(listElement, playlist);
+
+      // TODO: Delete later
+      // listElement.append(
+      //   new PlaylistCardComponent(
+      //     playlist.name,
+      //     playlist.imageId,
+      //     playlist.songs.length,
+      //   ).getElement(),
+      // );
+    }
+
+    this.addCreatePlaylistComponent(listElement);
+
+    this.addDeletePlaylistComponent(listElement);
+  }
+
+  private addCreatePlaylistComponent(listElement: HTMLElement): void {
+    const createPlaylistComponent: PlaylistButtonComponent =
+      new PlaylistButtonComponent(addImage, 'Создать плейлист');
+
+    createPlaylistComponent.addOnClickListener((event: Event) => {
+      event.preventDefault();
+
+      this.createPlaylistModalService.open(async (name: string) => {
+        const newPlaylist: PlaylistData = await createPlaylist(name);
+
+        this.playlistsModel.add(newPlaylist);
+
+        this.createPlaylistModalService.close();
+
+        this.onLoadCallback();
+      });
+    });
+
+    listElement.append(createPlaylistComponent.getElement());
+  }
+
+  private addDeletePlaylistComponent(listElement: HTMLElement): void {
+    const deletePlaylistComponent: PlaylistButtonComponent =
+      new PlaylistButtonComponent(deleteImage, 'Удалить плейлист');
+
+    deletePlaylistComponent.addOnClickListener((event: Event) => {
+      event.preventDefault();
+
+      this.deletePlaylistModalService.open(async (playlistId: number) => {
+        await deletePlaylist(playlistId);
+        this.playlistsModel.delete(playlistId);
+
+        this.deletePlaylistModalService.close();
+        this.onLoadCallback();
+      });
+    });
+
+    listElement.append(deletePlaylistComponent.getElement());
   }
 }

@@ -28,12 +28,23 @@ export default class TrackDropdownService {
       throw new Error('Dropdown container is not an instanceof HTMLElement');
     }
 
-    const dropdownElement: HTMLElement = createElement(`
-      <div class="track__dropdown dropdown--active">
-        <button class="track__add-btn">Добавить в плейлист</button>
-        ${isPlaylist ? '<button class="track__delete-btn">Удалить из плейлиста</button>' : ''}
-      </div>
-      `);
+    this.addDropdown(
+      dropdownContainer,
+      trackItemElement,
+      deleteCallback,
+      openModalCallback,
+      isPlaylist,
+    );
+  }
+
+  private addDropdown(
+    dropdownContainer: HTMLElement,
+    trackItemElement: HTMLElement,
+    deleteCallback: () => void,
+    openModalCallback: () => void,
+    isPlaylist: boolean,
+  ): void {
+    const dropdownElement: HTMLElement = this.createDropdownElement(isPlaylist);
 
     this.currentDropdownButton = trackItemElement.querySelector(
       '.track__btn-dropdown',
@@ -56,5 +67,14 @@ export default class TrackDropdownService {
 
     const deleteButton = dropdown.querySelector('.track__delete-btn');
     deleteButton?.addEventListener('click', () => deleteCallback());
+  }
+
+  private createDropdownElement(isPlaylist: boolean): HTMLElement {
+    return createElement(`
+      <div class="track__dropdown dropdown--active">
+        <button class="track__add-btn">Добавить в плейлист</button>
+        ${isPlaylist ? '<button class="track__delete-btn">Удалить из плейлиста</button>' : ''}
+      </div>
+      `);
   }
 }

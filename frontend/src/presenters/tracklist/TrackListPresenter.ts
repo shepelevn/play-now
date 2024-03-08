@@ -29,7 +29,10 @@ export default class TrackListPresenter {
     this.trackListComponent = new TrackListComponent(tracksModel);
 
     this.trackDropdownService = new TrackDropdownService(dropdownService);
-    this.addTrackModalService = new AddTrackModalService(modalService);
+    this.addTrackModalService = new AddTrackModalService(
+      modalService,
+      playlistsModel,
+    );
   }
 
   private createLikeCallback(id: number) {
@@ -43,8 +46,6 @@ export default class TrackListPresenter {
       }
 
       const trackData = this.tracksModel.get(id);
-
-      console.log(trackData.id);
 
       if (!isTrackLiked(trackData)) {
         await postLike(trackData.id);
@@ -66,11 +67,7 @@ export default class TrackListPresenter {
 
   private createAddModalCallback(id: number): () => void {
     return () => {
-      this.addTrackModalService.open(
-        id,
-        this.playlistsModel,
-        this.onPlaylistsChangeCallback,
-      );
+      this.addTrackModalService.open(id, this.onPlaylistsChangeCallback);
     };
   }
 
@@ -117,19 +114,21 @@ export default class TrackListPresenter {
 
     const trackListUl = document.getElementById('tracks-list');
 
-    if (trackListUl instanceof HTMLElement) {
-      for (const trackData of this.tracksModel.allWithSearch()) {
-        new TrackPresenter(
-          trackListUl,
-          trackData,
-          this.createLikeCallback(trackData.id),
-          this.createDropdownCallback(
-            trackData.id,
-            this.createDeleteCallback(trackData.id),
-            this.createAddModalCallback(trackData.id),
-          ),
-        );
-      }
+    if (!(trackListUl instanceof HTMLElement)) {
+      throw new Error('trackListUl is not an instanceof HTMLElement');
+    }
+
+    for (const trackData of this.tracksModel.allWithSearch()) {
+      new TrackPresenter(
+        trackListUl,
+        trackData,
+        this.createLikeCallback(trackData.id),
+        this.createDropdownCallback(
+          trackData.id,
+          this.createDeleteCallback(trackData.id),
+          this.createAddModalCallback(trackData.id),
+        ),
+      );
     }
   }
 }

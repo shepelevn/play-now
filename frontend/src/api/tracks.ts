@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { SERVER_URL, USERNAME } from './apiConstants';
-import { ShortTrackData, TrackData } from '../types/TrackData';
+import { TrackData } from '../types/TrackData';
+import { ShortTrackData } from '../types/ShortTrackData';
 
 export async function loadTracks(filterString: string): Promise<TrackData[]> {
   const response: AxiosResponse = await axios.get(
@@ -33,12 +34,8 @@ async function loadTrack(id: number): Promise<TrackData> {
 
 export async function postLike(trackId: number): Promise<void> {
   await axios.post(`${SERVER_URL}/songs/${trackId}/like`);
-
-  console.log('postLike');
 }
 
 export async function postDislike(trackId: number): Promise<void> {
   await axios.post(`${SERVER_URL}/songs/${trackId}/unlike`);
-
-  console.log('postDislike');
 }

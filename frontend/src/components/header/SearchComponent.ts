@@ -14,8 +14,12 @@ export default class SearchComponent extends Component {
       '.header__search__field',
     );
 
-    if (input instanceof HTMLInputElement) {
-      input.addEventListener('input', callback);
+    if (!(input instanceof HTMLInputElement)) {
+      throw new Error(
+        'Element with a class ".header__search__field" is not an instanceof HTMLInputElement',
+      );
     }
+
+    input.addEventListener('input', callback);
   }
 }

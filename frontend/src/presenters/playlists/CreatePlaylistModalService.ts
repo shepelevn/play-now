@@ -5,7 +5,19 @@ export default class CreatePlaylistModalService {
   constructor(private readonly modalService: ModalService) {}
 
   public open(onCreateCallback: (name: string) => void): void {
-    const modalElement = createElement(`
+    const modalElement: HTMLElement = this.createModalElement();
+
+    this.setCreateHandler(modalElement, onCreateCallback);
+
+    this.setCloseHandler(modalElement);
+  }
+
+  public close() {
+    this.modalService.close();
+  }
+
+  private createModalElement(): HTMLElement {
+    return createElement(`
       <div>
         <div class="playlists-modal">
             <div class="playlists-modal__title">
@@ -28,7 +40,12 @@ export default class CreatePlaylistModalService {
         </div>
       </div>
     `);
+  }
 
+  private setCreateHandler(
+    modalElement: HTMLElement,
+    onCreateCallback: (name: string) => void,
+  ): void {
     const button: HTMLElement | null = modalElement.querySelector(
       '.create-playlist__btn',
     );
@@ -56,7 +73,9 @@ export default class CreatePlaylistModalService {
         onCreateCallback(name);
       }
     });
+  }
 
+  private setCloseHandler(modalElement: HTMLElement): void {
     const cancelButton: HTMLElement | null = modalElement.querySelector(
       '.create-playlist__cancel',
     );
@@ -68,9 +87,5 @@ export default class CreatePlaylistModalService {
     cancelButton.addEventListener('click', () => this.modalService.close());
 
     this.modalService.open(modalElement);
-  }
-
-  public close() {
-    this.modalService.close();
   }
 }

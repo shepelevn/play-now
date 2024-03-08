@@ -8,18 +8,15 @@ export default class PlaylistsComponent extends Component {
   }
 
   public getTemplate(): string {
-    return this.playlists.status === ModelStatus.Success
-      ? `
+    const content: string =
+      this.playlists.status === ModelStatus.Success
+        ? '<ul class="playlist__list"></ul>'
+        : '<p>Loading ...</p>';
+
+    return `
       <section class="playlist section" data-target="playlists">
         <h2 class="playlist__h2 title__h2">Плейлисты</h2>
-        <ul class="playlist__list">
-        </ul>
-      </section>
-    `
-      : `
-      <section class="playlist section" data-target="playlists">
-        <h2 class="playlist__h2 title__h2">Плейлисты</h2>
-        <p>Loading ...</p>
+        ${content}
       </section>
     `;
   }

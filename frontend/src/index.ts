@@ -12,7 +12,7 @@ import ScreenPresenter from './presenters/screen/ScreenPresenter';
 
 import './resources/css/style.css';
 import Playlists from './model/Playlists';
-import ScreenState from './types/ScreenState';
+import { ScreenState } from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
 import { loadTracks } from './api/tracks';

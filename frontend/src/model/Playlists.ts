@@ -24,8 +24,6 @@ export default class Playlists {
   }
 
   public update(id: number, newPlaylist: PlaylistData): void {
-    console.log(newPlaylist);
-
     const index = this.playlists.findIndex((playlist) => playlist.id === id);
 
     const oldPlaylist = this.playlists[index];
@@ -39,7 +37,7 @@ export default class Playlists {
     this.playlists[index] = newPlaylist;
   }
 
-  public getPlaylistsForAddition(trackId: number): PlaylistData[] {
+  public getFilteredForAddition(trackId: number): PlaylistData[] {
     return this.playlists.filter((playlist) => {
       return playlist.songs.filter((song) => song.id === trackId).length === 0;
     });

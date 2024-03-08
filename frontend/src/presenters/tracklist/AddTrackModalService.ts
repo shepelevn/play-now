@@ -7,64 +7,17 @@ import { getTracksCountString } from '../../utils/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
 export default class AddTrackModalService {
-  constructor(private readonly modalService: ModalService) {}
+  constructor(
+    private readonly modalService: ModalService,
+    private readonly playlistsModel: Playlists,
+  ) {}
 
-  public open(
-    songId: number,
-    playlistsModel: Playlists,
-    onPlaylistsChange: () => void,
-  ) {
-    const modalDiv: HTMLElement = this.createElement();
+  public open(songId: number, onPlaylistsChange: () => void) {
+    const modalDiv: HTMLElement = this.createModalElement();
 
-    const cancelButton: HTMLElement | null = modalDiv.querySelector(
-      '.playlists-modal__close-btn',
-    );
+    this.createPlaylistButtons(modalDiv, songId, onPlaylistsChange);
 
-    if (!cancelButton) {
-      throw new Error('playlists-modal__close-btn is not found');
-    }
-
-    cancelButton.addEventListener('click', () => this.close());
-
-    const buttonsContainer = modalDiv.querySelector(
-      '.playlists-modal__playlist_content',
-    );
-
-    for (const playlist of playlistsModel.getPlaylistsForAddition(songId)) {
-      const imageSrc: string | undefined = PLAYLIST_IMAGES[playlist.imageId];
-      const countString: string = getTracksCountString(playlist.songs.length);
-
-      if (!imageSrc) {
-        throw new Error(`Image with id: ${playlist.imageId} not found`);
-      }
-
-      const playlistButton: HTMLElement = createElement(`
-        <div class="playlists-modal__playlist">
-            <img src="${imageSrc}" alt="" class="playlists-modal__playlist__image"/>
-            <div class="playlists-modal__playlist__title">
-              ${playlist.name}
-            </div>
-            <div class="playlists-modal__playlist__info">
-              ${countString}
-            </div>
-        </div>
-      `);
-
-      playlistButton.addEventListener('click', async () => {
-        this.close();
-
-        const newPlaylist: PlaylistData = await addToPlaylist(
-          playlist.id,
-          songId,
-        );
-
-        playlistsModel.update(playlist.id, newPlaylist);
-
-        onPlaylistsChange();
-      });
-
-      buttonsContainer?.append(playlistButton);
-    }
+    this.addCancelHandler(modalDiv);
 
     this.modalService.open(modalDiv);
   }
@@ -73,7 +26,7 @@ export default class AddTrackModalService {
     this.modalService.close();
   }
 
-  private createElement(): HTMLElement {
+  private createModalElement(): HTMLElement {
     return createElement(`
       <div class="playlists-modal">
           <div class="playlists-modal__title">
@@ -85,6 +38,69 @@ export default class AddTrackModalService {
               <div class="playlists-modal__close-btn">
                   Отменить
               </div>
+          </div>
+      </div>
+    `);
+  }
+
+  private addCancelHandler(modalDiv: HTMLElement): void {
+    const cancelButton: HTMLElement | null = modalDiv.querySelector(
+      '.playlists-modal__close-btn',
+    );
+
+    if (!cancelButton) {
+      throw new Error('playlists-modal__close-btn is not found');
+    }
+
+    cancelButton.addEventListener('click', () => this.close());
+  }
+
+  private createPlaylistButtons(
+    modalDiv: HTMLElement,
+    songId: number,
+    onPlaylistsChange: () => void,
+  ): void {
+    const buttonsContainer = modalDiv.querySelector(
+      '.playlists-modal__playlist_content',
+    );
+
+    for (const playlist of this.playlistsModel.getFilteredForAddition(songId)) {
+      const playlistButton: HTMLElement = this.createPlaylistButton(playlist);
+
+      // Add handler to the button
+      playlistButton.addEventListener('click', async () => {
+        this.close();
+
+        const newPlaylist: PlaylistData = await addToPlaylist(
+          playlist.id,
+          songId,
+        );
+
+        this.playlistsModel.update(playlist.id, newPlaylist);
+
+        onPlaylistsChange();
+      });
+
+      buttonsContainer?.append(playlistButton);
+    }
+  }
+
+  private createPlaylistButton(playlist: PlaylistData): HTMLElement {
+    const imageSrc: string | undefined = PLAYLIST_IMAGES[playlist.imageId];
+    const countString: string = getTracksCountString(playlist.songs.length);
+
+    if (!imageSrc) {
+      throw new Error(`Image with id: ${playlist.imageId} not found`);
+    }
+
+    return createElement(`
+      <div class="playlists-modal__playlist">
+          <img src="${imageSrc}" alt="" class="playlists-modal__playlist__image"/>
+          <div class="playlists-modal__playlist__title">
+            ${playlist.name}
+          </div>
+          <div class="playlists-modal__playlist__info">
+            ${countString}
           </div>
       </div>
     `);

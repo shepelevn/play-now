@@ -1,4 +1,4 @@
-import ScreenState from '../../types/ScreenState';
+import { ScreenState } from '../../types/ScreenState';
 import PlaylistsPresenter from '../playlists/PlaylistsPresenter';
 import TrackListPresenter from '../tracklist/TrackListPresenter';
 

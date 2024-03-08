@@ -1,7 +1,7 @@
 import SidebarComponent from '../../components/sidebar/SidebarComponent';
 import Playlists from '../../model/Playlists';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
-import ScreenState from '../../types/ScreenState';
+import { ScreenState } from '../../types/ScreenState';
 import { noop } from '../../utils/noop';
 
 import NoteSvg from '../../resources/svg/note.sprite.svg';
@@ -10,6 +10,7 @@ import SidebarButtonPresenter from './SidebarButtonPresenter';
 import Tracks from '../../model/Tracks';
 import { loadFavorites } from '../../api/tracks';
 import { ModelStatus } from '../../types/ModelStatus';
+import { PlaylistData } from '../../types/PlaylistData';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
@@ -38,6 +39,16 @@ export default class SidebarPresenter {
       throw new Error('Element with class .aside__list not found');
     }
 
+    this.addTracksButton(listElement);
+    this.addPlaylistListButton(listElement);
+    this.addFavoriteButton(listElement);
+
+    for (const playlistData of this.playlistsModel.playlists) {
+      this.addPlaylistButton(listElement, playlistData);
+    }
+  }
+
+  private addTracksButton(listElement: HTMLElement): void {
     new SidebarButtonPresenter(
       listElement,
       'Треки',
@@ -48,7 +59,9 @@ export default class SidebarPresenter {
       },
       renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
     );
+  }
 
+  private addPlaylistListButton(listElement: HTMLElement): void {
     new SidebarButtonPresenter(
       listElement,
       'Плейлисты',
@@ -59,7 +72,9 @@ export default class SidebarPresenter {
       },
       renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
     );
+  }
 
+  private addFavoriteButton(listElement: HTMLElement): void {
     new SidebarButtonPresenter(listElement, 'Любимые песни', async () => {
       this.tracksModel.tracksTitle = 'Любимые песни';
       this.tracksModel.playlistId = null;
@@ -71,15 +86,18 @@ export default class SidebarPresenter {
 
       this.changeScreenCallback(ScreenState.Tracks);
     });
+  }
 
-    for (const playlistData of this.playlistsModel.playlists) {
-      new SidebarButtonPresenter(listElement, playlistData.name, () => {
-        this.tracksModel.tracksTitle = playlistData.name;
-        this.tracksModel.playlistId = playlistData.id;
-        this.tracksModel.setAll(playlistData.songs);
+  private addPlaylistButton(
+    listElement: HTMLElement,
+    playlistData: PlaylistData,
+  ): void {
+    new SidebarButtonPresenter(listElement, playlistData.name, () => {
+      this.tracksModel.tracksTitle = playlistData.name;
+      this.tracksModel.playlistId = playlistData.id;
+      this.tracksModel.setAll(playlistData.songs);
 
-        this.changeScreenCallback(ScreenState.Tracks);
-      });
-    }
+      this.changeScreenCallback(ScreenState.Tracks);
+    });
   }
 }

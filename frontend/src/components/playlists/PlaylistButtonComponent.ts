@@ -26,7 +26,7 @@ export default class PlaylistButtonComponent extends Component {
     `;
   }
 
-  public addClickListener(onClickCallback: (event: Event) => void): void {
+  public addOnClickListener(onClickCallback: (event: Event) => void): void {
     const linkElement: HTMLElement | null = this.getElement().querySelector(
       '.playlist__h3__link',
     );
