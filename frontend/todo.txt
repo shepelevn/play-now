@@ -1,9 +1,9 @@
 TODOs:
 
+  - Make sidebar button active on open
+
   - Add loading spinner to create and delete playlist modals
   - Make loading elements with spinners
-  - Make sidebar button active on open
-  - Make playlists on playlist screen interactive
 
   - Make dropdown better
 

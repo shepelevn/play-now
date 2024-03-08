@@ -29,4 +29,20 @@ export default class PlaylistCardComponent extends Component {
       </li>
     `;
   }
+
+  public addOnClickListener(callback: () => void): void {
+    const link: HTMLElement | null = this.getElement().querySelector(
+      '.playlist__h3__link',
+    );
+
+    if (!link) {
+      throw new Error('.playlist__h3__link is not found');
+    }
+
+    link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+
+      callback();
+    });
+  }
 }

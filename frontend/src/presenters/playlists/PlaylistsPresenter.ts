@@ -26,6 +26,7 @@ export default class PlaylistsPresenter {
   constructor(
     private readonly parentElement: HTMLElement,
     private readonly playlistsModel: Playlists,
+    private readonly changeToPlaylist: (playlistData: PlaylistData) => void,
     modalService: ModalService,
   ) {
     this.playlistsComponent = new PlaylistsComponent(playlistsModel);
@@ -66,16 +67,7 @@ export default class PlaylistsPresenter {
     listElement.innerHTML = '';
 
     for (const playlist of this.playlistsModel.playlists) {
-      new PlaylistCardPresenter(listElement, playlist);
-
-      // TODO: Delete later
-      // listElement.append(
-      //   new PlaylistCardComponent(
-      //     playlist.name,
-      //     playlist.imageId,
-      //     playlist.songs.length,
-      //   ).getElement(),
-      // );
+      new PlaylistCardPresenter(listElement, playlist, this.changeToPlaylist);
     }
 
     this.addCreatePlaylistComponent(listElement);

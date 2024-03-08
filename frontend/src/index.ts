@@ -20,6 +20,7 @@ import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
 import { ModelStatus } from './types/ModelStatus';
 import { TracksType } from './types/TracksType';
+import {PlaylistData} from './types/PlaylistData';
 
 init();
 
@@ -52,6 +53,14 @@ async function init(): Promise<void> {
     screenPresenter.changeScreen(state);
   };
 
+  const changeToPlaylist = (playlistData: PlaylistData) => {
+    tracksModel.tracksTitle = playlistData.name;
+    tracksModel.playlistId = playlistData.id;
+    tracksModel.setAll(playlistData.songs);
+
+    changeScreenCallback(ScreenState.Tracks);
+  };
+
   const loadTracksCallback = async () => {
     tracksModel.playlistId = null;
     tracksModel.status = ModelStatus.Pending;
@@ -70,6 +79,7 @@ async function init(): Promise<void> {
   );
 
   sidebarPresenter.loadTracksCallback = loadTracksCallback;
+  sidebarPresenter.changeToPlaylist = changeToPlaylist;
 
   const mainElement = createAndAppendElement(
     contentWrapElement,
@@ -87,6 +97,7 @@ async function init(): Promise<void> {
   const playlistsPresenter: PlaylistsPresenter = new PlaylistsPresenter(
     mainElement,
     playlistsModel,
+    changeToPlaylist,
     modalService,
   );
 

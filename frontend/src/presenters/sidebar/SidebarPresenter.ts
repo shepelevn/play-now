@@ -16,6 +16,7 @@ export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
   public changeScreenCallback: (state: ScreenState) => void = noop;
   public loadTracksCallback: () => void = noop;
+  public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -93,11 +94,7 @@ export default class SidebarPresenter {
     playlistData: PlaylistData,
   ): void {
     new SidebarButtonPresenter(listElement, playlistData.name, () => {
-      this.tracksModel.tracksTitle = playlistData.name;
-      this.tracksModel.playlistId = playlistData.id;
-      this.tracksModel.setAll(playlistData.songs);
-
-      this.changeScreenCallback(ScreenState.Tracks);
+      this.changeToPlaylist(playlistData);
     });
   }
 }
