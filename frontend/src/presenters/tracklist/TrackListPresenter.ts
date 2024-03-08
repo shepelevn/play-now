@@ -114,21 +114,19 @@ export default class TrackListPresenter {
 
     const trackListUl = document.getElementById('tracks-list');
 
-    if (!(trackListUl instanceof HTMLElement)) {
-      throw new Error('trackListUl is not an instanceof HTMLElement');
-    }
-
-    for (const trackData of this.tracksModel.allWithSearch()) {
-      new TrackPresenter(
-        trackListUl,
-        trackData,
-        this.createLikeCallback(trackData.id),
-        this.createDropdownCallback(
-          trackData.id,
-          this.createDeleteCallback(trackData.id),
-          this.createAddModalCallback(trackData.id),
-        ),
-      );
+    if (trackListUl instanceof HTMLElement) {
+      for (const trackData of this.tracksModel.allWithSearch()) {
+        new TrackPresenter(
+          trackListUl,
+          trackData,
+          this.createLikeCallback(trackData.id),
+          this.createDropdownCallback(
+            trackData.id,
+            this.createDeleteCallback(trackData.id),
+            this.createAddModalCallback(trackData.id),
+          ),
+        );
+      }
     }
   }
 }
