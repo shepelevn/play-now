@@ -44,8 +44,7 @@ export default class Playlists {
   }
 
   public add(newPlaylist: PlaylistData): void {
-    newPlaylist.imageId =
-      ((this.playlists.length - 1) % PLAYLIST_IMAGES_COUNT) + 1;
+    newPlaylist.imageId = this.playlists.length % PLAYLIST_IMAGES_COUNT;
 
     this.playlists.push(newPlaylist);
   }
