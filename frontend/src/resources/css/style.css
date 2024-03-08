@@ -835,6 +835,8 @@ body {
 }
 
 .aside__btn svg {
+  color: #FC6D3E;
+
   margin-right: 12px;
 }
 
@@ -1496,6 +1498,10 @@ body {
   .aside__btn.aside__btn-active {
     background-color: var(--color-promo);
     color: #fff;
+  }
+
+  .aside__btn.aside__btn-active svg {
+    color: white;
   }
 
   .aside__btn.aside__btn-active path {

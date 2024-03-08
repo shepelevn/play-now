@@ -4,16 +4,22 @@ export default class SidebarButtonComponent extends Component {
   constructor(
     private readonly text: string,
     private readonly iconTemplate: string = '',
+    private readonly isActive: boolean,
   ) {
     super();
   }
 
   public getTemplate(): string {
+    // TODO: Delete later
+    if (this.isActive) {
+      console.log(this.text);
+    }
+
     return `
       <li class="aside__item">
-        <button class="aside__btn aside__tabs-btn" data-path="tracks">
+        <button class="aside__btn aside__tabs-btn ${this.isActive ? 'aside__btn-active' : ''}" data-path="tracks">
         ${this.iconTemplate}
-      <span class="aside__btn__text">${this.text}</span>
+      <span>${this.text}</span>
         </button>
       </li>
     `;

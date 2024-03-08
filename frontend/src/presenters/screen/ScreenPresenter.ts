@@ -3,7 +3,7 @@ import PlaylistsPresenter from '../playlists/PlaylistsPresenter';
 import TrackListPresenter from '../tracklist/TrackListPresenter';
 
 export default class ScreenPresenter {
-  private currentScreen: ScreenState = ScreenState.Tracks;
+  public currentScreen: ScreenState = ScreenState.Tracks;
 
   constructor(
     public parentElement: HTMLElement,

@@ -11,12 +11,15 @@ import Tracks from '../../model/Tracks';
 import { loadFavorites } from '../../api/tracks';
 import { ModelStatus } from '../../types/ModelStatus';
 import { PlaylistData } from '../../types/PlaylistData';
+import { TracksType } from '../../types/TracksType';
+import { SidebarButtonType } from '../../types/SidebarButtonType';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
   public changeScreenCallback: (state: ScreenState) => void = noop;
   public loadTracksCallback: () => void = noop;
   public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
+  public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -50,14 +53,26 @@ export default class SidebarPresenter {
   }
 
   private addTracksButton(listElement: HTMLElement): void {
+    const isActive: boolean =
+      this.activeButton === SidebarButtonType.Tracks &&
+      this.tracksModel.tracksType === TracksType.Tracks;
+
+    console.log('Tracks');
+    console.log(isActive);
+
     new SidebarButtonPresenter(
       listElement,
       'Треки',
       () => {
         this.tracksModel.tracksTitle = 'Треки';
+        this.tracksModel.tracksType = TracksType.Tracks;
 
         this.loadTracksCallback();
+
+        this.activeButton = SidebarButtonType.Tracks;
+        this.render();
       },
+      isActive,
       renderSvgSprite(NoteSvg.url, 'aside__btn-note-icon'),
     );
   }
@@ -67,34 +82,67 @@ export default class SidebarPresenter {
       listElement,
       'Плейлисты',
       () => {
-        this.tracksModel.tracksTitle = 'Плейлисты';
+        this.activeButton = SidebarButtonType.Tracks;
 
         this.changeScreenCallback(ScreenState.Playlists);
+
+        this.activeButton = SidebarButtonType.Playlists;
+        this.render();
       },
+      this.activeButton === SidebarButtonType.Playlists,
       renderSvgSprite(PlaySvg.url, 'aside__btn-play-icon'),
     );
   }
 
   private addFavoriteButton(listElement: HTMLElement): void {
-    new SidebarButtonPresenter(listElement, 'Любимые песни', async () => {
-      this.tracksModel.tracksTitle = 'Любимые песни';
-      this.tracksModel.playlistId = null;
-      this.tracksModel.status = ModelStatus.Pending;
-      this.changeScreenCallback(ScreenState.Tracks);
+    const isActive: boolean =
+      this.activeButton === SidebarButtonType.Tracks &&
+      this.tracksModel.tracksType === TracksType.Favorite;
 
-      this.tracksModel.setAll(await loadFavorites());
-      this.tracksModel.status = ModelStatus.Success;
+    new SidebarButtonPresenter(
+      listElement,
+      'Любимые песни',
+      async () => {
+        this.activeButton = SidebarButtonType.Tracks;
 
-      this.changeScreenCallback(ScreenState.Tracks);
-    });
+        this.tracksModel.tracksTitle = 'Любимые песни';
+        this.tracksModel.tracksType = TracksType.Favorite;
+        this.tracksModel.playlistId = null;
+        this.tracksModel.status = ModelStatus.Pending;
+        this.changeScreenCallback(ScreenState.Tracks);
+
+        this.tracksModel.setAll(await loadFavorites());
+        this.tracksModel.status = ModelStatus.Success;
+
+        this.changeScreenCallback(ScreenState.Tracks);
+
+        this.activeButton = SidebarButtonType.Tracks;
+        this.render();
+      },
+      isActive,
+    );
   }
 
   private addPlaylistButton(
     listElement: HTMLElement,
     playlistData: PlaylistData,
   ): void {
-    new SidebarButtonPresenter(listElement, playlistData.name, () => {
-      this.changeToPlaylist(playlistData);
-    });
+    const isActive: boolean =
+      this.activeButton === SidebarButtonType.Tracks &&
+      this.tracksModel.tracksType === TracksType.Playlist &&
+      this.tracksModel.playlistId === playlistData.id;
+
+    new SidebarButtonPresenter(
+      listElement,
+      playlistData.name,
+      () => {
+        this.activeButton = SidebarButtonType.Tracks;
+        this.changeToPlaylist(playlistData);
+
+        this.activeButton = SidebarButtonType.Tracks;
+        this.render();
+      },
+      isActive,
+    );
   }
 }

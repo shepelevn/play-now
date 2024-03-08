@@ -7,9 +7,10 @@ export default class SidebarButtonPresenter {
     private readonly parentElement: HTMLElement,
     text: string,
     clickCallback: () => void,
+    isActive: boolean = false,
     iconTemplate: string = '',
   ) {
-    this.component = new SidebarButtonComponent(text, iconTemplate);
+    this.component = new SidebarButtonComponent(text, iconTemplate, isActive);
 
     this.component.addOnClickListener(clickCallback);
 

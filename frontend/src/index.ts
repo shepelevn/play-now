@@ -55,6 +55,7 @@ async function init(): Promise<void> {
 
   const changeToPlaylist = (playlistData: PlaylistData) => {
     tracksModel.tracksTitle = playlistData.name;
+    tracksModel.tracksType = TracksType.Playlist;
     tracksModel.playlistId = playlistData.id;
     tracksModel.setAll(playlistData.songs);
 

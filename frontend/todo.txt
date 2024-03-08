@@ -1,7 +1,5 @@
 TODOs:
 
-  - Make sidebar button active on open
-
   - Add loading spinner to create and delete playlist modals
   - Make loading elements with spinners
 
