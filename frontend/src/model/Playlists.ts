@@ -26,14 +26,6 @@ export default class Playlists {
   public update(id: number, newPlaylist: PlaylistData): void {
     const index = this.playlists.findIndex((playlist) => playlist.id === id);
 
-    const oldPlaylist = this.playlists[index];
-
-    if (!oldPlaylist) {
-      throw new Error('oldPlaylist is undefined');
-    }
-
-    newPlaylist.imageId = oldPlaylist.imageId;
-
     this.playlists[index] = newPlaylist;
   }
 
@@ -44,8 +36,6 @@ export default class Playlists {
   }
 
   public add(newPlaylist: PlaylistData): void {
-    newPlaylist.imageId = this.playlists.length % PLAYLIST_IMAGES_COUNT;
-
     this.playlists.push(newPlaylist);
   }
 

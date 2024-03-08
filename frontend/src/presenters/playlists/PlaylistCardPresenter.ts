@@ -9,8 +9,8 @@ export default class PlaylistCardPresenter {
     playlistData: PlaylistData,
   ) {
     this.component = new PlaylistCardComponent(
+      playlistData.id,
       playlistData.name,
-      playlistData.imageId,
       playlistData.songs.length,
     );
 

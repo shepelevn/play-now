@@ -17,10 +17,10 @@ export async function loadPlaylistsData(): Promise<PlaylistData[]> {
   const playlistsInfo: PlaylistInfo[] = response.data;
 
   const playlistsData: PlaylistData[] = await Promise.all(
-    playlistsInfo.map(async (playlist, index) => {
+    playlistsInfo.map(async (playlist) => {
       const tracks: TrackData[] = await loadPlaylistTracks(playlist.id);
 
-      const imageId = index % PLAYLIST_IMAGES_COUNT;
+      const imageId = playlist.id % PLAYLIST_IMAGES_COUNT;
 
       return {
         id: playlist.id,

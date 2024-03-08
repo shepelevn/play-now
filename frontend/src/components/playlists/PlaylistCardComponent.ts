@@ -4,8 +4,8 @@ import { getTracksCountString } from '../../utils/getTracksCountString';
 
 export default class PlaylistCardComponent extends Component {
   constructor(
+    private readonly id: number,
     private readonly name: string,
-    private readonly imageId: number,
     private readonly tracksCount: number,
   ) {
     super();
@@ -14,7 +14,7 @@ export default class PlaylistCardComponent extends Component {
   public getTemplate(): string {
     const tracksCountString: string = getTracksCountString(this.tracksCount);
 
-    const imageSrc = PLAYLIST_IMAGES[this.imageId];
+    const imageSrc = PLAYLIST_IMAGES[this.id % PLAYLIST_IMAGES.length];
 
     // TODO: Add high quality picture srcset links
     return `

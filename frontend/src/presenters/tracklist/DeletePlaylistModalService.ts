@@ -62,11 +62,12 @@ export default class DeletePlaylistModalService {
   }
 
   private addPlaylistButton(playlist: PlaylistData): HTMLElement {
-    const imageSrc: string | undefined = PLAYLIST_IMAGES[playlist.imageId];
+    const imageId: number = playlist.id % PLAYLIST_IMAGES.length;
+    const imageSrc: string | undefined = PLAYLIST_IMAGES[imageId];
     const countString: string = getTracksCountString(playlist.songs.length);
 
     if (!imageSrc) {
-      throw new Error(`Image with id: ${playlist.imageId} not found`);
+      throw new Error(`Image with id: ${imageId} not found`);
     }
 
     return createElement(`
