@@ -1,7 +1,5 @@
 TODOs:
 
-  - Make dropdown better
-
   - Check TODOs console.logs and alerts
   - Check for errors in console
   - Check linter 

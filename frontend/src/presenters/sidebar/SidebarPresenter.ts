@@ -57,9 +57,6 @@ export default class SidebarPresenter {
       this.activeButton === SidebarButtonType.Tracks &&
       this.tracksModel.tracksType === TracksType.Tracks;
 
-    console.log('Tracks');
-    console.log(isActive);
-
     new SidebarButtonPresenter(
       listElement,
       'Треки',

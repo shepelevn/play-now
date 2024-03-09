@@ -52,7 +52,7 @@ export default class TrackDropdownService {
 
     this.currentDropdownButton?.classList.add('btn-dropdown--active');
 
-    const dropdown: HTMLElement = this.dropdownService.openDropdown(
+    const dropdown: HTMLElement | null = this.dropdownService.openDropdown(
       dropdownContainer,
       dropdownElement,
       () => {
@@ -60,13 +60,17 @@ export default class TrackDropdownService {
       },
     );
 
-    const addButton = dropdown.querySelector('.track__add-btn');
-    addButton?.addEventListener('click', () => {
-      openModalCallback();
-    });
+    if (dropdown) {
+      const addButton = dropdownElement.querySelector('.track__add-btn');
+      addButton?.addEventListener('click', () => {
+        openModalCallback();
+      });
 
-    const deleteButton = dropdown.querySelector('.track__delete-btn');
-    deleteButton?.addEventListener('click', () => deleteCallback());
+      const deleteButton = dropdownElement.querySelector('.track__delete-btn');
+      deleteButton?.addEventListener('click', () => deleteCallback());
+    } else {
+      dropdownElement.remove();
+    }
   }
 
   private createDropdownElement(isPlaylist: boolean): HTMLElement {
