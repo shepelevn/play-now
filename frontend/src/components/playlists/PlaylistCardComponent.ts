@@ -14,14 +14,19 @@ export default class PlaylistCardComponent extends Component {
   public getTemplate(): string {
     const tracksCountString: string = getTracksCountString(this.tracksCount);
 
-    const imageSrc = PLAYLIST_IMAGES[this.id % PLAYLIST_IMAGES.length];
+    const smallImageSrc =
+      PLAYLIST_IMAGES.small[this.id % PLAYLIST_IMAGES.small.length];
+    const normalImageSrc =
+      PLAYLIST_IMAGES.normal[this.id % PLAYLIST_IMAGES.normal.length];
+    const bigImageSrc =
+      PLAYLIST_IMAGES.big[this.id % PLAYLIST_IMAGES.big.length];
 
-    // TODO: Add high quality picture srcset links
     return `
       <li class="playlist__item">
         <picture>
-          <source srcset="${imageSrc}" media="(max-width: 576px)">
-          <source srcset="${imageSrc}" media="(max-width: 1440px)"><img class="playlist__img" src="${imageSrc}" alt="Любимые песни">
+          <source srcset="${smallImageSrc}" media="(max-width: 576px)">
+          <source srcset="${bigImageSrc}" media="(max-width: 1440px)">
+          <img class="playlist__img" src="${normalImageSrc}" alt="Любимые песни">
         </picture>
         <div class="playlist__content">
           <h3 class="playlist__h3"><a class="playlist__h3__link" href="/">${this.name}</a></h3><span class="playlist__count">${tracksCountString}</span>

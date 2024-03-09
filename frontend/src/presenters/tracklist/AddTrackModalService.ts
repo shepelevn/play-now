@@ -86,8 +86,8 @@ export default class AddTrackModalService {
   }
 
   private createPlaylistButton(playlist: PlaylistData): HTMLElement {
-    const imageId: number = playlist.id % PLAYLIST_IMAGES.length;
-    const imageSrc: string | undefined = PLAYLIST_IMAGES[imageId];
+    const imageId: number = playlist.id % PLAYLIST_IMAGES.small.length;
+    const imageSrc: string | undefined = PLAYLIST_IMAGES.small[imageId];
     const countString: string = getTracksCountString(playlist.songs.length);
 
     if (!imageSrc) {
