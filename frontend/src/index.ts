@@ -6,12 +6,12 @@ import SidebarPresenter from './presenters/sidebar/SidebarPresenter';
 import TrackListPresenter from './presenters/tracklist/TrackListPresenter';
 import PlayerPresenter from './presenters/player/PlayerPresenter';
 import { createAndAppendElement } from './utils/createAndAppendElement';
-import Tracks from './model/Tracks';
+import TracksModel from './model/TracksModel';
 import PlaylistsPresenter from './presenters/playlists/PlaylistsPresenter';
 import ScreenPresenter from './presenters/screen/ScreenPresenter';
 
 import './resources/css/style.css';
-import Playlists from './model/Playlists';
+import PlaylistsModel from './model/PlaylistsModel';
 import { ScreenState } from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
@@ -20,7 +20,7 @@ import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
 import { ModelStatus } from './types/ModelStatus';
 import { TracksType } from './types/TracksType';
-import {PlaylistData} from './types/PlaylistData';
+import { PlaylistData } from './types/PlaylistData';
 
 init();
 
@@ -35,13 +35,28 @@ async function init(): Promise<void> {
   const dropdownService = new DropdownService();
   const modalService = new ModalService();
 
-  const tracksModel: Tracks = new Tracks();
+  const tracksModel: TracksModel = new TracksModel();
   tracksModel.setAll(await loadTracks(''));
   tracksModel.status = ModelStatus.Success;
 
-  const playlistsModel: Playlists = new Playlists();
+  const playlistsModel: PlaylistsModel = new PlaylistsModel();
 
-  // TODO: Move to main presenter maybe
+  initPresenters(
+    rootElement,
+    tracksModel,
+    playlistsModel,
+    dropdownService,
+    modalService,
+  );
+}
+
+function initPresenters(
+  rootElement: HTMLElement,
+  tracksModel: TracksModel,
+  playlistsModel: PlaylistsModel,
+  dropdownService: DropdownService,
+  modalService: ModalService,
+): void {
   const headerPresenter = new HeaderPresenter(rootElement, tracksModel);
 
   const contentWrapElement: HTMLElement = createAndAppendElement(
