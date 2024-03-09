@@ -9,7 +9,9 @@ export default class PlayerPresenter {
     currentTrackModel: CurrentTrackModel,
   ) {
     this.playerComponent = new PlayerComponent(currentTrackModel.track);
+  }
 
+  public render(): void {
     this.parentElement.append(this.playerComponent.getElement());
   }
 }

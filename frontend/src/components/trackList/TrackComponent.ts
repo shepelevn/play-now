@@ -40,6 +40,21 @@ export default class TrackComponent extends Component {
     dropdownButton.addEventListener('click', callback);
   }
 
+  public addOnClickListener(callback: () => void): void {
+    const link: HTMLElement | null =
+      this.getElement().querySelector('.track__name__link');
+
+    if (!link) {
+      throw new Error('.track__name__link not found');
+    }
+
+    link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+
+      callback();
+    });
+  }
+
   public getTemplate(): string {
     const timeAgo: TimeAgo = new TimeAgo('ru-RU');
 

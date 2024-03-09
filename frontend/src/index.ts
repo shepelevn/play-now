@@ -70,7 +70,7 @@ function initPresenters(
   dropdownService: DropdownService,
   modalService: ModalService,
 ): void {
-  // Create elements and presenters
+  // Create presenters and DOM elements for them
   const headerPresenter = new HeaderPresenter(rootElement, tracksModel);
 
   const contentWrapElement: HTMLElement = createAndAppendElement(
@@ -93,6 +93,7 @@ function initPresenters(
     mainElement,
     tracksModel,
     playlistsModel,
+    currentTrackModel,
     dropdownService,
     modalService,
   );
@@ -117,7 +118,10 @@ function initPresenters(
     screenPresenter.render();
   };
 
-  new PlayerPresenter(rootElement, currentTrackModel);
+  const playerPresenter: PlayerPresenter = new PlayerPresenter(
+    rootElement,
+    currentTrackModel,
+  );
 
   // Create callbacks
   const changeToPlaylist = createChangeToPlaylistCallback(
@@ -142,6 +146,10 @@ function initPresenters(
   playlistsModel.onChange = () => {
     sidebarPresenter.render();
     screenPresenter.render();
+  };
+
+  currentTrackModel.onChange = () => {
+    playerPresenter.render();
   };
 }
 

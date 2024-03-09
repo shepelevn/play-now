@@ -11,6 +11,7 @@ import TrackDropdownService from './TrackDropdownService';
 import TrackPresenter from './TrackPresenter';
 import AddTrackModalService from './AddTrackModalService';
 import ModalService from '../../utils/services/ModalService';
+import CurrentTrackModel from '../../model/CurrentTrackModel';
 
 export default class TrackListPresenter {
   private readonly trackListComponent: TrackListComponent;
@@ -22,6 +23,7 @@ export default class TrackListPresenter {
     private readonly parentElement: HTMLElement,
     private readonly tracksModel: TracksModel,
     private readonly playlistsModel: PlaylistsModel,
+    private readonly currentTrackModel: CurrentTrackModel,
     dropdownService: DropdownService,
     modalService: ModalService,
   ) {
@@ -118,6 +120,7 @@ export default class TrackListPresenter {
         new TrackPresenter(
           trackListUl,
           trackData,
+          this.currentTrackModel,
           this.createLikeCallback(trackData.id),
           this.createDropdownCallback(
             trackData.id,
