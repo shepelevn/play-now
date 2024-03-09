@@ -16,7 +16,6 @@ import { SidebarButtonType } from '../../types/SidebarButtonType';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
-  public changeScreenCallback: (state: ScreenState) => void = noop;
   public loadTracksCallback: () => void = noop;
   public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
   public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
@@ -48,7 +47,7 @@ export default class SidebarPresenter {
     this.addFavoriteButton(listElement);
 
     for (const playlistData of this.playlistsModel.playlists) {
-      this.addPlaylistButton(listElement, playlistData);
+      this.addPlaylistButton(listElement, playlistData.id);
     }
   }
 
@@ -81,7 +80,7 @@ export default class SidebarPresenter {
       () => {
         this.activeButton = SidebarButtonType.Tracks;
 
-        this.changeScreenCallback(ScreenState.Playlists);
+        this.tracksModel.onChange(ScreenState.Playlists);
 
         this.activeButton = SidebarButtonType.Playlists;
         this.render();
@@ -106,12 +105,12 @@ export default class SidebarPresenter {
         this.tracksModel.tracksType = TracksType.Favorite;
         this.tracksModel.playlistId = null;
         this.tracksModel.status = ModelStatus.Pending;
-        this.changeScreenCallback(ScreenState.Tracks);
+        this.tracksModel.onChange(ScreenState.Tracks);
 
         this.tracksModel.setAll(await loadFavorites());
         this.tracksModel.status = ModelStatus.Success;
 
-        this.changeScreenCallback(ScreenState.Tracks);
+        this.tracksModel.onChange(ScreenState.Tracks);
 
         this.activeButton = SidebarButtonType.Tracks;
         this.render();
@@ -122,8 +121,10 @@ export default class SidebarPresenter {
 
   private addPlaylistButton(
     listElement: HTMLElement,
-    playlistData: PlaylistData,
+    playlistId: number,
   ): void {
+    const playlistData = this.playlistsModel.get(playlistId);
+
     const isActive: boolean =
       this.activeButton === SidebarButtonType.Tracks &&
       this.tracksModel.tracksType === TracksType.Playlist &&
@@ -133,6 +134,8 @@ export default class SidebarPresenter {
       listElement,
       playlistData.name,
       () => {
+        const playlistData = this.playlistsModel.get(playlistId);
+
         this.activeButton = SidebarButtonType.Tracks;
         this.changeToPlaylist(playlistData);
 

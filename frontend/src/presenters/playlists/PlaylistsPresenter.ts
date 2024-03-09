@@ -5,7 +5,6 @@ import {
 } from '../../api/playlists';
 import PlaylistsComponent from '../../components/playlists/PlaylistsComponent';
 import PlaylistsModel from '../../model/PlaylistsModel';
-import { noop } from '../../utils/noop';
 
 import addImage from '../../resources/img/add.png';
 import deleteImage from '../../resources/img/delete.png';
@@ -19,7 +18,6 @@ import PlaylistCardPresenter from './PlaylistCardPresenter';
 
 export default class PlaylistsPresenter {
   private readonly playlistsComponent: PlaylistsComponent;
-  public onLoadCallback: () => void = noop;
   private readonly createPlaylistModalService: CreatePlaylistModalService;
   private readonly deletePlaylistModalService: DeletePlaylistModalService;
 
@@ -47,7 +45,7 @@ export default class PlaylistsPresenter {
     this.playlistsModel.playlists = await loadPlaylistsData();
     this.playlistsModel.status = ModelStatus.Success;
 
-    this.onLoadCallback();
+    this.playlistsModel.onChange();
   }
 
   public render(): void {
@@ -89,7 +87,7 @@ export default class PlaylistsPresenter {
 
         this.createPlaylistModalService.close();
 
-        this.onLoadCallback();
+        this.playlistsModel.onChange();
       });
     });
 
@@ -108,7 +106,7 @@ export default class PlaylistsPresenter {
         this.playlistsModel.delete(playlistId);
 
         this.deletePlaylistModalService.close();
-        this.onLoadCallback();
+        this.playlistsModel.onChange();
       });
     });
 

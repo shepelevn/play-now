@@ -17,7 +17,6 @@ export default class TrackListPresenter {
   private readonly trackDropdownService;
   private readonly addTrackModalService: AddTrackModalService;
   public onTracksChangeCallback: () => void = noop;
-  public onPlaylistsChangeCallback: () => void = noop;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -67,7 +66,7 @@ export default class TrackListPresenter {
 
   private createAddModalCallback(id: number): () => void {
     return () => {
-      this.addTrackModalService.open(id, this.onPlaylistsChangeCallback);
+      this.addTrackModalService.open(id);
     };
   }
 

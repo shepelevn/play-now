@@ -12,10 +12,10 @@ export default class AddTrackModalService {
     private readonly playlistsModel: PlaylistsModel,
   ) {}
 
-  public open(songId: number, onPlaylistsChange: () => void) {
+  public open(songId: number) {
     const modalDiv: HTMLElement = this.createModalElement();
 
-    this.createPlaylistButtons(modalDiv, songId, onPlaylistsChange);
+    this.createPlaylistButtons(modalDiv, songId);
 
     this.addCancelHandler(modalDiv);
 
@@ -55,11 +55,7 @@ export default class AddTrackModalService {
     cancelButton.addEventListener('click', () => this.close());
   }
 
-  private createPlaylistButtons(
-    modalDiv: HTMLElement,
-    songId: number,
-    onPlaylistsChange: () => void,
-  ): void {
+  private createPlaylistButtons(modalDiv: HTMLElement, songId: number): void {
     const buttonsContainer = modalDiv.querySelector(
       '.playlists-modal__playlist_content',
     );
@@ -67,7 +63,6 @@ export default class AddTrackModalService {
     for (const playlist of this.playlistsModel.getFilteredForAddition(songId)) {
       const playlistButton: HTMLElement = this.createPlaylistButton(playlist);
 
-      // Add handler to the button
       playlistButton.addEventListener('click', async () => {
         this.close();
 
@@ -77,8 +72,6 @@ export default class AddTrackModalService {
         );
 
         this.playlistsModel.update(playlist.id, newPlaylist);
-
-        onPlaylistsChange();
       });
 
       buttonsContainer?.append(playlistButton);

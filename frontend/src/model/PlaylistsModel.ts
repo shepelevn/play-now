@@ -1,11 +1,13 @@
 import { ModelStatus } from '../types/ModelStatus';
 import { PlaylistData } from '../types/PlaylistData';
+import { noop } from '../utils/noop';
 
 export const PLAYLIST_IMAGES_COUNT = 8;
 
 export default class PlaylistsModel {
   public playlists: PlaylistData[] = [];
   public status: ModelStatus = ModelStatus.Pending;
+  public onChange: () => void = noop;
 
   public removeTrack(playlistId: number, trackId: number): void {
     const playlist: PlaylistData = this.get(playlistId);
