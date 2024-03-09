@@ -1,6 +1,8 @@
 import { ProfileData } from '../../api/profile';
 import Component from '../Component';
 
+import spinnerImage from '../../resources/img/spinner.png';
+
 export default class ProfileComponent extends Component {
   constructor(public profileData?: ProfileData) {
     super();
@@ -16,7 +18,9 @@ export default class ProfileComponent extends Component {
     `
       : `
       <button class="header__user">
-        Loading ...
+        <div class="loading loading_small profile-loading">
+          <img class="loading__spinner" src="${spinnerImage}" alt="Идёт загрузка">
+        </div>
       </button>
       `;
   }

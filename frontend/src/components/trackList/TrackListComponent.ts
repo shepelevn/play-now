@@ -2,17 +2,21 @@ import Tracks from '../../model/Tracks';
 import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
+import spinnerImage from '../../resources/img/spinner.png';
+
 export default class TrackListComponent extends Component {
   constructor(private readonly tracksModel: Tracks) {
     super();
   }
 
   public getTemplate(): string {
-    const isLoading = this.tracksModel.status === ModelStatus.Pending;
+    const isLoading: boolean = this.tracksModel.status === ModelStatus.Pending;
 
     const content: string = isLoading
       ? `
-        <p>Loading...</p>
+        <div class="loading tracks-loading">
+          <img class="loading__spinner" src="${spinnerImage}" alt="Идёт загрузка">
+        </div>
     `
       : `
       <div class="tracks__content">

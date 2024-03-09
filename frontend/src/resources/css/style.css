@@ -614,6 +614,52 @@ body {
   src: url("../fonts/CircularStd-Medium.woff2") format("woff2"),url("../fonts/CircularStd-Medium.woff") format("woff");
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 50vh;
+}
+
+.loading_small {
+  min-height: 0;
+}
+
+@keyframes rotate{
+  to { 
+    transform: rotate(360deg); 
+  }
+}
+
+.loading__spinner {
+  opacity: 0.7;
+  width: 40%;
+  animation: rotate 800ms linear infinite; 
+}
+
+.profile-loading {
+  height: 35px;
+}
+
+.profile-loading .loading__spinner {
+  width: 30px;
+}
+
+.sidebar-loading {
+  height: 110px;
+}
+
+.sidebar-loading .loading__spinner {
+  width: 40px;
+}
+
+.tracks-loading .loading__spinner {
+  width: 10%;
+  min-width: 40px;
+}
+
 .common-input {
     font-weight: 400;
     height: 30px;
@@ -1478,6 +1524,11 @@ body {
     padding: 20px 46px;
   }
 
+  .aside__nav {
+    display: flex;
+    flex-direction: row;
+  }
+
   .aside__list {
     display: flex;
     align-items: center;
@@ -1510,6 +1561,11 @@ body {
 }
 
 @media (max-width: 992px) {
+  .sidebar-loading {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
   .playlist__item {
     width: calc((100% - 60px)/3);
   }

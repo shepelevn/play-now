@@ -1,7 +1,8 @@
 TODOs:
 
   - Add loading spinner to create and delete playlist modals
-  - Make loading elements with spinners
+
+  - Fix multiple playlists creation or deletion bug
 
   - Make dropdown better
 
