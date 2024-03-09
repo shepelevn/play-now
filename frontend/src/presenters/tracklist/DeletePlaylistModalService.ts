@@ -1,5 +1,5 @@
 import { PLAYLIST_IMAGES } from '../../components/playlists/playlistImages';
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { PlaylistData } from '../../types/PlaylistData';
 import { createElement } from '../../utils/createElement';
 import { getTracksCountString } from '../../utils/getTracksCountString';
@@ -10,7 +10,7 @@ import spinnerImage from '../../resources/img/spinner.png';
 export default class DeletePlaylistModalService {
   constructor(
     private readonly modalService: ModalService,
-    private readonly playlistsModel: Playlists,
+    private readonly playlistsModel: PlaylistsModel,
   ) {}
 
   public open(onDeleteCallback: (playlistId: number) => Promise<void>) {

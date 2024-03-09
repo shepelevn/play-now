@@ -1,6 +1,6 @@
 import { addToPlaylist } from '../../api/playlists';
 import { PLAYLIST_IMAGES } from '../../components/playlists/playlistImages';
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { PlaylistData } from '../../types/PlaylistData';
 import { createElement } from '../../utils/createElement';
 import { getTracksCountString } from '../../utils/getTracksCountString';
@@ -9,7 +9,7 @@ import ModalService from '../../utils/services/ModalService';
 export default class AddTrackModalService {
   constructor(
     private readonly modalService: ModalService,
-    private readonly playlistsModel: Playlists,
+    private readonly playlistsModel: PlaylistsModel,
   ) {}
 
   public open(songId: number, onPlaylistsChange: () => void) {

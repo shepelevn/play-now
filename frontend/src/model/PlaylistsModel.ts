@@ -3,7 +3,7 @@ import { PlaylistData } from '../types/PlaylistData';
 
 export const PLAYLIST_IMAGES_COUNT = 8;
 
-export default class Playlists {
+export default class PlaylistsModel {
   public playlists: PlaylistData[] = [];
   public status: ModelStatus = ModelStatus.Pending;
 

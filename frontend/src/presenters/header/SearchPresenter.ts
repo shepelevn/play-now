@@ -1,5 +1,5 @@
 import SearchComponent from '../../components/header/SearchComponent';
-import Tracks from '../../model/Tracks';
+import TracksModel from '../../model/TracksModel';
 import { noop } from '../../utils/noop';
 
 export default class SearchPresenter {
@@ -8,7 +8,7 @@ export default class SearchPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    tracks: Tracks,
+    tracks: TracksModel,
   ) {
     this.searchComponent = new SearchComponent();
 

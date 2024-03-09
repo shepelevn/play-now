@@ -2,8 +2,8 @@ import { USERNAME } from '../../api/apiConstants';
 import { removeFromPlaylist } from '../../api/playlists';
 import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
-import Playlists from '../../model/Playlists';
-import Tracks from '../../model/Tracks';
+import PlaylistsModel from '../../model/PlaylistsModel';
+import TracksModel from '../../model/TracksModel';
 import DropdownService from '../../utils/services/DropdownService';
 import { isTrackLiked } from '../../utils/isTrackLiked';
 import { noop } from '../../utils/noop';
@@ -21,8 +21,8 @@ export default class TrackListPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    private readonly tracksModel: Tracks,
-    private readonly playlistsModel: Playlists,
+    private readonly tracksModel: TracksModel,
+    private readonly playlistsModel: PlaylistsModel,
     dropdownService: DropdownService,
     modalService: ModalService,
   ) {

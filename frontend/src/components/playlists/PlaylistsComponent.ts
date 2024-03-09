@@ -1,9 +1,9 @@
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
 export default class PlaylistsComponent extends Component {
-  constructor(private readonly playlists: Playlists) {
+  constructor(private readonly playlists: PlaylistsModel) {
     super();
   }
 

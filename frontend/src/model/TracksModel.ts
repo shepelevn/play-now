@@ -3,7 +3,7 @@ import { TrackData } from '../types/TrackData';
 import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
 import { TracksType } from '../types/TracksType';
 
-export default class Tracks {
+export default class TracksModel {
   private tracks: TrackDataWithIndex[] = [];
   public filterString: string = '';
   public status: ModelStatus = ModelStatus.Pending;

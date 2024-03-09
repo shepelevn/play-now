@@ -1,11 +1,11 @@
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
 import spinnerImage from '../../resources/img/spinner.png';
 
 export default class SidebarComponent extends Component {
-  constructor(private readonly playlists: Playlists) {
+  constructor(private readonly playlists: PlaylistsModel) {
     super();
   }
 

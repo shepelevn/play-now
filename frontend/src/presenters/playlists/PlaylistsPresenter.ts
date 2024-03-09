@@ -4,7 +4,7 @@ import {
   loadPlaylistsData,
 } from '../../api/playlists';
 import PlaylistsComponent from '../../components/playlists/PlaylistsComponent';
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { noop } from '../../utils/noop';
 
 import addImage from '../../resources/img/add.png';
@@ -25,7 +25,7 @@ export default class PlaylistsPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    private readonly playlistsModel: Playlists,
+    private readonly playlistsModel: PlaylistsModel,
     private readonly changeToPlaylist: (playlistData: PlaylistData) => void,
     modalService: ModalService,
   ) {

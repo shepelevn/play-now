@@ -1,5 +1,5 @@
 import HeaderComponent from '../../components/header/HeaderComponent';
-import Tracks from '../../model/Tracks';
+import TracksModel from '../../model/TracksModel';
 import ProfilePresenter from './ProfilePresenter';
 import SearchPresenter from './SearchPresenter';
 
@@ -9,7 +9,7 @@ export default class HeaderPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    tracks: Tracks,
+    tracks: TracksModel,
   ) {
     this.headerComponent = new HeaderComponent();
 

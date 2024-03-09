@@ -1,5 +1,5 @@
 import PlayerComponent from '../../components/player/PlayerComponent';
-import Tracks from '../../model/Tracks';
+import TracksModel from '../../model/TracksModel';
 import { TrackData } from '../../types/TrackData';
 
 export default class PlayerPresenter {
@@ -7,7 +7,7 @@ export default class PlayerPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    tracksModel: Tracks,
+    tracksModel: TracksModel,
   ) {
     let trackData: TrackData | undefined = tracksModel.allWithSearch()[0];
 

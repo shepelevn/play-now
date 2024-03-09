@@ -1,5 +1,5 @@
 import SidebarComponent from '../../components/sidebar/SidebarComponent';
-import Playlists from '../../model/Playlists';
+import PlaylistsModel from '../../model/PlaylistsModel';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
 import { ScreenState } from '../../types/ScreenState';
 import { noop } from '../../utils/noop';
@@ -7,7 +7,7 @@ import { noop } from '../../utils/noop';
 import NoteSvg from '../../resources/svg/note.sprite.svg';
 import PlaySvg from '../../resources/svg/play.sprite.svg';
 import SidebarButtonPresenter from './SidebarButtonPresenter';
-import Tracks from '../../model/Tracks';
+import TracksModel from '../../model/TracksModel';
 import { loadFavorites } from '../../api/tracks';
 import { ModelStatus } from '../../types/ModelStatus';
 import { PlaylistData } from '../../types/PlaylistData';
@@ -23,8 +23,8 @@ export default class SidebarPresenter {
 
   constructor(
     private readonly parentElement: HTMLElement,
-    private readonly playlistsModel: Playlists,
-    private readonly tracksModel: Tracks,
+    private readonly playlistsModel: PlaylistsModel,
+    private readonly tracksModel: TracksModel,
   ) {
     this.sidebarComponent = new SidebarComponent(playlistsModel);
 

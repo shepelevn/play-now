@@ -1,11 +1,11 @@
-import Tracks from '../../model/Tracks';
+import TracksModel from '../../model/TracksModel';
 import { ModelStatus } from '../../types/ModelStatus';
 import Component from '../Component';
 
 import spinnerImage from '../../resources/img/spinner.png';
 
 export default class TrackListComponent extends Component {
-  constructor(private readonly tracksModel: Tracks) {
+  constructor(private readonly tracksModel: TracksModel) {
     super();
   }
 
