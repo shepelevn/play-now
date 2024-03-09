@@ -21,7 +21,7 @@ import ModalService from './utils/services/ModalService';
 import { ModelStatus } from './types/ModelStatus';
 import { TracksType } from './types/TracksType';
 import { PlaylistData } from './types/PlaylistData';
-import CurrentTrackModel from './model/CurrentTrackModel';
+import PlayerModel from './model/PlayerModel';
 import { TrackData } from './types/TrackData';
 import { SidebarButtonType } from './types/SidebarButtonType';
 
@@ -48,7 +48,7 @@ async function init(): Promise<void> {
     throw new Error('firstSong is not found');
   }
 
-  const currentTrackModel: CurrentTrackModel = new CurrentTrackModel(firstSong);
+  const playerModel: PlayerModel = new PlayerModel(firstSong);
 
   const playlistsModel: PlaylistsModel = new PlaylistsModel();
 
@@ -56,7 +56,7 @@ async function init(): Promise<void> {
     rootElement,
     tracksModel,
     playlistsModel,
-    currentTrackModel,
+    playerModel,
     dropdownService,
     modalService,
   );
@@ -66,7 +66,7 @@ function initPresenters(
   rootElement: HTMLElement,
   tracksModel: TracksModel,
   playlistsModel: PlaylistsModel,
-  currentTrackModel: CurrentTrackModel,
+  playerModel: PlayerModel,
   dropdownService: DropdownService,
   modalService: ModalService,
 ): void {
@@ -93,7 +93,7 @@ function initPresenters(
     mainElement,
     tracksModel,
     playlistsModel,
-    currentTrackModel,
+    playerModel,
     dropdownService,
     modalService,
   );
@@ -120,7 +120,7 @@ function initPresenters(
 
   const playerPresenter: PlayerPresenter = new PlayerPresenter(
     rootElement,
-    currentTrackModel,
+    playerModel,
   );
 
   // Create callbacks
@@ -148,7 +148,7 @@ function initPresenters(
     screenPresenter.render();
   };
 
-  currentTrackModel.onChange = () => {
+  playerModel.onChange = () => {
     playerPresenter.render();
   };
 }

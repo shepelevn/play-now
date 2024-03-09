@@ -1,5 +1,5 @@
 import TrackComponent from '../../components/trackList/TrackComponent';
-import CurrentTrackModel from '../../model/CurrentTrackModel';
+import PlayerModel from '../../model/PlayerModel';
 import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 
 export default class TrackPresenter {
@@ -8,7 +8,7 @@ export default class TrackPresenter {
   constructor(
     private readonly parentElement: HTMLElement,
     private readonly trackData: TrackDataWithIndex,
-    private readonly currentTrackModel: CurrentTrackModel,
+    private readonly playerModel: PlayerModel,
     private readonly likeCallback: () => void,
     private readonly dropdownCallback: (event: Event) => void,
   ) {
@@ -21,8 +21,8 @@ export default class TrackPresenter {
     this.trackComponent.addOnLikeListener(this.likeCallback);
     this.trackComponent.addOnDropdownListener(this.dropdownCallback);
     this.trackComponent.addOnClickListener(() => {
-      this.currentTrackModel.track = this.trackData;
-      this.currentTrackModel.onChange();
+      this.playerModel.track = this.trackData;
+      this.playerModel.onChange();
     });
 
     this.parentElement.append(this.trackComponent.getElement());

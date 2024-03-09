@@ -1,17 +1,17 @@
 import PlayerComponent from '../../components/player/PlayerComponent';
-import CurrentTrackModel from '../../model/CurrentTrackModel';
+import PlayerModel from '../../model/PlayerModel';
 
 export default class PlayerPresenter {
-  private readonly playerComponent: PlayerComponent;
-
   constructor(
     private readonly parentElement: HTMLElement,
-    currentTrackModel: CurrentTrackModel,
+    private readonly playerModel: PlayerModel,
   ) {
-    this.playerComponent = new PlayerComponent(currentTrackModel.track);
+    this.render();
   }
 
   public render(): void {
-    this.parentElement.append(this.playerComponent.getElement());
+    this.parentElement.append(
+      new PlayerComponent(this.playerModel.track).getElement(),
+    );
   }
 }
