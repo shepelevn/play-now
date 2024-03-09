@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL, USERNAME } from './apiConstants';
 
 const PASSWORD = 'password';
 const FIRST_NAME = 'John';
@@ -32,7 +32,7 @@ async function register(
   firstName: string,
   lastName: string,
 ): Promise<AxiosResponse> {
-  return await axios.post(`${SERVER_URL}/auth/register`, {
+  return await axios.post(`${API_SERVER_URL}/auth/register`, {
     username,
     password,
     firstName,
@@ -44,5 +44,8 @@ async function login(
   username: string,
   password: string,
 ): Promise<AxiosResponse> {
-  return await axios.post(`${SERVER_URL}/auth/login`, { username, password });
+  return await axios.post(`${API_SERVER_URL}/auth/login`, {
+    username,
+    password,
+  });
 }

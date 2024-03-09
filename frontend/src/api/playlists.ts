@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { PlaylistData } from '../types/PlaylistData';
-import { SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL, USERNAME } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { PLAYLIST_IMAGES_COUNT } from '../model/PlaylistsModel';
 
@@ -11,7 +11,7 @@ type PlaylistInfo = {
 
 export async function loadPlaylistsData(): Promise<PlaylistData[]> {
   const response: AxiosResponse = await axios.get(
-    `${SERVER_URL}/users/${USERNAME}/playlists`,
+    `${API_SERVER_URL}/users/${USERNAME}/playlists`,
   );
 
   const playlistsInfo: PlaylistInfo[] = response.data;
@@ -35,7 +35,7 @@ export async function loadPlaylistsData(): Promise<PlaylistData[]> {
 }
 
 export async function loadPlaylistTracks(id: number): Promise<TrackData[]> {
-  const response = await axios.get(`${SERVER_URL}/playlists/${id}`);
+  const response = await axios.get(`${API_SERVER_URL}/playlists/${id}`);
 
   return response.data.songs;
 }
@@ -44,7 +44,9 @@ export async function removeFromPlaylist(
   playlistId: number,
   trackId: number,
 ): Promise<void> {
-  await axios.post(`${SERVER_URL}/playlists/${playlistId}/remove/${trackId}`);
+  await axios.post(
+    `${API_SERVER_URL}/playlists/${playlistId}/remove/${trackId}`,
+  );
 }
 
 export async function addToPlaylist(
@@ -52,16 +54,19 @@ export async function addToPlaylist(
   trackId: number,
 ): Promise<PlaylistData> {
   const response = await axios.post(
-    `${SERVER_URL}/playlists/${playlistId}/add/${trackId}`,
+    `${API_SERVER_URL}/playlists/${playlistId}/add/${trackId}`,
   );
 
   return response.data;
 }
 
 export async function createPlaylist(name: string): Promise<PlaylistData> {
-  const response: AxiosResponse = await axios.post(`${SERVER_URL}/playlists`, {
-    name: name,
-  });
+  const response: AxiosResponse = await axios.post(
+    `${API_SERVER_URL}/playlists`,
+    {
+      name: name,
+    },
+  );
 
   const playlist = response.data;
   playlist.songs = [];
@@ -70,5 +75,5 @@ export async function createPlaylist(name: string): Promise<PlaylistData> {
 }
 
 export async function deletePlaylist(playlistId: number): Promise<void> {
-  await axios.delete(`${SERVER_URL}/playlists/${playlistId}`);
+  await axios.delete(`${API_SERVER_URL}/playlists/${playlistId}`);
 }

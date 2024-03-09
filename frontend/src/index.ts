@@ -9,8 +9,6 @@ import { createAndAppendElement } from './utils/createAndAppendElement';
 import TracksModel from './model/TracksModel';
 import PlaylistsPresenter from './presenters/playlists/PlaylistsPresenter';
 import ScreenPresenter from './presenters/screen/ScreenPresenter';
-
-import './resources/css/style.css';
 import PlaylistsModel from './model/PlaylistsModel';
 import { ScreenState } from './types/ScreenState';
 import axios from 'axios';
@@ -24,6 +22,9 @@ import { PlaylistData } from './types/PlaylistData';
 import PlayerModel from './model/PlayerModel';
 import { TrackData } from './types/TrackData';
 import { SidebarButtonType } from './types/SidebarButtonType';
+import 'nouislider/dist/nouislider.css';
+
+import './resources/css/style.css';
 
 init();
 
@@ -150,6 +151,7 @@ function initPresenters(
 
   playerModel.onChange = () => {
     playerPresenter.render();
+    playerPresenter.load();
   };
 }
 
