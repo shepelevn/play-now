@@ -69,6 +69,7 @@ function initPresenters(
   dropdownService: DropdownService,
   modalService: ModalService,
 ): void {
+  // Create elements and presenters
   const headerPresenter = new HeaderPresenter(rootElement, tracksModel);
 
   const contentWrapElement: HTMLElement = createAndAppendElement(
@@ -76,34 +77,11 @@ function initPresenters(
     '<div class="content-wrap flex"></div>',
   );
 
-  const changeToPlaylist = (playlistData: PlaylistData) => {
-    tracksModel.tracksTitle = playlistData.name;
-    tracksModel.tracksType = TracksType.Playlist;
-    tracksModel.playlistId = playlistData.id;
-    tracksModel.setAll(playlistData.songs);
-
-    tracksModel.onChange(ScreenState.Tracks);
-  };
-
-  const loadTracksCallback = async () => {
-    tracksModel.playlistId = null;
-    tracksModel.status = ModelStatus.Pending;
-    tracksModel.onChange(ScreenState.Tracks);
-
-    tracksModel.setAll(await loadTracks(tracksModel.filterString));
-    tracksModel.status = ModelStatus.Success;
-
-    tracksModel.onChange(ScreenState.Tracks);
-  };
-
   const sidebarPresenter = new SidebarPresenter(
     contentWrapElement,
     playlistsModel,
     tracksModel,
   );
-
-  sidebarPresenter.loadTracksCallback = loadTracksCallback;
-  sidebarPresenter.changeToPlaylist = changeToPlaylist;
 
   const mainElement = createAndAppendElement(
     contentWrapElement,
@@ -121,7 +99,6 @@ function initPresenters(
   const playlistsPresenter: PlaylistsPresenter = new PlaylistsPresenter(
     mainElement,
     playlistsModel,
-    changeToPlaylist,
     modalService,
   );
 
@@ -139,10 +116,21 @@ function initPresenters(
     screenPresenter.render();
   };
 
-  trackListPresenter.onTracksChangeCallback = () => screenPresenter.render();
-
   new PlayerPresenter(rootElement, currentTrackModel);
 
+  // Create callbacks
+  const changeToPlaylist = createChangeToPlaylistCallback(tracksModel);
+  const loadTracksCallback = createLoadTracksCallback(tracksModel);
+
+  // Add callbacks to presenters
+  sidebarPresenter.loadTracksCallback = loadTracksCallback;
+  sidebarPresenter.changeToPlaylist = changeToPlaylist;
+
+  trackListPresenter.onTracksChangeCallback = () => screenPresenter.render();
+
+  playlistsPresenter.changeToPlaylist = changeToPlaylist;
+
+  // Create callbacks for models
   tracksModel.onChange = (state: ScreenState) => {
     screenPresenter.changeScreen(state);
   };
@@ -150,5 +138,31 @@ function initPresenters(
   playlistsModel.onChange = () => {
     sidebarPresenter.render();
     screenPresenter.render();
+  };
+}
+
+function createChangeToPlaylistCallback(
+  tracksModel: TracksModel,
+): (playlistData: PlaylistData) => void {
+  return (playlistData: PlaylistData) => {
+    tracksModel.tracksTitle = playlistData.name;
+    tracksModel.tracksType = TracksType.Playlist;
+    tracksModel.playlistId = playlistData.id;
+    tracksModel.setAll(playlistData.songs);
+
+    tracksModel.onChange(ScreenState.Tracks);
+  };
+}
+
+function createLoadTracksCallback(tracksModel: TracksModel): () => void {
+  return async () => {
+    tracksModel.playlistId = null;
+    tracksModel.status = ModelStatus.Pending;
+    tracksModel.onChange(ScreenState.Tracks);
+
+    tracksModel.setAll(await loadTracks(tracksModel.filterString));
+    tracksModel.status = ModelStatus.Success;
+
+    tracksModel.onChange(ScreenState.Tracks);
   };
 }
