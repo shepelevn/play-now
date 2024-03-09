@@ -1,10 +1,5 @@
 TODOs:
 
-  - Clean up initPresenters in index.ts
-    * Move callbacks creation to their own functions
-
-  - Fix bug where sidebar button doesn't change when changing screen to playlist
-
   - Check TODOs console.logs and alerts
   - Check for errors in console
   - Check linter 

@@ -23,6 +23,7 @@ import { TracksType } from './types/TracksType';
 import { PlaylistData } from './types/PlaylistData';
 import CurrentTrackModel from './model/CurrentTrackModel';
 import { TrackData } from './types/TrackData';
+import { SidebarButtonType } from './types/SidebarButtonType';
 
 init();
 
@@ -119,7 +120,10 @@ function initPresenters(
   new PlayerPresenter(rootElement, currentTrackModel);
 
   // Create callbacks
-  const changeToPlaylist = createChangeToPlaylistCallback(tracksModel);
+  const changeToPlaylist = createChangeToPlaylistCallback(
+    tracksModel,
+    sidebarPresenter,
+  );
   const loadTracksCallback = createLoadTracksCallback(tracksModel);
 
   // Add callbacks to presenters
@@ -143,12 +147,18 @@ function initPresenters(
 
 function createChangeToPlaylistCallback(
   tracksModel: TracksModel,
+  sidebarPresenter: SidebarPresenter,
 ): (playlistData: PlaylistData) => void {
   return (playlistData: PlaylistData) => {
     tracksModel.tracksTitle = playlistData.name;
     tracksModel.tracksType = TracksType.Playlist;
     tracksModel.playlistId = playlistData.id;
     tracksModel.setAll(playlistData.songs);
+
+    sidebarPresenter.activeButton = SidebarButtonType.Tracks;
+    tracksModel.tracksType = TracksType.Playlist;
+
+    sidebarPresenter.render();
 
     tracksModel.onChange(ScreenState.Tracks);
   };
