@@ -5,13 +5,15 @@ import { createElement } from '../../utils/createElement';
 import { getTracksCountString } from '../../utils/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
+import spinnerImage from '../../resources/img/spinner.png';
+
 export default class DeletePlaylistModalService {
   constructor(
     private readonly modalService: ModalService,
     private readonly playlistsModel: Playlists,
   ) {}
 
-  public open(onDeleteCallback: (playlistId: number) => void) {
+  public open(onDeleteCallback: (playlistId: number) => Promise<void>) {
     const modalDiv: HTMLElement = this.createModalElement();
 
     this.addPlaylistButtons(modalDiv, onDeleteCallback);
@@ -38,13 +40,16 @@ export default class DeletePlaylistModalService {
                   Отменить
               </div>
           </div>
+          <div class="loading modal-loading loading_hidden" id="modal-loading">
+            <img class="loading__spinner" src="${spinnerImage}" alt="Идёт загрузка">
+          </div>
       </div>
     `);
   }
 
   private addPlaylistButtons(
     modalDiv: HTMLElement,
-    onDeleteCallback: (playlistId: number) => void,
+    onDeleteCallback: (playlistId: number) => Promise<void>,
   ): void {
     const buttonsContainer = modalDiv.querySelector(
       '.playlists-modal__playlist_content',
@@ -54,7 +59,18 @@ export default class DeletePlaylistModalService {
       const playlistButton: HTMLElement = this.addPlaylistButton(playlist);
 
       playlistButton.addEventListener('click', async () => {
-        onDeleteCallback(playlist.id);
+        const loadingElement: HTMLElement | null =
+          document.getElementById('modal-loading');
+
+        if (!loadingElement) {
+          throw new Error('Could not find element with id: "modal-loading"');
+        }
+
+        loadingElement.classList.remove('loading_hidden');
+
+        await onDeleteCallback(playlist.id);
+
+        loadingElement.classList.add('loading_hidden');
       });
 
       buttonsContainer?.append(playlistButton);

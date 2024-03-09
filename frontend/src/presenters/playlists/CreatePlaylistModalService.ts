@@ -1,10 +1,12 @@
 import { createElement } from '../../utils/createElement';
 import ModalService from '../../utils/services/ModalService';
 
+import spinnerImage from '../../resources/img/spinner.png';
+
 export default class CreatePlaylistModalService {
   constructor(private readonly modalService: ModalService) {}
 
-  public open(onCreateCallback: (name: string) => void): void {
+  public open(onCreateCallback: (name: string) => Promise<void>): void {
     const modalElement: HTMLElement = this.createModalElement();
 
     this.setCreateHandler(modalElement, onCreateCallback);
@@ -37,6 +39,9 @@ export default class CreatePlaylistModalService {
                     Отменить
                 </div>
             </div>
+          <div class="loading loading_hidden modal-loading" id="modal-loading">
+            <img class="loading__spinner" src="${spinnerImage}" alt="Идёт загрузка">
+          </div>
         </div>
       </div>
     `);
@@ -44,7 +49,7 @@ export default class CreatePlaylistModalService {
 
   private setCreateHandler(
     modalElement: HTMLElement,
-    onCreateCallback: (name: string) => void,
+    onCreateCallback: (name: string) => Promise<void>,
   ): void {
     const button: HTMLElement | null = modalElement.querySelector(
       '.create-playlist__btn',
@@ -54,7 +59,7 @@ export default class CreatePlaylistModalService {
       throw new Error('.create-playlist__btn is not found');
     }
 
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       const input: HTMLElement | null = document.getElementById(
         'create-playlist-name',
       );
@@ -70,7 +75,18 @@ export default class CreatePlaylistModalService {
       const name: string = input.value.trim();
 
       if (name !== '') {
-        onCreateCallback(name);
+        const loadingElement: HTMLElement | null =
+          document.getElementById('modal-loading');
+
+        if (!loadingElement) {
+          throw new Error('Could not find element with id: "modal-loading"');
+        }
+
+        loadingElement.classList.remove('loading_hidden');
+
+        await onCreateCallback(name);
+
+        loadingElement.classList.add('loading_hidden');
       }
     });
   }
