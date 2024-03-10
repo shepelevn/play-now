@@ -1186,6 +1186,12 @@ body {
   gap: 20px;
 }
 
+.player__track__like-svg {
+  width: 22px;
+  height: 18px;
+  color: var(--color-promo);
+}
+
 .player__track-name {
   align-items: center;
   max-width: 388px;
@@ -1215,10 +1221,25 @@ body {
   margin-bottom: 10px;
 }
 
-.player__shaffle-btn svg,
-.player__repeat-btn svg {
+.player__shuffle-svg,
+.player__repeat-svg {
   width: 18px;
   height: 18px;
+}
+
+.player__skipback-svg,
+.player__skipnext-svg {
+  width: 16px;
+  height: 16px;
+}
+
+.player__skipnext-svg {
+  transform: rotate(180deg);
+}
+
+.player__volume-svg {
+  width: 12px;
+  height: 14px;
 }
 
 .player__controls {
@@ -1773,7 +1794,7 @@ body {
     margin: 0;
   }
 
-  .player__shaffle-btn,
+  .player__shuffle-btn,
   .player__skipback-btn,
   .player__skipnext-btn,
   .player__repeat-btn,
