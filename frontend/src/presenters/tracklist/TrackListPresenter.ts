@@ -12,6 +12,7 @@ import TrackPresenter from './TrackPresenter';
 import AddTrackModalService from './AddTrackModalService';
 import ModalService from '../../utils/services/ModalService';
 import PlayerModel from '../../model/PlayerModel';
+import { TracksType } from '../../types/TracksType';
 
 export default class TrackListPresenter {
   private readonly trackListComponent: TrackListComponent;
@@ -33,6 +34,7 @@ export default class TrackListPresenter {
     this.addTrackModalService = new AddTrackModalService(
       modalService,
       playlistsModel,
+      playerModel,
     );
   }
 
@@ -105,6 +107,16 @@ export default class TrackListPresenter {
       this.tracksModel.setAll(this.playlistsModel.get(playlistId).songs);
 
       this.onTracksChangeCallback();
+
+      if (
+        (this.playerModel.tracksType === TracksType.Playlist &&
+          this.playerModel.playlistId === this.tracksModel.playlistId) ||
+        this.playerModel.tracksType === this.tracksModel.tracksType
+      ) {
+        this.playerModel.originalTracks = this.tracksModel.all();
+        this.playerModel.track.index--;
+        this.playerModel.onTrackListChange();
+      }
     };
   }
 

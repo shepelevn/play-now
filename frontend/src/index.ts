@@ -126,6 +126,7 @@ function initPresenters(
   const playerPresenter: PlayerPresenter = new PlayerPresenter(
     rootElement,
     playerModel,
+    tracksModel,
   );
 
   // Create callbacks
@@ -155,7 +156,7 @@ function initPresenters(
 
   playerModel.onTrackChange = () => {
     // TODO: Delete later maybe
-    playerPresenter.render();
+    // playerPresenter.render();
 
     playerPresenter.load();
     playerPresenter.play();
@@ -163,11 +164,6 @@ function initPresenters(
 
   playerModel.onTrackListChange = () => {
     playerPresenter.onTrackListChange();
-    // TODO: Delete later maybe
-    playerPresenter.render();
-
-    playerPresenter.load();
-    playerPresenter.play();
   };
 }
 

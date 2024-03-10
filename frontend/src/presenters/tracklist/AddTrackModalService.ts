@@ -1,8 +1,11 @@
 import { addToPlaylist } from '../../api/playlists';
 import { PLAYLIST_IMAGES } from '../../components/playlists/playlistImages';
+import PlayerModel from '../../model/PlayerModel';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import { PlaylistData } from '../../types/PlaylistData';
+import { TracksType } from '../../types/TracksType';
 import { createElement } from '../../utils/createElement';
+import { generateIndexes } from '../../utils/generateIndexes';
 import { getTracksCountString } from '../../utils/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
@@ -10,6 +13,7 @@ export default class AddTrackModalService {
   constructor(
     private readonly modalService: ModalService,
     private readonly playlistsModel: PlaylistsModel,
+    private readonly playerModel: PlayerModel,
   ) {}
 
   public open(songId: number) {
@@ -72,6 +76,14 @@ export default class AddTrackModalService {
         );
 
         this.playlistsModel.update(playlist.id, newPlaylist);
+
+        if (
+          this.playerModel.tracksType === TracksType.Playlist &&
+          this.playerModel.playlistId === newPlaylist.id
+        ) {
+          this.playerModel.originalTracks = generateIndexes(newPlaylist.songs);
+          this.playerModel.onTrackListChange();
+        }
       });
 
       buttonsContainer?.append(playlistButton);

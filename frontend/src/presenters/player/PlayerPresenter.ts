@@ -7,6 +7,7 @@ import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 import { shuffleArray } from '../../utils/shuffleArray';
 import { generateIndexes } from '../../utils/generateIndexes';
 import { getTimeString } from '../../utils/getTimeString';
+import TracksModel from '../../model/TracksModel';
 
 export default class PlayerPresenter {
   private playerComponent: PlayerComponent;
@@ -22,6 +23,7 @@ export default class PlayerPresenter {
   constructor(
     private readonly parentElement: HTMLElement,
     private readonly playerModel: PlayerModel,
+    private readonly tracksModel: TracksModel,
   ) {
     // Left here so there would be no TypeScript initialization error
     this.playerComponent = new PlayerComponent(
@@ -92,6 +94,9 @@ export default class PlayerPresenter {
   }
 
   public onTrackListChange(): void {
+    this.playerModel.tracksType = this.tracksModel.tracksType;
+    this.playerModel.playlistId = this.tracksModel.playlistId;
+
     if (this.shuffle) {
       const playerNextTracks: TrackDataWithIndex[] = shuffleArray(
         this.playerModel.originalTracks.filter(
@@ -108,21 +113,19 @@ export default class PlayerPresenter {
         this.playerModel.originalTracks,
       );
 
-      const currentTrack: TrackDataWithIndex | undefined =
-        this.playerModel.tracks.filter(
-          (track) => track.id === this.playerModel.track.id,
-        )[0];
+      // TODO: Delete code later
+      // const currentTrack: TrackDataWithIndex | undefined =
+      //   this.playerModel.tracks.filter(
+      //     (track) => track.id === this.playerModel.track.id,
+      //   )[0];
 
-      if (!currentTrack) {
-        throw new Error(
-          `Track with id: ${this.playerModel.track.id} is not found`,
-        );
-      }
-
-      this.playerModel.track = currentTrack;
+      // if (!currentTrack) {
+      //   throw new Error(
+      //     `Track with id: ${this.playerModel.track.id} is not found`,
+      //   );
     }
 
-    this.render();
+    // this.playerModel.track = currentTrack;
   }
 
   public load(): void {
@@ -208,8 +211,6 @@ export default class PlayerPresenter {
     } finally {
       // Remove isLoading flag with delay to prevent fast clicking on tracks
       if (this.tracksChanged === 2) {
-        this.tracksChanged = 0;
-
         setTimeout(() => {
           this.playerModel.isLoading = false;
         }, 3000);
@@ -219,6 +220,10 @@ export default class PlayerPresenter {
         setTimeout(() => {
           this.playerModel.isLoading = false;
         }, 1000);
+
+        setTimeout(() => {
+          this.tracksChanged = 0;
+        }, 6_000);
       }
     }
   }
@@ -235,18 +240,34 @@ export default class PlayerPresenter {
       return;
     }
 
-    const currentIndex: number = this.playerModel.track.index;
-    const nextIndex: number =
-      (currentIndex + 1) % this.playerModel.tracks.length;
+    if (
+      !this.playerModel.tracks.filter(
+        (track) => track.id === this.playerModel.track.id,
+      )[0]
+    ) {
+      const firstTrack: TrackDataWithIndex | undefined =
+        this.playerModel.tracks[0];
 
-    const nextTrack: TrackDataWithIndex | undefined =
-      this.playerModel.tracks[nextIndex];
+      if (!firstTrack) {
+        return;
+      }
 
-    if (!nextTrack) {
-      throw new Error('Next track is undefined');
+      this.playerModel.track = firstTrack;
+    } else {
+      const currentIndex: number = this.playerModel.track.index;
+      const nextIndex: number =
+        (currentIndex + 1) % this.playerModel.tracks.length;
+
+      const nextTrack: TrackDataWithIndex | undefined =
+        this.playerModel.tracks[nextIndex];
+
+      if (!nextTrack) {
+        throw new Error('Next track is undefined');
+      }
+
+      this.playerModel.track = nextTrack;
     }
 
-    this.playerModel.track = nextTrack;
     this.playerModel.onTrackChange();
   }
 
@@ -255,19 +276,35 @@ export default class PlayerPresenter {
       return;
     }
 
-    const currentIndex: number = this.playerModel.track.index;
-    const tracksLength: number = this.playerModel.tracks.length;
-    const previousIndex: number =
-      (currentIndex - 1 + tracksLength) % tracksLength;
+    if (
+      !this.playerModel.tracks.filter(
+        (track) => track.id === this.playerModel.track.id,
+      )[0]
+    ) {
+      const firstTrack: TrackDataWithIndex | undefined =
+        this.playerModel.tracks[0];
 
-    const previousTrack: TrackDataWithIndex | undefined =
-      this.playerModel.tracks[previousIndex];
+      if (!firstTrack) {
+        return;
+      }
 
-    if (!previousTrack) {
-      throw new Error('Previous track is undefined');
+      this.playerModel.track = firstTrack;
+    } else {
+      const currentIndex: number = this.playerModel.track.index;
+      const tracksLength: number = this.playerModel.tracks.length;
+      const previousIndex: number =
+        (currentIndex - 1 + tracksLength) % tracksLength;
+
+      const previousTrack: TrackDataWithIndex | undefined =
+        this.playerModel.tracks[previousIndex];
+
+      if (!previousTrack) {
+        throw new Error('Previous track is undefined');
+      }
+
+      this.playerModel.track = previousTrack;
     }
 
-    this.playerModel.track = previousTrack;
     this.playerModel.onTrackChange();
   }
 

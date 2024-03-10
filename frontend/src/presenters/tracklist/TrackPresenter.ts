@@ -27,6 +27,7 @@ export default class TrackPresenter {
         this.playerModel.track = this.trackData;
         this.playerModel.originalTracks = this.tracksModel.all();
         this.playerModel.onTrackListChange();
+        this.playerModel.onTrackChange();
       }
     });
 
