@@ -1228,6 +1228,11 @@ body {
   flex-direction: column;
 }
 
+.player__play-svg {
+  width: 40px;
+  height: 40px;
+}
+
 .player__controls__header {
   align-self: center;
   display: flex;

@@ -1,6 +1,7 @@
 TODOs:
-
-  - 
+  
+  - Add animations to buttons maybe
+  - Add track like and dislike functionality to player
 
   - Check TODOs console.logs and alerts
   - Check for errors in console

@@ -2,22 +2,24 @@ import { SERVER_URL } from '../../api/apiConstants';
 import PlayerComponent from '../../components/player/PlayerComponent';
 import PlayerModel from '../../model/PlayerModel';
 import noUiSlider from 'nouislider';
+import { PlayerStatus } from '../../types/PlayerStatus';
 
 export default class PlayerPresenter {
   private readonly playerComponent: PlayerComponent;
   private readonly audioElement: HTMLAudioElement;
   private readonly audioContext: AudioContext;
+  private status: PlayerStatus = PlayerStatus.Playing;
 
   constructor(
     private readonly parentElement: HTMLElement,
     private readonly playerModel: PlayerModel,
   ) {
-    this.playerComponent = new PlayerComponent(this.playerModel.track);
+    this.playerComponent = new PlayerComponent(
+      this.playerModel.track,
+      this.status,
+    );
 
     this.render();
-
-    this.createTrackSlider();
-    this.createVolumeSlider();
 
     this.audioContext = new AudioContext();
     this.audioElement = this.load();
@@ -25,7 +27,27 @@ export default class PlayerPresenter {
   }
 
   public render(): void {
+    this.playerComponent.status = this.status;
+    this.playerComponent.removeElement();
     this.parentElement.append(this.playerComponent.getElement());
+
+    this.createTrackSlider();
+    this.createVolumeSlider();
+
+    this.playerComponent.addOnPlayListener(() => {
+      this.audioElement.play();
+
+      this.status = PlayerStatus.Playing;
+      this.render();
+    });
+
+    this.playerComponent.addOnStopListener(() => {
+      console.log('stop');
+      this.audioElement.pause();
+
+      this.status = PlayerStatus.Stopped;
+      this.render();
+    });
   }
 
   public load(): HTMLAudioElement {

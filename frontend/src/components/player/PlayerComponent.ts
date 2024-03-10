@@ -1,13 +1,25 @@
+import { PlayerStatus } from '../../types/PlayerStatus';
 import { TrackData } from '../../types/TrackData';
 import { getTimeString } from '../../utils/getTimeString';
 import Component from '../Component';
+import { renderSvgSprite } from '../../render/renderSvgSprite';
+
+import playSprite from '../../resources/svg/player-play.sprite.svg';
+import stopSprite from '../../resources/svg/stop.sprite.svg';
 
 export default class PlayerComponent extends Component {
-  constructor(private readonly trackData: TrackData) {
+  constructor(
+    private readonly trackData: TrackData,
+    public status: PlayerStatus,
+  ) {
     super();
   }
 
   public getTemplate(): string {
+    const centerButtonTemplate: string = this.getCenterButtonTemplate(
+      this.status,
+    );
+
     return `
       <footer class="footer">
         <div class="player flex">
@@ -36,12 +48,7 @@ export default class PlayerComponent extends Component {
       <path d="M3.5 2C3.63261 2 3.75978 2.05268 3.85355 2.14645C3.94732 2.24022 4 2.36739 4 2.5V7.10846L11.4786 2.53821C11.6302 2.44558 11.8037 2.39501 11.9813 2.39169C12.1589 2.38838 12.3342 2.43244 12.4892 2.51934C12.6441 2.60624 12.7731 2.73285 12.8629 2.88615C12.9527 3.03944 13 3.21389 13 3.39154V12.6085C12.9999 12.7861 12.9526 12.9605 12.8628 13.1137C12.773 13.267 12.644 13.3936 12.489 13.4805C12.3341 13.5674 12.1588 13.6114 11.9812 13.6081C11.8036 13.6048 11.6301 13.5543 11.4785 13.4618L4 8.89151V13.5C4 13.6326 3.94732 13.7598 3.85355 13.8536C3.75979 13.9473 3.63261 14 3.5 14C3.36739 14 3.24021 13.9473 3.14645 13.8536C3.05268 13.7598 3 13.6326 3 13.5V2.5C3 2.36739 3.05268 2.24022 3.14645 2.14645C3.24022 2.05268 3.36739 2 3.5 2Z" fill="#AAAAAA"/>
       </svg>
               </button>
-              <button class="player__play-btn">
-                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 20C0 8.95431 8.95431 0 20 0C31.0457 0 40 8.95431 40 20C40 31.0457 31.0457 40 20 40C8.95431 40 0 31.0457 0 20Z" fill="#AAAAAA"/>
-      <path d="M27.0385 21.4138C26.9679 21.4862 26.7012 21.7962 26.4528 22.0512C24.9963 23.655 21.197 26.28 19.2085 27.0813C18.9065 27.21 18.143 27.4825 17.735 27.5C17.3441 27.5 16.9715 27.41 16.6159 27.2275C16.1727 26.9725 15.8171 26.5713 15.6223 26.0975C15.4968 25.7688 15.302 24.785 15.302 24.7675C15.1072 23.6913 15 21.9425 15 20.01C15 18.1688 15.1072 16.4913 15.2667 15.3988C15.2849 15.3812 15.4798 14.1588 15.6929 13.74C16.0838 12.975 16.8473 12.5 17.6644 12.5H17.735C18.2672 12.5187 19.3863 12.9938 19.3863 13.0113C21.2677 13.8138 24.9793 16.31 26.471 17.9688C26.471 17.9688 26.8911 18.395 27.0738 18.6613C27.3587 19.0437 27.5 19.5175 27.5 19.9913C27.5 20.52 27.3405 21.0125 27.0385 21.4138Z" fill="white"/>
-      </svg>
-              </button>
+              ${centerButtonTemplate}
               <button class="player__skipnext-btn"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 0.5V11.5C10 11.6326 9.94732 11.7598 9.85355 11.8536C9.75979 11.9473 9.63261 12 9.5 12C9.36739 12 9.24021 11.9473 9.14645 11.8536C9.05268 11.7598 9 11.6326 9 11.5V6.89151L1.52148 11.4618C1.36989 11.5544 1.19636 11.605 1.01873 11.6083C0.841109 11.6116 0.665804 11.5676 0.510852 11.4807C0.355901 11.3938 0.226897 11.2672 0.137111 11.1139C0.0473251 10.9606 -1.32783e-06 10.7861 0 10.6085V1.39154C-2.12292e-06 1.21389 0.0473207 1.03944 0.137101 0.886149C0.226881 0.732854 0.355877 0.606243 0.51082 0.519338C0.665764 0.432434 0.841061 0.388374 1.01868 0.39169C1.1963 0.395007 1.36983 0.44558 1.52142 0.538208L9 5.10846V0.5C9 0.367392 9.05268 0.240215 9.14645 0.146447C9.24021 0.0526785 9.36739 0 9.5 0C9.63261 0 9.75979 0.0526785 9.85355 0.146447C9.94732 0.240215 10 0.367392 10 0.5Z" fill="#AAAAAA"/>
       </svg>
@@ -68,5 +75,42 @@ export default class PlayerComponent extends Component {
     `;
   }
 
-  public addPlay
+  public addOnPlayListener(callback: () => void): void {
+    const playButton: HTMLElement | null =
+      document.getElementById('player-play');
+
+    console.log('playButton');
+    console.log(playButton);
+
+    if (playButton) {
+      playButton.addEventListener('click', callback);
+    }
+  }
+
+  public addOnStopListener(callback: () => void): void {
+    const stopButton: HTMLElement | null =
+      document.getElementById('player-stop');
+
+    console.log('stopButton');
+    console.log(stopButton);
+
+    if (stopButton) {
+      stopButton.addEventListener('click', callback);
+      console.log('stop listener is binded');
+    }
+  }
+
+  private getCenterButtonTemplate(status: PlayerStatus): string {
+    return status === PlayerStatus.Stopped
+      ? `
+      <button class="player__play-btn" id="player-play">
+        ${renderSvgSprite(playSprite.url, 'player__play-svg')}
+      </button>
+    `
+      : `
+      <button class="player__play-btn" id="player-stop">
+        ${renderSvgSprite(stopSprite.url, 'player__play-svg')}
+      </button>
+      `;
+  }
 }
