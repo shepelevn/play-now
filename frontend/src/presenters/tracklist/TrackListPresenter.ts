@@ -121,6 +121,7 @@ export default class TrackListPresenter {
           trackListUl,
           trackData,
           this.playerModel,
+          this.tracksModel,
           this.createLikeCallback(trackData.id),
           this.createDropdownCallback(
             trackData.id,

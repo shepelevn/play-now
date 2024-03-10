@@ -390,11 +390,11 @@ template {
 }
 
 .noUi-marker-sub {
-  background: #aaa;
+  BACKGROUND: var(--color-grey-bg-btn);
 }
 
 .noUi-marker-large {
-  background: #aaa;
+  BACKGROUND: var(--color-grey-bg-btn);
 }
 
 .noUi-pips-horizontal {
@@ -559,8 +559,8 @@ body {
   --color-greytxt: #A4A4A4;
   --color-lightgreytxt: #C4C4C4;
   --color-greybg: #F5F5F5;
-  --color-greyDarkerbg: #E8E8E8;
-  --color-greyBgBtn: #AAAAAA;
+  --color-grey-darker-bg: #E8E8E8;
+  --color-grey-bg-btn: #AAAAAA;
   --color-promo: #FC6D3E;
   --transition-duration: .3s;
 }
@@ -703,7 +703,7 @@ body {
 
 .track__btn-dropdown:focus {
   outline: none;
-  border-color: var(--color-greyBgBtn);
+  border-color: var(--color-grey-bg-btn);
 }
 
 .track__btn-dropdown:focus circle {
@@ -782,7 +782,7 @@ body {
 
 .header__search__field:focus-visible,
 .header__user:focus-visible {
-  outline-color: var(--color-greyDarkerbg);
+  outline-color: var(--color-grey-darker-bg);
 }
 
 .logo__icone,
@@ -804,7 +804,7 @@ body {
 
 .header__user:active {
   opacity: 1;
-  background-color: var(--color-greyDarkerbg);
+  background-color: var(--color-grey-darker-bg);
 }
 
 .aside__btn:focus {
@@ -1024,8 +1024,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  border-top: 1px solid var(--color-greyDarkerbg);
-  border-bottom: 1px solid var(--color-greyDarkerbg);
+  border-top: 1px solid var(--color-grey-darker-bg);
+  border-bottom: 1px solid var(--color-grey-darker-bg);
 }
 
 .track__author {
@@ -1249,6 +1249,24 @@ body {
   flex-direction: column;
 }
 
+.player__svg {
+  color: var(--color-grey-bg-btn);
+}
+
+.player__svg_active {
+  color: var(--color-promo);
+}
+
+.player__command-btn {
+  color: var(--color-grey-bg-btn);
+
+  /* transition: color ease-in-out var(--transition-duration); */
+}
+
+.player__command-btn:active {
+  color: var(--color-promo);
+}
+
 .player__play-svg {
   width: 40px;
   height: 40px;
@@ -1303,7 +1321,7 @@ body {
 
 .player__controls .noUi-connects,
 .player__volume-range .noUi-connects {
-  background-color: var(--color-greyDarkerbg);
+  background-color: var(--color-grey-darker-bg);
 }
 
 .player__controls .noUi-horizontal,
@@ -1374,7 +1392,7 @@ body {
   left: 50%;
   transform: translate(-50%, -60%);
   z-index: 5;
-  border: 1px solid #AAAAAA;
+  border: 1px solid VAR(--color-grey-bg-btn);
 }
 
 .playlists-modal {
@@ -1413,7 +1431,7 @@ body {
 .playlists-modal__playlist__image {
   width: 40px;
   height: 40px;
-  background: #AAAAAA;
+  background: VAR(--color-grey-bg-btn);
   float: left;
 }
 
@@ -1432,7 +1450,7 @@ body {
   padding-top: 4px;
   width: 228px;
   font-size: 12px;
-  color: #AAAAAA;
+  color: VAR(--color-grey-bg-btn);
   display: inline-block;
 }
 
@@ -1450,7 +1468,7 @@ body {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  background: #AAAAAA;
+  background: VAR(--color-grey-bg-btn);
   color: #171717;
   font-size: 14px;
   width: 114px;
@@ -1498,7 +1516,7 @@ body {
   }
 
   .track__btn-dropdown:hover {
-    border-color: var(--color-greyBgBtn);
+    border-color: var(--color-grey-bg-btn);
   }
 
   .track__dropdown button:hover {

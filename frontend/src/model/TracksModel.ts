@@ -3,6 +3,7 @@ import { ScreenState } from '../types/ScreenState';
 import { TrackData } from '../types/TrackData';
 import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
 import { TracksType } from '../types/TracksType';
+import {generateIndexes} from '../utils/generateIndexes';
 import { noop } from '../utils/noop';
 
 export default class TracksModel {
@@ -24,6 +25,10 @@ export default class TracksModel {
         track.album.name.toLowerCase().includes(filter)
       );
     });
+  }
+
+  public all(): TrackDataWithIndex[] {
+    return this.tracks;
   }
 
   public setAll(tracks: TrackData[]) {
@@ -63,9 +68,12 @@ export default class TracksModel {
   }
 
   private recalculateIndexes(): void {
-    this.tracks.map((track, index) => {
-      track.index = index;
-      return track;
-    });
+    // TODO: Delete later
+    // this.tracks.map((track, index) => {
+    //   track.index = index;
+    //   return track;
+    // });
+
+    this.tracks = generateIndexes(this.tracks);
   }
 }

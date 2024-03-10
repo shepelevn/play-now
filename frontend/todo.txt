@@ -1,7 +1,10 @@
 TODOs:
   
-  - Add animations to buttons maybe
   - Add track like and dislike functionality to player
+  - Add player model tracks refresh on adding or deleting songs
+  - Add search on mobile
+  - Add loading style for player element
+  - Add flash for timeout in song loading
 
   - Check TODOs console.logs and alerts
   - Check for errors in console

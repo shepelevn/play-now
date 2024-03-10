@@ -20,11 +20,11 @@ import { ModelStatus } from './types/ModelStatus';
 import { TracksType } from './types/TracksType';
 import { PlaylistData } from './types/PlaylistData';
 import PlayerModel from './model/PlayerModel';
-import { TrackData } from './types/TrackData';
 import { SidebarButtonType } from './types/SidebarButtonType';
 import 'nouislider/dist/nouislider.css';
 
 import './resources/css/style.css';
+import { TrackDataWithIndex } from './types/TracksDataWithIndex';
 
 init();
 
@@ -43,13 +43,17 @@ async function init(): Promise<void> {
   tracksModel.setAll(await loadTracks(''));
   tracksModel.status = ModelStatus.Success;
 
-  const firstSong: TrackData | undefined = tracksModel.allWithSearch()[0];
+  const firstSong: TrackDataWithIndex | undefined =
+    tracksModel.allWithSearch()[0];
 
   if (!firstSong) {
     throw new Error('firstSong is not found');
   }
 
-  const playerModel: PlayerModel = new PlayerModel(firstSong);
+  const playerModel: PlayerModel = new PlayerModel(
+    firstSong,
+    tracksModel.all(),
+  );
 
   const playlistsModel: PlaylistsModel = new PlaylistsModel();
 
@@ -149,9 +153,21 @@ function initPresenters(
     screenPresenter.render();
   };
 
-  playerModel.onChange = () => {
+  playerModel.onTrackChange = () => {
+    // TODO: Delete later maybe
     playerPresenter.render();
+
     playerPresenter.load();
+    playerPresenter.play();
+  };
+
+  playerModel.onTrackListChange = () => {
+    playerPresenter.onTrackListChange();
+    // TODO: Delete later maybe
+    playerPresenter.render();
+
+    playerPresenter.load();
+    playerPresenter.play();
   };
 }
 
