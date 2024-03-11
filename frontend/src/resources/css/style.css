@@ -678,6 +678,10 @@ body {
   width: 20%;
 }
 
+.player-loading .loading__spinner {
+  width: 40px;
+}
+
 .common-input {
     font-weight: 400;
     height: 30px;

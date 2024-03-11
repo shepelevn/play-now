@@ -31,6 +31,7 @@ export default class PlayerPresenter {
       this.status,
       this.shuffle,
       this.repeat,
+      this.playerModel.isLoading,
     );
 
     this.audioContext = new AudioContext();
@@ -53,6 +54,7 @@ export default class PlayerPresenter {
       this.status,
       this.shuffle,
       this.repeat,
+      this.playerModel.isLoading,
     );
 
     this.parentElement.append(this.playerComponent.getElement());
@@ -182,22 +184,30 @@ export default class PlayerPresenter {
 
   public async play(): Promise<void> {
     this.playerModel.isLoading = true;
+    let isTimeout = false;
     try {
       const loadTimeoutId = setTimeout(() => {
+        console.log('timeout');
+
         this.playerModel.isLoading = false;
+        isTimeout = true;
 
         this.audioElement.pause();
         this.audioElement.remove();
 
         this.audioContext.close();
         this.audioContext = new AudioContext();
-      }, 20_000);
+
+        this.render();
+      }, 10_000);
+
+      this.render();
 
       await this.audioElement.play();
 
       clearTimeout(loadTimeoutId);
 
-      if (!this.playerModel.isLoading) {
+      if (isTimeout) {
         this.audioElement.pause();
         return;
       }
@@ -213,17 +223,19 @@ export default class PlayerPresenter {
       if (this.tracksChanged === 2) {
         setTimeout(() => {
           this.playerModel.isLoading = false;
+          this.render();
         }, 3000);
       } else {
         this.tracksChanged++;
 
         setTimeout(() => {
           this.playerModel.isLoading = false;
+          this.render();
         }, 1000);
 
         setTimeout(() => {
           this.tracksChanged = 0;
-        }, 6_000);
+        }, 12_000);
       }
     }
   }

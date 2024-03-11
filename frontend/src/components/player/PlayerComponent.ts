@@ -4,6 +4,7 @@ import { getTimeString } from '../../utils/getTimeString';
 import Component from '../Component';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
 
+import spinnerImage from '../../resources/img/spinner.png';
 import playSprite from '../../resources/svg/player-play.sprite.svg';
 import stopSprite from '../../resources/svg/stop.sprite.svg';
 import heartSprite from '../../resources/svg/heart.sprite.svg';
@@ -18,6 +19,7 @@ export default class PlayerComponent extends Component {
     private readonly status: PlayerStatus,
     private readonly shuffle: boolean,
     private readonly repeat: boolean,
+    private readonly isLoading: boolean,
   ) {
     super();
   }
@@ -27,20 +29,33 @@ export default class PlayerComponent extends Component {
       this.status,
     );
 
+    const songInfoContent: string = this.isLoading
+      ? `
+      <div class="player__track-name flex">
+        <div class="loading loading_small player-loading">
+          <img class="loading__spinner" src="${spinnerImage}" alt="Идёт загрузка">
+        </div>
+      </div>
+    `
+      : `
+      <div class="player__track-name flex">
+        <img class="player__track__img" src="${this.trackData.image}" alt="${this.trackData.name} - ${this.trackData.artist.name}">
+        <div class="player__track-name__content">
+          <div class="flex player__name__header">
+            <h3 class="player__track__h3">${this.trackData.name}</h3>
+            <button class="player__track__like">
+              ${renderSvgSprite(heartSprite.url, 'player__track__like-svg')}
+            </button>
+          </div>
+          <p class="player__track__author">${this.trackData.artist.name}</p>
+        </div>
+      </div>
+    `;
+
     return `
       <footer class="footer">
         <div class="player flex">
-          <div class="player__track-name flex"><img class="player__track__img" src="${this.trackData.image}" alt="${this.trackData.name} - ${this.trackData.artist.name}">
-            <div class="player__track-name__content">
-              <div class="flex player__name__header">
-                <h3 class="player__track__h3">${this.trackData.name}</h3>
-                <button class="player__track__like">
-                  ${renderSvgSprite(heartSprite.url, 'player__track__like-svg')}
-                </button>
-              </div>
-              <p class="player__track__author">${this.trackData.artist.name}</p>
-            </div>
-          </div>
+          ${songInfoContent}
           <div class="player__controls">
             <div class="player__controls__header">
               <button class="player__shuffle-btn" id="player-shuffle">
