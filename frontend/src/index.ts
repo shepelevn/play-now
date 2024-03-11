@@ -22,6 +22,7 @@ import { PlaylistData } from './types/PlaylistData';
 import PlayerModel from './model/PlayerModel';
 import { SidebarButtonType } from './types/SidebarButtonType';
 import 'nouislider/dist/nouislider.css';
+import '../node_modules/izitoast/dist/css/iziToast.min.css';
 
 import './resources/css/style.css';
 import { TrackDataWithIndex } from './types/TracksDataWithIndex';

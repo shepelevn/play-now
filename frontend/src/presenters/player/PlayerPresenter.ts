@@ -8,6 +8,7 @@ import { shuffleArray } from '../../utils/shuffleArray';
 import { generateIndexes } from '../../utils/generateIndexes';
 import { getTimeString } from '../../utils/getTimeString';
 import TracksModel from '../../model/TracksModel';
+import {ToastType, showToast} from '../../utils/showToast';
 
 export default class PlayerPresenter {
   private playerComponent: PlayerComponent;
@@ -175,19 +176,12 @@ export default class PlayerPresenter {
     return audioElement;
   }
 
-  // TODO: Delete later
-  // private async loadFile(path: string): Promise<AudioBuffer> {
-  //   const buffer: ArrayBuffer = await loadTrackFile(path);
-
-  //   return await this.audioContext.decodeAudioData(buffer);
-  // }
-
   public async play(): Promise<void> {
     this.playerModel.isLoading = true;
     let isTimeout = false;
     try {
       const loadTimeoutId = setTimeout(() => {
-        console.log('timeout');
+        showToast(ToastType.Danger, '', 'Не удалось загрузить трек.');
 
         this.playerModel.isLoading = false;
         isTimeout = true;

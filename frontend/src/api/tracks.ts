@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_SERVER_URL, SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL, USERNAME } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { ShortTrackData } from '../types/ShortTrackData';
 
@@ -32,13 +32,6 @@ async function loadTrack(id: number): Promise<TrackData> {
   );
 
   return response.data;
-}
-
-// TODO: Delete later
-export async function loadTrackFile(path: string): Promise<ArrayBuffer> {
-  const response: AxiosResponse = await axios.get(`${SERVER_URL}/${path}`);
-
-  return response.data.arrayBuffer;
 }
 
 export async function postLike(trackId: number): Promise<void> {

@@ -68,12 +68,6 @@ export default class TracksModel {
   }
 
   private recalculateIndexes(): void {
-    // TODO: Delete later
-    // this.tracks.map((track, index) => {
-    //   track.index = index;
-    //   return track;
-    // });
-
     this.tracks = generateIndexes(this.tracks);
   }
 }
