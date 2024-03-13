@@ -15,7 +15,7 @@ export default class PlayerPresenter {
   private audioElement: HTMLAudioElement;
   private audioContext: AudioContext;
   private status: PlayerStatus = PlayerStatus.Stopped;
-  private volume: number = 0.5;
+  private volume: number = 1;
   private shuffle: boolean = false;
   private repeat: boolean = false;
   private trackSlider: API | null = null;
@@ -123,6 +123,8 @@ export default class PlayerPresenter {
         this.playerModel.originalTracks,
       );
     }
+
+    this.render();
   }
 
   public load(): void {
@@ -150,7 +152,11 @@ export default class PlayerPresenter {
       });
 
       this.audioElement.addEventListener('ended', () => {
-        this.loadNextTrack();
+        if (this.repeat) {
+          this.audioElement.play();
+        } else {
+          this.loadNextTrack();
+        }
       });
     });
   }

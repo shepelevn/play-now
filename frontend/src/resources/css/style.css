@@ -760,6 +760,10 @@ body {
   outline: none;
 }
 
+.aside__item:last-child {
+  margin-bottom: 70px;
+}
+
 .aside__search {
   display: none;
   max-width: 1010px;
@@ -1749,6 +1753,10 @@ body {
     margin-right: 30px;
   }
 
+  .tracks__item:last-child {
+    margin-bottom: 60px;
+  }
+
   .tracks__item__albom {
     display: none;
   }
@@ -1912,5 +1920,9 @@ body {
 
   .aside {
     padding: 20px 16px;
+  }
+
+  .tracks__item:last-child {
+    margin-bottom: 0;
   }
 }
