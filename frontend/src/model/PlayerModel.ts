@@ -1,11 +1,12 @@
 import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
 import { TracksType } from '../types/TracksType';
-import { noop } from '../utils/noop';
+import { notInitialized } from '../utils/notInitialized';
 
 export default class PlayerModel {
-  public onTrackInfoChange: (trackData: TrackDataWithIndex) => void = noop;
-  public onTrackChange: () => void = noop;
-  public onTrackListChange: () => void = noop;
+  public onTrackInfoChange: (trackData: TrackDataWithIndex) => void =
+    notInitialized;
+  public onTrackChange: () => void = notInitialized;
+  public onTrackListChange: () => void = notInitialized;
   public tracks: TrackDataWithIndex[];
   public isLoading: boolean = false;
 

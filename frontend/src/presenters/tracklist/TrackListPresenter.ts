@@ -3,7 +3,7 @@ import TrackListComponent from '../../components/trackList/TrackListComponent';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import TracksModel from '../../model/TracksModel';
 import DropdownService from '../../utils/services/DropdownService';
-import { noop } from '../../utils/noop';
+import { notInitialized } from '../../utils/notInitialized';
 import TrackDropdownService from './TrackDropdownService';
 import TrackPresenter from './TrackPresenter';
 import AddTrackModalService from './AddTrackModalService';
@@ -16,9 +16,8 @@ export default class TrackListPresenter {
   private readonly trackListComponent: TrackListComponent;
   private readonly trackDropdownService;
   private readonly addTrackModalService: AddTrackModalService;
-  public onTracksChangeCallback: () => void = noop;
   public createLikeCallback: (trackData: TrackDataWithIndex) => () => void =
-    () => noop;
+    () => notInitialized;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -76,7 +75,7 @@ export default class TrackListPresenter {
       this.playlistsModel.removeTrack(playlistId, trackId);
       this.tracksModel.setAll(this.playlistsModel.get(playlistId).songs);
 
-      this.onTracksChangeCallback();
+      this.playlistsModel.onChange();
 
       if (
         (this.playerModel.tracksType === TracksType.Playlist &&

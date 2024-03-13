@@ -1,8 +1,8 @@
-import { noop } from '../noop';
+import { notInitialized } from '../notInitialized';
 
 export default class DropdownService {
   private currentDropdown: HTMLElement | null = null;
-  private listenerCallback: () => void = noop;
+  private listenerCallback: () => void = notInitialized;
   private isOpen: boolean = false;
   private previousContainer: HTMLElement | null = null;
 

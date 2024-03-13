@@ -15,13 +15,14 @@ import DeletePlaylistModalService from '../tracklist/DeletePlaylistModalService'
 import { PlaylistData } from '../../types/PlaylistData';
 import { ModelStatus } from '../../types/ModelStatus';
 import PlaylistCardPresenter from './PlaylistCardPresenter';
-import { noop } from '../../utils/noop';
+import { notInitialized } from '../../utils/notInitialized';
 
 export default class PlaylistsPresenter {
   private readonly playlistsComponent: PlaylistsComponent;
   private readonly createPlaylistModalService: CreatePlaylistModalService;
   private readonly deletePlaylistModalService: DeletePlaylistModalService;
-  public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
+  public changeToPlaylist: (playlistData: PlaylistData) => void =
+    notInitialized;
 
   constructor(
     private readonly parentElement: HTMLElement,

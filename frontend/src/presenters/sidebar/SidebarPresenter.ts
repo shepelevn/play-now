@@ -2,7 +2,7 @@ import SidebarComponent from '../../components/sidebar/SidebarComponent';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
 import { ScreenState } from '../../types/ScreenState';
-import { noop } from '../../utils/noop';
+import { notInitialized } from '../../utils/notInitialized';
 
 import NoteSvg from '../../resources/svg/note.sprite.svg';
 import PlaySvg from '../../resources/svg/play.sprite.svg';
@@ -16,9 +16,10 @@ import { SidebarButtonType } from '../../types/SidebarButtonType';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
-  public loadTracksCallback: () => void = noop;
-  public searchChangeCallback: () => void = noop;
-  public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
+  public loadTracksCallback: () => void = notInitialized;
+  public searchChangeCallback: () => void = notInitialized;
+  public changeToPlaylist: (playlistData: PlaylistData) => void =
+    notInitialized;
   public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
 
   constructor(

@@ -1,10 +1,10 @@
 import SearchComponent from '../../components/header/SearchComponent';
 import TracksModel from '../../model/TracksModel';
-import { noop } from '../../utils/noop';
+import { notInitialized } from '../../utils/notInitialized';
 
 export default class SearchPresenter {
   private readonly searchComponent: SearchComponent;
-  public searchChangeCallback: () => void = noop;
+  public searchChangeCallback: () => void = notInitialized;
 
   constructor(
     private readonly parentElement: HTMLElement,

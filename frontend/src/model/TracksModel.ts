@@ -4,7 +4,7 @@ import { TrackData } from '../types/TrackData';
 import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
 import { TracksType } from '../types/TracksType';
 import { generateIndexes } from '../utils/tracks/generateIndexes';
-import { noop } from '../utils/noop';
+import { notInitialized } from '../utils/notInitialized';
 
 export default class TracksModel {
   private tracks: TrackDataWithIndex[] = [];
@@ -13,7 +13,7 @@ export default class TracksModel {
   public playlistId: number | null = null;
   public tracksType: TracksType = TracksType.Tracks;
   public tracksTitle: string = 'Треки';
-  public onChange: (state: ScreenState) => void = noop;
+  public onChange: (state: ScreenState) => void = notInitialized;
 
   public allWithSearch(): TrackDataWithIndex[] {
     return this.tracks.filter((track: TrackData) => {
