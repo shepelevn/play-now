@@ -1,7 +1,5 @@
 TODOs:
   
-  - Write readme
-
   - Make accessible
   - Test after getting better backend
 
