@@ -1,11 +1,15 @@
 TODOs:
   
-  - Add track like and dislike functionality to player
-
   - Add search on mobile
 
-  - Check with throttling
   - Create subfolders for utils functions
+
+  - Check with throttling
+
+  - Change variable names from track to song maybe
+
+  - Test
+  - Reread task document
 
   - Make accessible
   - Test after getting better backend

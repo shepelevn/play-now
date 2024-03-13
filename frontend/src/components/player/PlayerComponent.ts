@@ -12,6 +12,7 @@ import shuffleSprite from '../../resources/svg/shuffle.sprite.svg';
 import skipBackSprite from '../../resources/svg/skip-back.sprite.svg';
 import repeatSprite from '../../resources/svg/repeat.sprite.svg';
 import volumeSprite from '../../resources/svg/volume.sprite.svg';
+import { isTrackLiked } from '../../utils/isTrackLiked';
 
 export default class PlayerComponent extends Component {
   constructor(
@@ -29,6 +30,8 @@ export default class PlayerComponent extends Component {
       this.status,
     );
 
+    const isLiked = isTrackLiked(this.trackData);
+
     const songInfoContent: string = this.isLoading
       ? `
       <div class="player__track-name flex">
@@ -43,7 +46,7 @@ export default class PlayerComponent extends Component {
         <div class="player__track-name__content">
           <div class="flex player__name__header">
             <h3 class="player__track__h3">${this.trackData.name}</h3>
-            <button class="player__track__like">
+            <button class="player__track__like ${isLiked ? 'player__track__like_active' : ''}" id="player-like">
               ${renderSvgSprite(heartSprite.url, 'player__track__like-svg')}
             </button>
           </div>
@@ -145,6 +148,17 @@ export default class PlayerComponent extends Component {
     }
 
     repeatButton.addEventListener('click', callback);
+  }
+
+  public addOnLikeListener(callback: () => void) {
+    const likeButton: HTMLElement | null =
+      document.getElementById('player-like');
+
+    if (!likeButton) {
+      throw new Error('Button with id: player-like is not found');
+    }
+
+    likeButton.addEventListener('click', callback);
   }
 
   private getCenterButtonTemplate(status: PlayerStatus): string {

@@ -13,7 +13,7 @@ import PlaylistsModel from './model/PlaylistsModel';
 import { ScreenState } from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
-import { loadTracks } from './api/tracks';
+import { loadTracks, postDislike, postLike } from './api/tracks';
 import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
 import { ModelStatus } from './types/ModelStatus';
@@ -26,6 +26,8 @@ import '../node_modules/izitoast/dist/css/iziToast.min.css';
 
 import './resources/css/style.css';
 import { TrackDataWithIndex } from './types/TracksDataWithIndex';
+import { isTrackLiked } from './utils/isTrackLiked';
+import { USERNAME } from './api/apiConstants';
 
 init();
 
@@ -128,6 +130,7 @@ function initPresenters(
     rootElement,
     playerModel,
     tracksModel,
+    createLikeCallbackCreator(playerModel),
   );
 
   // Create callbacks
@@ -140,10 +143,9 @@ function initPresenters(
   // Add callbacks to presenters
   sidebarPresenter.loadTracksCallback = loadTracksCallback;
   sidebarPresenter.changeToPlaylist = changeToPlaylist;
-
-  trackListPresenter.onTracksChangeCallback = () => screenPresenter.render();
-
   playlistsPresenter.changeToPlaylist = changeToPlaylist;
+  trackListPresenter.createLikeCallback =
+    createLikeCallbackCreator(playerModel);
 
   // Create callbacks for models
   tracksModel.onChange = (state: ScreenState) => {
@@ -153,6 +155,21 @@ function initPresenters(
   playlistsModel.onChange = () => {
     sidebarPresenter.render();
     screenPresenter.render();
+  };
+
+  playerModel.onTrackInfoChange = (trackData: TrackDataWithIndex) => {
+    screenPresenter.render();
+
+    if (playerModel.track.id === trackData.id) {
+      console.log('hit');
+      const index = playerModel.track.index;
+      playerModel.track = trackData;
+      playerModel.track.index = index;
+
+      playerPresenter.render();
+    }
+
+    playlistsModel.updateTrack(trackData);
   };
 
   playerModel.onTrackChange = () => {
@@ -167,6 +184,8 @@ function initPresenters(
     playerPresenter.onTrackListChange();
   };
 }
+
+// TODO: Move to their own files
 
 function createChangeToPlaylistCallback(
   tracksModel: TracksModel,
@@ -197,5 +216,37 @@ function createLoadTracksCallback(tracksModel: TracksModel): () => void {
     tracksModel.status = ModelStatus.Success;
 
     tracksModel.onChange(ScreenState.Tracks);
+  };
+}
+
+function createLikeCallbackCreator(
+  playerModel: PlayerModel,
+): (trackData: TrackDataWithIndex) => () => void {
+  return (trackData: TrackDataWithIndex) => {
+    let loading = false;
+
+    return async () => {
+      if (loading) {
+        return;
+      } else {
+        loading = true;
+      }
+
+      if (!isTrackLiked(trackData)) {
+        await postLike(trackData.id);
+
+        trackData.likes.push({ username: USERNAME });
+      } else {
+        await postDislike(trackData.id);
+
+        trackData.likes = trackData.likes.filter(
+          (like) => like.username !== USERNAME,
+        );
+      }
+
+      playerModel.onTrackInfoChange(trackData);
+
+      loading = false;
+    };
   };
 }

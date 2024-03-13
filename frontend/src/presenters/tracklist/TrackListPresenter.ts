@@ -1,11 +1,8 @@
-import { USERNAME } from '../../api/apiConstants';
 import { removeFromPlaylist } from '../../api/playlists';
-import { postDislike, postLike } from '../../api/tracks';
 import TrackListComponent from '../../components/trackList/TrackListComponent';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import TracksModel from '../../model/TracksModel';
 import DropdownService from '../../utils/services/DropdownService';
-import { isTrackLiked } from '../../utils/isTrackLiked';
 import { noop } from '../../utils/noop';
 import TrackDropdownService from './TrackDropdownService';
 import TrackPresenter from './TrackPresenter';
@@ -13,12 +10,15 @@ import AddTrackModalService from './AddTrackModalService';
 import ModalService from '../../utils/services/ModalService';
 import PlayerModel from '../../model/PlayerModel';
 import { TracksType } from '../../types/TracksType';
+import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 
 export default class TrackListPresenter {
   private readonly trackListComponent: TrackListComponent;
   private readonly trackDropdownService;
   private readonly addTrackModalService: AddTrackModalService;
   public onTracksChangeCallback: () => void = noop;
+  public createLikeCallback: (trackData: TrackDataWithIndex) => () => void =
+    () => noop;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -36,36 +36,6 @@ export default class TrackListPresenter {
       playlistsModel,
       playerModel,
     );
-  }
-
-  private createLikeCallback(id: number) {
-    let loading = false;
-
-    return async () => {
-      if (loading) {
-        return;
-      } else {
-        loading = true;
-      }
-
-      const trackData = this.tracksModel.get(id);
-
-      if (!isTrackLiked(trackData)) {
-        await postLike(trackData.id);
-
-        trackData.likes.push({ username: USERNAME });
-      } else {
-        await postDislike(trackData.id);
-
-        trackData.likes = trackData.likes.filter(
-          (like) => like.username !== USERNAME,
-        );
-      }
-
-      this.onTracksChangeCallback();
-
-      loading = false;
-    };
   }
 
   private createAddModalCallback(id: number): () => void {
@@ -134,7 +104,7 @@ export default class TrackListPresenter {
           trackData,
           this.playerModel,
           this.tracksModel,
-          this.createLikeCallback(trackData.id),
+          this.createLikeCallback(trackData),
           this.createDropdownCallback(
             trackData.id,
             this.createDeleteCallback(trackData.id),

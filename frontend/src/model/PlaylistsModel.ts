@@ -1,5 +1,6 @@
 import { ModelStatus } from '../types/ModelStatus';
 import { PlaylistData } from '../types/PlaylistData';
+import { TrackData } from '../types/TrackData';
 import { noop } from '../utils/noop';
 
 export const PLAYLIST_IMAGES_COUNT = 8;
@@ -29,6 +30,16 @@ export default class PlaylistsModel {
     const index = this.playlists.findIndex((playlist) => playlist.id === id);
 
     this.playlists[index] = newPlaylist;
+  }
+
+  public updateTrack(track: TrackData): void {
+    for (const playlist of this.playlists) {
+      const index: number = playlist.songs.findIndex(
+        (song) => song.id === track.id,
+      );
+
+      playlist.songs[index] = track;
+    }
   }
 
   public getFilteredForAddition(trackId: number): PlaylistData[] {

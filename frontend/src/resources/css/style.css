@@ -1190,10 +1190,17 @@ body {
   gap: 20px;
 }
 
+.player__track__like {
+  color: var(--color-grey-bg-btn);
+}
+
+.player__track__like_active {
+  color: var(--color-promo);
+}
+
 .player__track__like-svg {
   width: 22px;
   height: 18px;
-  color: var(--color-promo);
 }
 
 .player__track-name {
@@ -1509,10 +1516,6 @@ body {
 
   .track__name__link:hover::before {
     border-color: var(--color-promo);
-  }
-
-  .track__like-btn:hover svg {
-    color: var(--color-promo);
   }
 
   .track__btn-dropdown:hover circle {

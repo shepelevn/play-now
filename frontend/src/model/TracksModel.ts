@@ -35,7 +35,7 @@ export default class TracksModel {
     this.tracks = tracks.map((track, index) => Object.assign(track, { index }));
   }
 
-  public get(id: number): TrackData {
+  public get(id: number): TrackDataWithIndex {
     return this.findById(id);
   }
 
@@ -57,7 +57,7 @@ export default class TracksModel {
     this.recalculateIndexes();
   }
 
-  private findById(id: number): TrackData {
+  private findById(id: number): TrackDataWithIndex {
     const track = this.tracks.filter((track) => track.id === id)[0];
 
     if (!track) {

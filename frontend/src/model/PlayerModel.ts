@@ -3,6 +3,7 @@ import { TracksType } from '../types/TracksType';
 import { noop } from '../utils/noop';
 
 export default class PlayerModel {
+  public onTrackInfoChange: (trackData: TrackDataWithIndex) => void = noop;
   public onTrackChange: () => void = noop;
   public onTrackListChange: () => void = noop;
   public tracks: TrackDataWithIndex[];

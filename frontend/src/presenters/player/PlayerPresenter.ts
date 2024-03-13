@@ -8,7 +8,7 @@ import { shuffleArray } from '../../utils/shuffleArray';
 import { generateIndexes } from '../../utils/generateIndexes';
 import { getTimeString } from '../../utils/getTimeString';
 import TracksModel from '../../model/TracksModel';
-import {ToastType, showToast} from '../../utils/showToast';
+import { ToastType, showToast } from '../../utils/showToast';
 
 export default class PlayerPresenter {
   private playerComponent: PlayerComponent;
@@ -25,6 +25,9 @@ export default class PlayerPresenter {
     private readonly parentElement: HTMLElement,
     private readonly playerModel: PlayerModel,
     private readonly tracksModel: TracksModel,
+    private readonly createLikeCallback: (
+      trackData: TrackDataWithIndex,
+    ) => () => void,
   ) {
     // Left here so there would be no TypeScript initialization error
     this.playerComponent = new PlayerComponent(
@@ -94,6 +97,10 @@ export default class PlayerPresenter {
 
       this.render();
     });
+
+    this.playerComponent.addOnLikeListener(
+      this.createLikeCallback(this.playerModel.track),
+    );
   }
 
   public onTrackListChange(): void {
