@@ -4,9 +4,9 @@ import PlayerModel from '../../model/PlayerModel';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import { PlaylistData } from '../../types/PlaylistData';
 import { TracksType } from '../../types/TracksType';
-import { createElement } from '../../utils/createElement';
-import { generateIndexes } from '../../utils/generateIndexes';
-import { getTracksCountString } from '../../utils/getTracksCountString';
+import { createElement } from '../../utils/dom/createElement';
+import { generateIndexes } from '../../utils/tracks/generateIndexes';
+import { getTracksCountString } from '../../utils/tracks/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
 export default class AddTrackModalService {

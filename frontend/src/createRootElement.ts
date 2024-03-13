@@ -1,4 +1,4 @@
-import { createElement } from './utils/createElement';
+import { createElement } from './utils/dom/createElement';
 
 export function createRootElement(): HTMLElement {
   document.body.innerHTML = '';

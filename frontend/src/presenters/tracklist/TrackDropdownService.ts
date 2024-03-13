@@ -1,5 +1,5 @@
 import DropdownService from '../../utils/services/DropdownService';
-import { createElement } from '../../utils/createElement';
+import { createElement } from '../../utils/dom/createElement';
 
 export default class TrackDropdownService {
   private currentDropdownButton: HTMLElement | null = null;

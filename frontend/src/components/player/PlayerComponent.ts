@@ -12,7 +12,7 @@ import shuffleSprite from '../../resources/svg/shuffle.sprite.svg';
 import skipBackSprite from '../../resources/svg/skip-back.sprite.svg';
 import repeatSprite from '../../resources/svg/repeat.sprite.svg';
 import volumeSprite from '../../resources/svg/volume.sprite.svg';
-import { isTrackLiked } from '../../utils/isTrackLiked';
+import { isTrackLiked } from '../../utils/tracks/isTrackLiked';
 
 export default class PlayerComponent extends Component {
   constructor(

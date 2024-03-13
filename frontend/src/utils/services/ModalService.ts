@@ -1,4 +1,4 @@
-import { createElement } from '../createElement';
+import { createElement } from '../dom/createElement';
 
 export default class ModalService {
   private previousModal: HTMLElement | null = null;

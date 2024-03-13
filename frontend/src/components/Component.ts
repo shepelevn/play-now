@@ -1,4 +1,4 @@
-import { createElement } from '../utils/createElement';
+import { createElement } from '../utils/dom/createElement';
 
 export default abstract class Component {
   protected element: HTMLElement | null = null;

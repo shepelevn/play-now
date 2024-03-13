@@ -1,5 +1,5 @@
-import { USERNAME } from '../api/apiConstants';
-import { TrackData } from '../types/TrackData';
+import { USERNAME } from '../../api/apiConstants';
+import { TrackData } from '../../types/TrackData';
 
 export function isTrackLiked(trackData: TrackData): boolean {
   for (const like of trackData.likes) {

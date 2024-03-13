@@ -1,5 +1,5 @@
-import { TrackData } from '../types/TrackData';
-import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
+import { TrackData } from '../../types/TrackData';
+import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 
 export function generateIndexes(tracks: TrackData[]): TrackDataWithIndex[] {
   return tracks.map((track, index) => {

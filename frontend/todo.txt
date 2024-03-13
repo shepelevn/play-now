@@ -1,12 +1,10 @@
 TODOs:
   
-  - Add search on mobile
-
   - Create subfolders for utils functions
 
   - Check with throttling
 
-  - Change variable names from track to song maybe
+  - Add search on mobile
 
   - Test
   - Reread task document

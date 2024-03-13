@@ -1,6 +1,6 @@
 import Component from '../Component';
 import { PLAYLIST_IMAGES } from './playlistImages';
-import { getTracksCountString } from '../../utils/getTracksCountString';
+import { getTracksCountString } from '../../utils/tracks/getTracksCountString';
 
 export default class PlaylistCardComponent extends Component {
   constructor(

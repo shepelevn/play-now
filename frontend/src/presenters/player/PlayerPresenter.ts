@@ -5,10 +5,10 @@ import noUiSlider, { API } from 'nouislider';
 import { PlayerStatus } from '../../types/PlayerStatus';
 import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
 import { shuffleArray } from '../../utils/shuffleArray';
-import { generateIndexes } from '../../utils/generateIndexes';
+import { generateIndexes } from '../../utils/tracks/generateIndexes';
 import { getTimeString } from '../../utils/getTimeString';
 import TracksModel from '../../model/TracksModel';
-import { ToastType, showToast } from '../../utils/showToast';
+import { ToastType, showToast } from '../../utils/dom/showToast';
 
 export default class PlayerPresenter {
   private playerComponent: PlayerComponent;

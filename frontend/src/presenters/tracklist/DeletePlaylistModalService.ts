@@ -1,8 +1,8 @@
 import { PLAYLIST_IMAGES } from '../../components/playlists/playlistImages';
 import PlaylistsModel from '../../model/PlaylistsModel';
 import { PlaylistData } from '../../types/PlaylistData';
-import { createElement } from '../../utils/createElement';
-import { getTracksCountString } from '../../utils/getTracksCountString';
+import { createElement } from '../../utils/dom/createElement';
+import { getTracksCountString } from '../../utils/tracks/getTracksCountString';
 import ModalService from '../../utils/services/ModalService';
 
 import spinnerImage from '../../resources/img/spinner.png';

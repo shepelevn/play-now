@@ -5,7 +5,7 @@ import HeaderPresenter from './presenters/header/HeaderPresenter';
 import SidebarPresenter from './presenters/sidebar/SidebarPresenter';
 import TrackListPresenter from './presenters/tracklist/TrackListPresenter';
 import PlayerPresenter from './presenters/player/PlayerPresenter';
-import { createAndAppendElement } from './utils/createAndAppendElement';
+import { createAndAppendElement } from './utils/dom/createAndAppendElement';
 import TracksModel from './model/TracksModel';
 import PlaylistsPresenter from './presenters/playlists/PlaylistsPresenter';
 import ScreenPresenter from './presenters/screen/ScreenPresenter';
@@ -26,7 +26,7 @@ import '../node_modules/izitoast/dist/css/iziToast.min.css';
 
 import './resources/css/style.css';
 import { TrackDataWithIndex } from './types/TracksDataWithIndex';
-import { isTrackLiked } from './utils/isTrackLiked';
+import { isTrackLiked } from './utils/tracks/isTrackLiked';
 import { USERNAME } from './api/apiConstants';
 
 init();

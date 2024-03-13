@@ -5,7 +5,7 @@ import Component from '../Component';
 import HeartSvg from '../../resources/svg/heart.sprite.svg';
 import { renderSvgSprite } from '../../render/renderSvgSprite';
 import { TrackDataWithIndex } from '../../types/TracksDataWithIndex';
-import { isTrackLiked } from '../../utils/isTrackLiked';
+import { isTrackLiked } from '../../utils/tracks/isTrackLiked';
 
 export default class TrackComponent extends Component {
   private readonly createdAt: Date;

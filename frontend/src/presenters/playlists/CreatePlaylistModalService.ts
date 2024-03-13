@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/createElement';
+import { createElement } from '../../utils/dom/createElement';
 import ModalService from '../../utils/services/ModalService';
 
 import spinnerImage from '../../resources/img/spinner.png';
