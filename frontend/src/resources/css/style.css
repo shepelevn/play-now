@@ -1203,6 +1203,8 @@ body {
 }
 
 .create-playlist__label {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
 }
 
@@ -1812,6 +1814,19 @@ body {
     width: 99px;
   }
 
+  .playlist__image-container {
+    margin-bottom: 0;
+    width: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 18px;
+  }
+
+  .playlist__button-img {
+    width: 60px;
+    height: 60px;
+  }
+
   .playlist__content {
     flex: 1;
   }
@@ -1866,23 +1881,30 @@ body {
     margin: 0;
   }
 
-  .player__shuffle-btn,
-  .player__skipback-btn,
-  .player__skipnext-btn,
-  .player__repeat-btn,
-  .tracks__item__number,
-  .header__user__svg {
-    display: none;
+  .player__controls__header {
+    gap: 35px;
+    padding-top: 10px;
+    margin-bottom: 20px;
   }
 
   .player {
     position: relative;
   }
 
+  .player__controls__header svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .player__play-btn {
     position: absolute;
     top: 14px;
     right: 16px;
+  }
+
+  .player__play-btn svg {
+    width: 40px;
+    height: 40px;
   }
 
   .player__controls__header button:not(:last-child) {
@@ -1909,6 +1931,10 @@ body {
     padding-bottom: 0;
   }
 
+  .tracks__item:last-child {
+    margin-bottom: 50px;
+  }
+
   .tracks__item:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -1930,9 +1956,5 @@ body {
 
   .aside {
     padding: 20px 16px;
-  }
-
-  .tracks__item:last-child {
-    margin-bottom: 0;
   }
 }

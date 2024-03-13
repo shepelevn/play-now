@@ -14,7 +14,8 @@ export default class PlaylistButtonComponent extends Component {
         <div class="playlist__image-container">
           <picture class="playlist__small-btn">
             <source srcset="${this.imageSrc}" media="(max-width: 576px)">
-            <source srcset="${this.imageSrc}" media="(max-width: 1440px)"><img class="playlist__img" src="${this.imageSrc}" alt="Любимые песни">
+            <source srcset="${this.imageSrc}" media="(max-width: 1440px)">
+            <img class="playlist__img playlist__button-img" src="${this.imageSrc}" alt="Любимые песни">
           </picture>
         </div>
         <div class="playlist__content">

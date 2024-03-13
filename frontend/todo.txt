@@ -1,6 +1,5 @@
 TODOs:
   
-  - Test on small screen
   - Write readme
 
   - Make accessible

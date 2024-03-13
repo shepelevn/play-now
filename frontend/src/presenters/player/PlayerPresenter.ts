@@ -40,10 +40,6 @@ export default class PlayerPresenter {
 
     this.audioContext = new AudioContext();
 
-    if (this.audioContext.state === 'suspended') {
-      this.audioContext.resume();
-    }
-
     this.audioElement = new Audio();
     this.load();
 
@@ -179,6 +175,11 @@ export default class PlayerPresenter {
   public async play(): Promise<void> {
     this.playerModel.isLoading = true;
     let isTimeout = false;
+
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+
     try {
       const loadTimeoutId = setTimeout(() => {
         showToast(ToastType.Danger, '', 'Не удалось загрузить трек.');
