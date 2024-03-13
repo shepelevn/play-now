@@ -122,20 +122,7 @@ export default class PlayerPresenter {
       this.playerModel.tracks = generateIndexes(
         this.playerModel.originalTracks,
       );
-
-      // TODO: Delete code later
-      // const currentTrack: TrackDataWithIndex | undefined =
-      //   this.playerModel.tracks.filter(
-      //     (track) => track.id === this.playerModel.track.id,
-      //   )[0];
-
-      // if (!currentTrack) {
-      //   throw new Error(
-      //     `Track with id: ${this.playerModel.track.id} is not found`,
-      //   );
     }
-
-    // this.playerModel.track = currentTrack;
   }
 
   public load(): void {

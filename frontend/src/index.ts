@@ -13,21 +13,21 @@ import PlaylistsModel from './model/PlaylistsModel';
 import { ScreenState } from './types/ScreenState';
 import axios from 'axios';
 import { getApiToken } from './api/auth';
-import { loadTracks, postDislike, postLike } from './api/tracks';
+import { loadTracks } from './api/tracks';
 import DropdownService from './utils/services/DropdownService';
 import ModalService from './utils/services/ModalService';
 import { ModelStatus } from './types/ModelStatus';
 import { TracksType } from './types/TracksType';
-import { PlaylistData } from './types/PlaylistData';
 import PlayerModel from './model/PlayerModel';
-import { SidebarButtonType } from './types/SidebarButtonType';
+import { TrackDataWithIndex } from './types/TracksDataWithIndex';
+
 import 'nouislider/dist/nouislider.css';
 import '../node_modules/izitoast/dist/css/iziToast.min.css';
 
 import './resources/css/style.css';
-import { TrackDataWithIndex } from './types/TracksDataWithIndex';
-import { isTrackLiked } from './utils/tracks/isTrackLiked';
-import { USERNAME } from './api/apiConstants';
+import { createLikeCallbackCreator } from './callbacks/createLikeCallbackCreator';
+import { createChangeToPlaylistCallback } from './callbacks/createChangeToPlaylistCallback';
+import { createLoadTracksCallback } from './callbacks/createLoadTracksCallback';
 
 init();
 
@@ -183,71 +183,5 @@ function initPresenters(
 
   playerModel.onTrackListChange = () => {
     playerPresenter.onTrackListChange();
-  };
-}
-
-// TODO: Move to their own files
-
-function createChangeToPlaylistCallback(
-  tracksModel: TracksModel,
-  sidebarPresenter: SidebarPresenter,
-): (playlistData: PlaylistData) => void {
-  return (playlistData: PlaylistData) => {
-    tracksModel.tracksTitle = playlistData.name;
-    tracksModel.tracksType = TracksType.Playlist;
-    tracksModel.playlistId = playlistData.id;
-    tracksModel.setAll(playlistData.songs);
-
-    sidebarPresenter.activeButton = SidebarButtonType.Tracks;
-    tracksModel.tracksType = TracksType.Playlist;
-
-    sidebarPresenter.render();
-
-    tracksModel.onChange(ScreenState.Tracks);
-  };
-}
-
-function createLoadTracksCallback(tracksModel: TracksModel): () => void {
-  return async () => {
-    tracksModel.playlistId = null;
-    tracksModel.status = ModelStatus.Pending;
-    tracksModel.onChange(ScreenState.Tracks);
-
-    tracksModel.setAll(await loadTracks(tracksModel.filterString));
-    tracksModel.status = ModelStatus.Success;
-
-    tracksModel.onChange(ScreenState.Tracks);
-  };
-}
-
-function createLikeCallbackCreator(
-  playerModel: PlayerModel,
-): (trackData: TrackDataWithIndex) => () => void {
-  return (trackData: TrackDataWithIndex) => {
-    let loading = false;
-
-    return async () => {
-      if (loading) {
-        return;
-      } else {
-        loading = true;
-      }
-
-      if (!isTrackLiked(trackData)) {
-        await postLike(trackData.id);
-
-        trackData.likes.push({ username: USERNAME });
-      } else {
-        await postDislike(trackData.id);
-
-        trackData.likes = trackData.likes.filter(
-          (like) => like.username !== USERNAME,
-        );
-      }
-
-      playerModel.onTrackInfoChange(trackData);
-
-      loading = false;
-    };
   };
 }
