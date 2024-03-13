@@ -16,24 +16,12 @@ export default class SidebarComponent extends Component {
       <aside class="aside">
         <h2 class="aside__h2 visually-hidden">Левая панель навигации</h2>
         <nav class="aside__nav">
-          <input class="aside__search round-input" id="mobile-search" type="search" placeholder="Что будем искать?">
-            <ul class="aside__list">
-            </ul>
-            ${isLoading ? `<li class="sidebar-loading loading loading_small"><img class="loading__spinner" src="${spinnerImage}" alt="Идет загрузка"></li>` : ''}
+          <div class="aside__search-container"></div>
+          <ul class="aside__list">
+          </ul>
+          ${isLoading ? `<li class="sidebar-loading loading loading_small"><img class="loading__spinner" src="${spinnerImage}" alt="Идет загрузка"></li>` : ''}
         </nav>
       </aside>
     `;
-  }
-
-  public addOnSearchListener(callback: (event: Event) => void): void {
-    const input: HTMLElement | null = document.getElementById('mobile-search');
-
-    if (!(input instanceof HTMLInputElement)) {
-      throw new Error(
-        'Element with id: mobile-search is not an instanceof HTMLInputElement',
-      );
-    }
-
-    input.addEventListener('input', callback);
   }
 }

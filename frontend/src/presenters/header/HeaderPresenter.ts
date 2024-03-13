@@ -16,7 +16,14 @@ export default class HeaderPresenter {
     const headerElement = this.headerComponent.getElement();
     this.parentElement.append(headerElement);
 
-    this.searchPresenter = new SearchPresenter(headerElement, tracks);
+    this.searchPresenter = new SearchPresenter(
+      headerElement,
+      tracks,
+      'header__search',
+      'header__search__field',
+      'ЧТО БУДЕМ ИСКАТЬ?',
+      'desktop-search',
+    );
 
     new ProfilePresenter(headerElement);
   }

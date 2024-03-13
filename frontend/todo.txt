@@ -1,6 +1,5 @@
 TODOs:
   
-  - Test
   - Reread task document
   - Test
   - Test on small screen

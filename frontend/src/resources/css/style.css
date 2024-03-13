@@ -764,8 +764,11 @@ body {
   margin-bottom: 70px;
 }
 
-.aside__search {
+.aside__search-container {
   display: none;
+}
+
+.aside__search {
   max-width: 1010px;
   border: none;
   width: 100%;
@@ -1617,6 +1620,10 @@ body {
     padding: 20px 46px;
   }
 
+  .aside__item:last-child {
+    margin-bottom: 0;
+  }
+
   .aside__nav {
     display: flex;
     flex-direction: row;
@@ -1654,9 +1661,12 @@ body {
 }
 
 @media (max-width: 992px) {
-  .aside__search {
+  .aside__search-container {
     display: block;
     margin-right: 10px;
+  }
+
+  .aside__search {
     height: 57px;
   }
 

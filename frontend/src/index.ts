@@ -144,7 +144,6 @@ function initPresenters(
 
   sidebarPresenter.loadTracksCallback = loadTracksCallback;
   sidebarPresenter.changeToPlaylist = changeToPlaylist;
-  sidebarPresenter.searchChangeCallback = searchChangeCallback;
 
   playlistsPresenter.changeToPlaylist = changeToPlaylist;
 

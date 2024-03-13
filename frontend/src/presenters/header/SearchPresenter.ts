@@ -9,8 +9,17 @@ export default class SearchPresenter {
   constructor(
     private readonly parentElement: HTMLElement,
     tracks: TracksModel,
+    className: string,
+    inputClass: string,
+    placeholder: string,
+    inputId: string,
   ) {
-    this.searchComponent = new SearchComponent();
+    this.searchComponent = new SearchComponent(
+      className,
+      inputClass,
+      placeholder,
+      inputId,
+    );
 
     this.parentElement.append(this.searchComponent.getElement());
 

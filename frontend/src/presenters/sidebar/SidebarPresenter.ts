@@ -13,14 +13,15 @@ import { ModelStatus } from '../../types/ModelStatus';
 import { PlaylistData } from '../../types/PlaylistData';
 import { TracksType } from '../../types/TracksType';
 import { SidebarButtonType } from '../../types/SidebarButtonType';
+import SearchPresenter from '../header/SearchPresenter';
 
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
   public loadTracksCallback: () => void = notInitialized;
-  public searchChangeCallback: () => void = notInitialized;
   public changeToPlaylist: (playlistData: PlaylistData) => void =
     notInitialized;
   public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
+  public searchPresenter: SearchPresenter;
 
   constructor(
     private readonly parentElement: HTMLElement,
@@ -29,10 +30,10 @@ export default class SidebarPresenter {
   ) {
     this.sidebarComponent = new SidebarComponent(playlistsModel);
 
-    this.render();
+    this.searchPresenter = this.render();
   }
 
-  public render(): void {
+  public render(): SearchPresenter {
     this.sidebarComponent.removeElement();
     const sidebarElement: HTMLElement = this.sidebarComponent.getElement();
     this.parentElement.prepend(sidebarElement);
@@ -52,7 +53,9 @@ export default class SidebarPresenter {
       this.addPlaylistButton(listElement, playlistData.id);
     }
 
-    this.initMobileSearch();
+    this.searchPresenter = this.initMobileSearch();
+
+    return this.searchPresenter;
   }
 
   private addTracksButton(listElement: HTMLElement): void {
@@ -150,17 +153,22 @@ export default class SidebarPresenter {
     );
   }
 
-  private initMobileSearch(): void {
-    this.sidebarComponent.addOnSearchListener((event: Event) => {
-      const input: EventTarget | null = event.currentTarget;
+  private initMobileSearch(): SearchPresenter {
+    const parentElement: HTMLElement | null = this.sidebarComponent
+      .getElement()
+      .querySelector('.aside__search-container');
 
-      if (!(input instanceof HTMLInputElement)) {
-        throw new Error('Event target is not HTMLInputElement');
-      }
+    if (!parentElement) {
+      throw new Error('nav element is not found');
+    }
 
-      this.tracksModel.filterString = input.value;
-
-      this.searchChangeCallback();
-    });
+    return new SearchPresenter(
+      parentElement,
+      this.tracksModel,
+      '',
+      'aside__search round-input',
+      'Что будем искать?',
+      'mobile-search',
+    );
   }
 }
