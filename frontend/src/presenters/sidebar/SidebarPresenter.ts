@@ -17,6 +17,7 @@ import { SidebarButtonType } from '../../types/SidebarButtonType';
 export default class SidebarPresenter {
   private readonly sidebarComponent: SidebarComponent;
   public loadTracksCallback: () => void = noop;
+  public searchChangeCallback: () => void = noop;
   public changeToPlaylist: (playlistData: PlaylistData) => void = noop;
   public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
 
@@ -49,6 +50,8 @@ export default class SidebarPresenter {
     for (const playlistData of this.playlistsModel.playlists) {
       this.addPlaylistButton(listElement, playlistData.id);
     }
+
+    this.initMobileSearch();
   }
 
   private addTracksButton(listElement: HTMLElement): void {
@@ -144,5 +147,19 @@ export default class SidebarPresenter {
       },
       isActive,
     );
+  }
+
+  private initMobileSearch(): void {
+    this.sidebarComponent.addOnSearchListener((event: Event) => {
+      const input: EventTarget | null = event.currentTarget;
+
+      if (!(input instanceof HTMLInputElement)) {
+        throw new Error('Event target is not HTMLInputElement');
+      }
+
+      this.tracksModel.filterString = input.value;
+
+      this.searchChangeCallback();
+    });
   }
 }

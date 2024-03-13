@@ -118,14 +118,6 @@ function initPresenters(
     playlistsPresenter,
   );
 
-  headerPresenter.searchPresenter.searchChangeCallback = () => {
-    if (tracksModel.tracksType === TracksType.Tracks) {
-      loadTracksCallback();
-    }
-
-    screenPresenter.render();
-  };
-
   const playerPresenter: PlayerPresenter = new PlayerPresenter(
     rootElement,
     playerModel,
@@ -139,11 +131,23 @@ function initPresenters(
     sidebarPresenter,
   );
   const loadTracksCallback = createLoadTracksCallback(tracksModel);
+  const searchChangeCallback = () => {
+    if (tracksModel.tracksType === TracksType.Tracks) {
+      loadTracksCallback();
+    }
+
+    screenPresenter.render();
+  };
 
   // Add callbacks to presenters
+  headerPresenter.searchPresenter.searchChangeCallback = searchChangeCallback;
+
   sidebarPresenter.loadTracksCallback = loadTracksCallback;
   sidebarPresenter.changeToPlaylist = changeToPlaylist;
+  sidebarPresenter.searchChangeCallback = searchChangeCallback;
+
   playlistsPresenter.changeToPlaylist = changeToPlaylist;
+
   trackListPresenter.createLikeCallback =
     createLikeCallbackCreator(playerModel);
 

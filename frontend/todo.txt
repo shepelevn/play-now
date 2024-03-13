@@ -1,11 +1,9 @@
 TODOs:
   
-  - Check with throttling
-
-  - Add search on mobile
-
   - Test
   - Reread task document
+  - Test
+  - Test on small screen
 
   - Make accessible
   - Test after getting better backend

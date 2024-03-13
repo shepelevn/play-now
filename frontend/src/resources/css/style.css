@@ -760,6 +760,25 @@ body {
   outline: none;
 }
 
+.aside__search {
+  display: none;
+  max-width: 1010px;
+  border: none;
+  width: 100%;
+  min-width: 250px;
+  padding: 15px 12px 15px 47px;
+  border-radius: 30px;
+  background-color: white;
+  color: var(--color-greytxt);
+  background-image: url("../img/search.svg");
+  background-repeat: no-repeat;
+  background-position: left 15px center;
+  outline: 2px solid transparent;
+  transition-property: outline-color,opacity,background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: var(--transition-duration);
+}
+
 .aside__btn {
   transition-property: background-color;
   transition-timing-function: ease-in-out;
@@ -1631,6 +1650,12 @@ body {
 }
 
 @media (max-width: 992px) {
+  .aside__search {
+    display: block;
+    margin-right: 10px;
+    height: 57px;
+  }
+
   .sidebar-loading {
     padding-left: 25px;
     padding-right: 25px;
@@ -1738,6 +1763,10 @@ body {
 }
 
 @media (max-width: 576px) {
+  .aside__search {
+    font-size: 14px;
+  }
+
   .playlist__item {
     width: 100%;
     display: flex;
