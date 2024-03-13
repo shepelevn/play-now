@@ -1,7 +1,5 @@
 TODOs:
   
-  - Create subfolders for utils functions
-
   - Check with throttling
 
   - Add search on mobile

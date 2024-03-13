@@ -158,10 +158,7 @@ function initPresenters(
   };
 
   playerModel.onTrackInfoChange = (trackData: TrackDataWithIndex) => {
-    screenPresenter.render();
-
     if (playerModel.track.id === trackData.id) {
-      console.log('hit');
       const index = playerModel.track.index;
       playerModel.track = trackData;
       playerModel.track.index = index;
@@ -169,13 +166,13 @@ function initPresenters(
       playerPresenter.render();
     }
 
+    tracksModel.update(trackData, trackData.id);
     playlistsModel.updateTrack(trackData);
+
+    screenPresenter.render();
   };
 
   playerModel.onTrackChange = () => {
-    // TODO: Delete later maybe
-    // playerPresenter.render();
-
     playerPresenter.load();
     playerPresenter.play();
   };

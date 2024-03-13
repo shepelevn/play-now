@@ -154,11 +154,9 @@ export default class PlayerComponent extends Component {
     const likeButton: HTMLElement | null =
       document.getElementById('player-like');
 
-    if (!likeButton) {
-      throw new Error('Button with id: player-like is not found');
+    if (likeButton) {
+      likeButton.addEventListener('click', callback);
     }
-
-    likeButton.addEventListener('click', callback);
   }
 
   private getCenterButtonTemplate(status: PlayerStatus): string {
