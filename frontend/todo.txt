@@ -1,8 +1,7 @@
 TODOs:
   
-  - Reread task document
-  - Test
   - Test on small screen
+  - Write readme
 
   - Make accessible
   - Test after getting better backend

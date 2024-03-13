@@ -20,6 +20,7 @@ export default class SidebarPresenter {
   public loadTracksCallback: () => void = notInitialized;
   public changeToPlaylist: (playlistData: PlaylistData) => void =
     notInitialized;
+  public searchChangeCallback: () => void = notInitialized;
   public activeButton: SidebarButtonType = SidebarButtonType.Tracks;
   public searchPresenter: SearchPresenter;
 
@@ -53,7 +54,7 @@ export default class SidebarPresenter {
       this.addPlaylistButton(listElement, playlistData.id);
     }
 
-    this.searchPresenter = this.initMobileSearch();
+    this.searchPresenter = this.createSearchPresenter();
 
     return this.searchPresenter;
   }
@@ -153,7 +154,7 @@ export default class SidebarPresenter {
     );
   }
 
-  private initMobileSearch(): SearchPresenter {
+  private createSearchPresenter(): SearchPresenter {
     const parentElement: HTMLElement | null = this.sidebarComponent
       .getElement()
       .querySelector('.aside__search-container');
@@ -162,7 +163,7 @@ export default class SidebarPresenter {
       throw new Error('nav element is not found');
     }
 
-    return new SearchPresenter(
+    const searchPresenter: SearchPresenter = new SearchPresenter(
       parentElement,
       this.tracksModel,
       '',
@@ -170,5 +171,9 @@ export default class SidebarPresenter {
       'Что будем искать?',
       'mobile-search',
     );
+
+    searchPresenter.searchChangeCallback = this.searchChangeCallback;
+
+    return searchPresenter;
   }
 }
