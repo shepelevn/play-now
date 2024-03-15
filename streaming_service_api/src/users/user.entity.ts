@@ -40,16 +40,16 @@ export class User {
 
   @ApiProperty({ type: () => [Artist], description: 'Liked artists' })
   @ManyToMany(() => Artist, (artist: Artist) => artist.likes)
-  @JoinTable()
+  // @JoinTable()
   artistLikes: Promise<Artist[]>;
 
   @ApiProperty({ type: () => [Album], description: 'Liked albums' })
   @ManyToMany(() => Album, (album: Album) => album.likes)
-  @JoinTable()
+  // @JoinTable()
   albumLikes: Promise<Album[]>;
 
   @ApiProperty({ type: () => [Song], description: 'Liked songs' })
   @ManyToMany(() => Song, (song: Song) => song.likes)
-  @JoinTable()
+  // @JoinTable()
   songLikes: Promise<Song[]>;
 }
