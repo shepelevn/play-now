@@ -122,7 +122,7 @@ function initPresenters(
     rootElement,
     playerModel,
     tracksModel,
-    createLikeCallbackCreator(playerModel),
+    createLikeCallbackCreator(playerModel, tracksModel),
   );
 
   // Create callbacks
@@ -132,15 +132,18 @@ function initPresenters(
   );
   const loadTracksCallback = createLoadTracksCallback(tracksModel);
   const searchChangeCallback = () => {
-    if (tracksModel.tracksType === TracksType.Tracks) {
-      loadTracksCallback();
-    }
+    if (screenPresenter.currentScreen !== ScreenState.Playlists) {
+      if (tracksModel.tracksType === TracksType.Tracks) {
+        loadTracksCallback();
+      }
 
-    screenPresenter.render();
+      screenPresenter.render();
+    }
   };
 
   // Add callbacks to presenters
-  headerPresenter.searchPresenter.searchChangeCallback = searchChangeCallback;
+  headerPresenter.searchChangeCallback = searchChangeCallback;
+  headerPresenter.render();
 
   sidebarPresenter.loadTracksCallback = loadTracksCallback;
   sidebarPresenter.changeToPlaylist = changeToPlaylist;
@@ -148,11 +151,21 @@ function initPresenters(
 
   playlistsPresenter.changeToPlaylist = changeToPlaylist;
 
-  trackListPresenter.createLikeCallback =
-    createLikeCallbackCreator(playerModel);
+  trackListPresenter.createLikeCallback = createLikeCallbackCreator(
+    playerModel,
+    tracksModel,
+  );
 
   // Create callbacks for models
   tracksModel.onChange = (state: ScreenState) => {
+    tracksModel.filterString = '';
+    headerPresenter.render();
+    sidebarPresenter.render();
+
+    screenPresenter.changeScreen(state);
+  };
+
+  tracksModel.onUpdate = (state: ScreenState) => {
     screenPresenter.changeScreen(state);
   };
 

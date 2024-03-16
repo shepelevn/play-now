@@ -1,11 +1,16 @@
 import { USERNAME } from '../api/apiConstants';
-import { postDislike, postLike } from '../api/tracks';
+import { loadFavorites, postDislike, postLike } from '../api/tracks';
 import PlayerModel from '../model/PlayerModel';
+import TracksModel from '../model/TracksModel';
+import { ModelStatus } from '../types/ModelStatus';
+import { ScreenState } from '../types/ScreenState';
 import { TrackDataWithIndex } from '../types/TracksDataWithIndex';
+import { TracksType } from '../types/TracksType';
 import { isTrackLiked } from '../utils/tracks/isTrackLiked';
 
 export function createLikeCallbackCreator(
   playerModel: PlayerModel,
+  tracksModel: TracksModel,
 ): (trackData: TrackDataWithIndex) => () => void {
   return (trackData: TrackDataWithIndex) => {
     let loading = false;
@@ -30,6 +35,29 @@ export function createLikeCallbackCreator(
       }
 
       playerModel.onTrackInfoChange(trackData);
+
+      if (playerModel.tracksType === TracksType.Favorite) {
+        if (isTrackLiked(trackData)) {
+          playerModel.originalTracks.push(trackData);
+        } else {
+          playerModel.originalTracks = playerModel.originalTracks.filter(
+            (track) => track.id !== trackData.id,
+          );
+        }
+
+        playerModel.onTrackListChange();
+      }
+
+      if (tracksModel.tracksType === TracksType.Favorite) {
+        tracksModel.status = ModelStatus.Pending;
+
+        tracksModel.onUpdate(ScreenState.Tracks);
+        tracksModel.setAll(await loadFavorites());
+
+        tracksModel.status = ModelStatus.Success;
+
+        tracksModel.onUpdate(ScreenState.Tracks);
+      }
 
       loading = false;
     };

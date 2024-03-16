@@ -3,22 +3,30 @@ import TracksModel from '../../model/TracksModel';
 import { notInitialized } from '../../utils/notInitialized';
 
 export default class SearchPresenter {
-  private readonly searchComponent: SearchComponent;
+  private searchComponent: SearchComponent;
   public searchChangeCallback: () => void = notInitialized;
 
   constructor(
     private readonly parentElement: HTMLElement,
-    tracks: TracksModel,
-    className: string,
-    inputClass: string,
-    placeholder: string,
-    inputId: string,
+    private readonly tracks: TracksModel,
+    private readonly className: string,
+    private readonly inputClass: string,
+    private readonly placeholder: string,
+    private readonly inputId: string,
   ) {
+    this.searchComponent = this.render();
+  }
+
+  public render(): SearchComponent {
+    if (this.searchComponent) {
+      this.searchComponent.removeElement();
+    }
+
     this.searchComponent = new SearchComponent(
-      className,
-      inputClass,
-      placeholder,
-      inputId,
+      this.className,
+      this.inputClass,
+      this.placeholder,
+      this.inputId,
     );
 
     this.parentElement.append(this.searchComponent.getElement());
@@ -30,9 +38,11 @@ export default class SearchPresenter {
         throw new Error('Event target is not HTMLInputElement');
       }
 
-      tracks.filterString = input.value;
+      this.tracks.filterString = input.value;
 
       this.searchChangeCallback();
     });
+
+    return this.searchComponent;
   }
 }

@@ -14,6 +14,7 @@ export default class TracksModel {
   public tracksType: TracksType = TracksType.Tracks;
   public tracksTitle: string = 'Треки';
   public onChange: (state: ScreenState) => void = notInitialized;
+  public onUpdate: (state: ScreenState) => void = notInitialized;
 
   public allWithSearch(): TrackDataWithIndex[] {
     return this.tracks.filter((track: TrackData) => {
