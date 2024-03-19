@@ -1,0 +1,8 @@
+TODOs:
+  
+  - Make accessible
+  - Make order in playlists and favorite be loaded in order
+
+  - Check TODOs console.logs and alerts
+  - Check for errors in console
+  - Check linter 
