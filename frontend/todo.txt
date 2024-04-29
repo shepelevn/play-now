@@ -1,7 +1,7 @@
 TODOs:
   
   - Make accessible
-  - Make order in playlists and favorite be loaded in order
+  - Order songs in playlists and favorites
 
   - Check TODOs console.logs and alerts
   - Check for errors in console
