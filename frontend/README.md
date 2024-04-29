@@ -1,25 +1,30 @@
 # Play_now Frontend
 
-Клиентская часть веб-сайта для прослушивания музыки. Позволяет создавать
-плейлисты и добавлять песни в избранное.
+Frontend part of the music streaming website. Allows listening to music,
+creating playlists and adding songs to favorites.
 
-## Установка и запуск проекта
+## README.md
 
-Для запуска данного проекта вам понадобится Node.js и npm.  
-Склонируйте данный репозиторий к себе на диск,  
-затем выполните `npm i` для установки.
+* en [English](README.md)
+* ru [Русский](readme/README.ru.md)
 
-## Команды запуска проекта
+## Installation and launch
 
-* `npm run serve` - Сборка и запуск проекта в режиме разработки.
-  Запускает локальный сервер на `localhost:8080`.
-* `npm run build` - Сборка проекта в режиме production.
+To launch the project you need Node.js and npm.
+Clone the repository on your local disk then run `npm install` to install
+dependencies.
 
-## Команды тестирования проекта
+## Launch scripts
 
-`npm run lint` - Проверка проекта в ESLint.
-`npm run lint:fix` - Исправление ошибок проекта в ESLint.
+* `npm run serve` - Start development server. Server listens on
+  `localhost:8080`
+* `npm run build` - Build project in production mode
 
-## Примечания
+## Linting scripts
 
-Для работы проекта нужен API сервер слушающий 3000 порт.
+* `npm run lint` - Check code with ESLint
+* `npm run lint:fix` - Fix errors with ESLint
+
+## Notes
+
+For website to work you need API server listening on port 3000
