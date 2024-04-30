@@ -3,6 +3,11 @@
 The backend part of the music streaming website. Allows searching for and
 listening to music, creating playlists and adding songs to favorites.
 
+## README.md
+
+* en [English](README.md)
+* ru [Русский](readme/README.ru.md)
+
 ## Initialization
 
 For the project initialization, you must download the folder `static`, which
