@@ -1,6 +1,6 @@
 # Play_now Frontend
 
-Frontend part of the music streaming website. Allows searching for and
+The frontend part of the music streaming website. Allows searching for and
 listening to music, creating playlists and adding songs to favorites.
 
 ## README.md
