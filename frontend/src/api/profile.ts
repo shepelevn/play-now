@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL } from './apiConstants';
+import { username } from '../api/auth';
 
 import userAvatarUrl from '../resources/img/user.jpg';
 
@@ -19,9 +20,9 @@ export async function getProfileData(): Promise<ProfileData> {
 
   const usersDataArray: UserData[] = response.data;
 
-  const userData: UserData | undefined = usersDataArray.filter(
-    (userData) => (userData.username = USERNAME),
-  )[0];
+  const userData: UserData | undefined = usersDataArray.filter((userData) => {
+    return userData.username === username;
+  })[0];
 
   if (!userData) {
     throw new Error('User not found in server list');

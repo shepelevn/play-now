@@ -1,20 +1,27 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { API_SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL } from './apiConstants';
+import Cookie from 'js-cookie';
+import { nanoid } from 'nanoid';
 
-const PASSWORD = 'password';
 const FIRST_NAME = 'John';
 const LAST_NAME = 'Smith';
+export let username: string | undefined;
 
 export async function getApiToken(): Promise<string> {
+  const credentials = getCredentials();
+
+  username = credentials.username;
+  const password = credentials.password;
+
   try {
-    const loginResponse: AxiosResponse = await login(USERNAME, PASSWORD);
+    const loginResponse: AxiosResponse = await login(username, password);
 
     return loginResponse.data.access_token;
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 401) {
       const registerResponse = await register(
-        USERNAME,
-        PASSWORD,
+        username,
+        password,
         FIRST_NAME,
         LAST_NAME,
       );
@@ -24,6 +31,21 @@ export async function getApiToken(): Promise<string> {
       throw error;
     }
   }
+}
+
+function getCredentials(): { username: string; password: string } {
+  let username = Cookie.get('username');
+  let password = Cookie.get('password');
+
+  if (!username || !password) {
+    username = nanoid();
+    password = nanoid();
+
+    Cookie.set('username', username);
+    Cookie.set('password', password);
+  }
+
+  return { username, password };
 }
 
 async function register(

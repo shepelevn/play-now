@@ -1,4 +1,4 @@
-import { USERNAME } from '../api/apiConstants';
+import { username } from '../api/auth';
 import { loadFavorites, postDislike, postLike } from '../api/tracks';
 import PlayerModel from '../model/PlayerModel';
 import TracksModel from '../model/TracksModel';
@@ -25,12 +25,16 @@ export function createLikeCallbackCreator(
       if (!isTrackLiked(trackData)) {
         await postLike(trackData.id);
 
-        trackData.likes.push({ username: USERNAME });
+        if (!username) {
+          throw new Error('username is undefined');
+        }
+
+        trackData.likes.push({ username: username });
       } else {
         await postDislike(trackData.id);
 
         trackData.likes = trackData.likes.filter(
-          (like) => like.username !== USERNAME,
+          (like) => like.username !== username,
         );
       }
 

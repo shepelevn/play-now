@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { ShortTrackData } from '../types/ShortTrackData';
+import { username } from './auth';
 
 export async function loadTracks(filterString: string): Promise<TrackData[]> {
   const response: AxiosResponse = await axios.get(
@@ -13,7 +14,7 @@ export async function loadTracks(filterString: string): Promise<TrackData[]> {
 
 export async function loadFavorites(): Promise<TrackData[]> {
   const likesResponse: AxiosResponse = await axios.get(
-    `${API_SERVER_URL}/users/${USERNAME}/likes`,
+    `${API_SERVER_URL}/users/${username}/likes`,
   );
 
   const shortTracks: ShortTrackData[] = likesResponse.data.songLikes;

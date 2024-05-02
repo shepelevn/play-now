@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { PlaylistData } from '../types/PlaylistData';
-import { API_SERVER_URL, USERNAME } from './apiConstants';
+import { API_SERVER_URL } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { PLAYLIST_IMAGES_COUNT } from '../model/PlaylistsModel';
+import { username } from '../api/auth';
 
 type PlaylistInfo = {
   id: number;
@@ -11,7 +12,7 @@ type PlaylistInfo = {
 
 export async function loadPlaylistsData(): Promise<PlaylistData[]> {
   const response: AxiosResponse = await axios.get(
-    `${API_SERVER_URL}/users/${USERNAME}/playlists`,
+    `${API_SERVER_URL}/users/${username}/playlists`,
   );
 
   const playlistsInfo: PlaylistInfo[] = response.data;
