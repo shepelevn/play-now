@@ -3,6 +3,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpritePlugin = require('svg-sprite-loader/plugin');
+const { DefinePlugin } = require('webpack');
+
+require('dotenv').config({ path: '.env' });
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -26,6 +29,9 @@ const config = {
       favicon: './src/resources/favicon.ico',
     }),
     new SpritePlugin(),
+    new DefinePlugin({
+      'window.process.env': JSON.stringify(process.env),
+    }),
   ],
   module: {
     rules: [

@@ -20,6 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@webpack-cli/generators": "^3.0.7",
     "@webpack-cli/serve": "^2.0.5",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",

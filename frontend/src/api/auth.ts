@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { API_SERVER_URL } from './apiConstants';
 import Cookie from 'js-cookie';
 import { nanoid } from 'nanoid';
 
@@ -54,20 +53,26 @@ async function register(
   firstName: string,
   lastName: string,
 ): Promise<AxiosResponse> {
-  return await axios.post(`${API_SERVER_URL}/auth/register`, {
-    username,
-    password,
-    firstName,
-    lastName,
-  });
+  return await axios.post(
+    `${window.process.env['API_SERVER_URL']}/auth/register`,
+    {
+      username,
+      password,
+      firstName,
+      lastName,
+    },
+  );
 }
 
 async function login(
   username: string,
   password: string,
 ): Promise<AxiosResponse> {
-  return await axios.post(`${API_SERVER_URL}/auth/login`, {
-    username,
-    password,
-  });
+  return await axios.post(
+    `${window.process.env['API_SERVER_URL']}/auth/login`,
+    {
+      username,
+      password,
+    },
+  );
 }

@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_SERVER_URL } from './apiConstants';
 import { username } from '../api/auth';
 
 import userAvatarUrl from '../resources/img/user.jpg';
@@ -16,7 +15,7 @@ type UserData = {
 };
 
 export async function getProfileData(): Promise<ProfileData> {
-  const response: AxiosResponse = await axios.get(`${API_SERVER_URL}/users`);
+  const response: AxiosResponse = await axios.get(`${window.process.env['API_SERVER_URL']}/users`);
 
   const usersDataArray: UserData[] = response.data;
 

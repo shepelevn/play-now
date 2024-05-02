@@ -1,4 +1,3 @@
-import { SERVER_URL } from '../../api/apiConstants';
 import PlayerComponent from '../../components/player/PlayerComponent';
 import PlayerModel from '../../model/PlayerModel';
 import noUiSlider, { API } from 'nouislider';
@@ -159,7 +158,7 @@ export default class PlayerPresenter {
 
   private loadElement(): HTMLAudioElement {
     const audioElement: HTMLAudioElement = new Audio(
-      `${SERVER_URL}${this.playerModel.track.path}`,
+      `${window.process.env['SERVER_URL']}${this.playerModel.track.path}`,
     );
 
     audioElement.crossOrigin = 'anonymous';

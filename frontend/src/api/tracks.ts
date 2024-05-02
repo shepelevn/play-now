@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_SERVER_URL } from './apiConstants';
 import { TrackData } from '../types/TrackData';
 import { ShortTrackData } from '../types/ShortTrackData';
 import { username } from './auth';
 
 export async function loadTracks(filterString: string): Promise<TrackData[]> {
   const response: AxiosResponse = await axios.get(
-    `${API_SERVER_URL}/songs?search=${filterString}`,
+    `${window.process.env['API_SERVER_URL']}/songs?search=${filterString}`,
   );
 
   return response.data;
@@ -14,7 +13,7 @@ export async function loadTracks(filterString: string): Promise<TrackData[]> {
 
 export async function loadFavorites(): Promise<TrackData[]> {
   const likesResponse: AxiosResponse = await axios.get(
-    `${API_SERVER_URL}/users/${username}/likes`,
+    `${window.process.env['API_SERVER_URL']}/users/${username}/likes`,
   );
 
   const shortTracks: ShortTrackData[] = likesResponse.data.songLikes;
@@ -29,16 +28,16 @@ export async function loadFavorites(): Promise<TrackData[]> {
 
 async function loadTrack(id: number): Promise<TrackData> {
   const response: AxiosResponse = await axios.get(
-    `${API_SERVER_URL}/songs/${id}`,
+    `${window.process.env['API_SERVER_URL']}/songs/${id}`,
   );
 
   return response.data;
 }
 
 export async function postLike(trackId: number): Promise<void> {
-  await axios.post(`${API_SERVER_URL}/songs/${trackId}/like`);
+  await axios.post(`${window.process.env['API_SERVER_URL']}/songs/${trackId}/like`);
 }
 
 export async function postDislike(trackId: number): Promise<void> {
-  await axios.post(`${API_SERVER_URL}/songs/${trackId}/unlike`);
+  await axios.post(`${window.process.env['API_SERVER_URL']}/songs/${trackId}/unlike`);
 }
