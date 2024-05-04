@@ -10,6 +10,8 @@ listening to music, creating playlists and adding songs to favorites.
 
 ## Initialization
 
+First create `.env` file according to `.env-sample`.
+
 For the project initialization, you must download the folder `static`, which
 contains static files for database. Contents of the folder should be put in
 `/backend/static`.

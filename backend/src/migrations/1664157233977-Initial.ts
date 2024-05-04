@@ -5,23 +5,23 @@ export class Initial1664157233977 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "song" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "filename" varchar NOT NULL, "path" varchar NOT NULL, "image" varchar NOT NULL, "duration" integer NOT NULL, "createdAt" integer NOT NULL DEFAULT (datetime('now')), "albumId" integer, "artistId" integer)`,
+      `CREATE TABLE "song" ("id" SERIAL PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "filename" varchar NOT NULL, "path" varchar NOT NULL, "image" varchar NOT NULL, "duration" integer NOT NULL, "createdAt" integer NOT NULL DEFAULT (CURRENT_TIMESTAMP), "albumId" integer, "artistId" integer)`,
     );
 
     await queryRunner.query(
-      `CREATE TABLE "playlist" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (datetime('now')), "userId" integer)`,
+      `CREATE TABLE "playlist" ("id" SERIAL PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (CURRENT_TIMESTAMP), "userId" integer)`,
     );
 
     await queryRunner.query(
-      `CREATE TABLE "user" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar NOT NULL, "password" varchar NOT NULL, "firstName" varchar NOT NULL, "lastName" varchar NOT NULL, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"))`,
+      `CREATE TABLE "user" ("id" SERIAL PRIMARY KEY NOT NULL, "username" varchar NOT NULL, "password" varchar NOT NULL, "firstName" varchar NOT NULL, "lastName" varchar NOT NULL, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"))`,
     );
 
     await queryRunner.query(
-      `CREATE TABLE "artist" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "image" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (datetime('now')))`,
+      `CREATE TABLE "artist" ("id" SERIAL PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "image" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (CURRENT_TIMESTAMP))`,
     );
 
     await queryRunner.query(
-      `CREATE TABLE "album" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "image" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (datetime('now')), "artistId" integer)`,
+      `CREATE TABLE "album" ("id" SERIAL PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "image" varchar NOT NULL, "createdAt" integer NOT NULL DEFAULT (CURRENT_TIMESTAMP), "artistId" integer)`,
     );
 
     await queryRunner.query(

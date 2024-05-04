@@ -21,9 +21,9 @@ export class SongsService {
 
     if (params.search?.length) {
       query.where(
-        'LOWER(song.name) GLOB :search OR LOWER(album.name) GLOB :search OR LOWER(artist.name) GLOB :search',
+        'LOWER(song.name) ILIKE :search OR LOWER(album.name) ILIKE :search OR LOWER(artist.name) ILIKE :search',
         {
-          search: `*${params.search.trim().toLowerCase()}*`,
+          search: `%${params.search.trim().toLowerCase()}%`,
         },
       );
     }
