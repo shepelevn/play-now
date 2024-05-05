@@ -1,10 +1,11 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinTable,
+  Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Album } from '../albums/album.entity';
 import { User } from '../users/user.entity';

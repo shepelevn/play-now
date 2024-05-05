@@ -1,9 +1,10 @@
 import {
   Column,
-  Entity, JoinTable,
+  Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Playlist } from '../playlists/playlist.entity';
