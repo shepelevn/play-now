@@ -15,7 +15,9 @@ type UserData = {
 };
 
 export async function getProfileData(): Promise<ProfileData> {
-  const response: AxiosResponse = await axios.get(`${window.process.env['API_SERVER_URL']}/users`);
+  const response: AxiosResponse = await axios.get(
+    `${window.process.env['API_SERVER_URL']}/users`,
+  );
 
   const usersDataArray: UserData[] = response.data;
 

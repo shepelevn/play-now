@@ -35,7 +35,9 @@ export async function loadPlaylistsData(): Promise<PlaylistData[]> {
 }
 
 export async function loadPlaylistTracks(id: number): Promise<TrackData[]> {
-  const response = await axios.get(`${window.process.env['API_SERVER_URL']}/playlists/${id}`);
+  const response = await axios.get(
+    `${window.process.env['API_SERVER_URL']}/playlists/${id}`,
+  );
 
   return response.data.songs;
 }
@@ -75,5 +77,7 @@ export async function createPlaylist(name: string): Promise<PlaylistData> {
 }
 
 export async function deletePlaylist(playlistId: number): Promise<void> {
-  await axios.delete(`${window.process.env['API_SERVER_URL']}/playlists/${playlistId}`);
+  await axios.delete(
+    `${window.process.env['API_SERVER_URL']}/playlists/${playlistId}`,
+  );
 }
