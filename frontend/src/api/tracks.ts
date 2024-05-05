@@ -35,9 +35,13 @@ async function loadTrack(id: number): Promise<TrackData> {
 }
 
 export async function postLike(trackId: number): Promise<void> {
-  await axios.post(`${window.process.env['API_SERVER_URL']}/songs/${trackId}/like`);
+  await axios.post(
+    `${window.process.env['API_SERVER_URL']}/songs/${trackId}/like`,
+  );
 }
 
 export async function postDislike(trackId: number): Promise<void> {
-  await axios.post(`${window.process.env['API_SERVER_URL']}/songs/${trackId}/unlike`);
+  await axios.post(
+    `${window.process.env['API_SERVER_URL']}/songs/${trackId}/unlike`,
+  );
 }

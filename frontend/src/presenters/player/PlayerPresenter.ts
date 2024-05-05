@@ -158,7 +158,7 @@ export default class PlayerPresenter {
 
   private loadElement(): HTMLAudioElement {
     const audioElement: HTMLAudioElement = new Audio(
-      `${window.process.env['SERVER_URL']}${this.playerModel.track.path}`,
+      `${window.process.env['SONGS_STORAGE_URL']}${this.playerModel.track.path}`,
     );
 
     audioElement.crossOrigin = 'anonymous';
