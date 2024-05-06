@@ -8,6 +8,13 @@ listening to music, creating playlists and adding songs to favorites.
 * en [English](README.md)
 * ru [Русский](readme/README.ru.md)
 
+## Technologies used in the project
+
+* `Webpack`
+* `HTML`
+* `CSS`
+* `TypeScript`
+
 ## Installation and launch
 
 To launch the project you need Node.js and npm.
